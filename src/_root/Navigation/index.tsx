@@ -9,7 +9,7 @@ import { NavLinkButton } from '_components/buttons/NavLinkButton'
 
 export default function Navigation() {
   return (
-    <Stack direction={"column"} spacing={2} sx={{ mx: 4 }}>
+    <Stack direction={"column"} spacing={2} sx={{ sm: { mx: 4 }, px: 2 }}>
       <NavLinkButton variant="text" LinkComponent={Link} to="/">
         Home
       </NavLinkButton>
