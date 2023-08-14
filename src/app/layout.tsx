@@ -1,10 +1,8 @@
-'use client'
-
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 import Themed from '@/app/_components/Themed'
-import Layout from '@/app/_components/Layout'
+import SiteLayout from '@/app/_components/SiteLayout'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,9 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Themed>
-          <Layout>
+          <SiteLayout>
             {children}
-          </Layout>
+          </SiteLayout>
         </Themed>
       </body>
     </html>

@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 
 import useTheme from '@mui/material/styles/useTheme'
@@ -13,7 +15,7 @@ import HeaderBar from './HeaderBar'
 const mobileNavWidth = '240px'
 const desktopNavWidth = '20vw'
 
-export default function Layout({
+export default function SiteLayout({
   children,
 }: {
   children: React.ReactNode

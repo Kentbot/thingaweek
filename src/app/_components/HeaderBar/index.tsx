@@ -15,7 +15,7 @@ export default function HeaderBar() {
     <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
       <Toolbar>
         <Typography sx={{ flexGrow: 1}} variant="h6" noWrap component={"div"}>
-          Kent's Code and Such
+          Kent&apos;s Code and Such
         </Typography>
         <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
           {theme.palette.mode === 'dark' ? <Brightness4Icon/> : <Brightness7Icon />}

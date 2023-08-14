@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 
 import { useMediaQuery, createTheme, ThemeProvider, CssBaseline } from '@mui/material'
@@ -23,7 +25,6 @@ export default function Themed(props: React.PropsWithChildren) {
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
-        console.log('clicky')
         setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
       },
     }),
