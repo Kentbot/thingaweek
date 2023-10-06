@@ -12,6 +12,9 @@ export default function SiteOverview() {
       </div>
       <ul>
         <li>
+          Next.js: This is the framework the site is built with
+        </li>
+        <li>
           Serverless functions (AWS Lambda, Google Cloud Functions, something like these)
         </li>
         <li>
