@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material'
+import { List, ListItem as MuiListItem, ListItemIcon, ListItemText } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import CircleIcon from '@mui/icons-material/CircleOutlined'
 
@@ -15,27 +15,27 @@ export default function SiteOverview() {
         learning about things like:
       </Typography>
       <List>
-        <MyListItem
+        <ListItem
           text="Material UI (MUI) - This site is actually written with MUI right now! I'm still learning
           all of the in's and out's of MUI, and so far I really like how it works.">
-        </MyListItem>
-        <MyListItem
+        </ListItem>
+        <ListItem
           text="serverless functions (AWS Lambda, Google Cloud Functions, something like these)">
-        </MyListItem>
-        <MyListItem
+        </ListItem>
+        <ListItem
           text="Any cool JS libraries that I find out about">
-        </MyListItem>
-        <MyListItem
+        </ListItem>
+        <ListItem
           text="And more!">
-        </MyListItem>
+        </ListItem>
       </List>
     </>
   )
 }
 
-function MyListItem(props: React.PropsWithChildren & { text: string }) {
+function ListItem(props: React.PropsWithChildren & { text: string }) {
   return (
-    <ListItem>
+    <MuiListItem>
       <ListItemIcon>
         <CircleIcon />
       </ListItemIcon>
@@ -44,6 +44,6 @@ function MyListItem(props: React.PropsWithChildren & { text: string }) {
           {props.text}
         </Typography>
       </ListItemText>
-    </ListItem>
+    </MuiListItem>
   )
 }

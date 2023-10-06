@@ -3,14 +3,14 @@
 import { useState } from 'react'
 
 import useTheme from '@mui/material/styles/useTheme'
-import useMediaQuery from '@mui/material/useMediaQuery/useMediaQuery'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar/Toolbar'
-import AppBar from '@mui/material/AppBar/AppBar'
 import Drawer from '@mui/material/Drawer/Drawer'
 
 import Navigation from '@/app/_components/Navigation'
 import HeaderBar from './HeaderBar'
+import useCheckMobileScreen from '@/utils/screenSize'
+import AppBar from '@mui/material/AppBar'
 
 const mobileNavWidth = '240px'
 const desktopNavWidth = '20vw'
@@ -28,9 +28,9 @@ export default function SiteLayout({
 
   const theme = useTheme()
 
-  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
+  const isMobile = useCheckMobileScreen();
 
-  const drawerWidth = isDesktop ? desktopNavWidth : mobileNavWidth
+  const drawerWidth = isMobile ? mobileNavWidth : desktopNavWidth
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -38,8 +38,8 @@ export default function SiteLayout({
         <HeaderBar />
       </AppBar>
       <Drawer
-        variant={ isDesktop ? "permanent" : "temporary" }
-        open={ isDesktop ? true : mobileOpen }
+        variant={isMobile ? 'temporary' : 'permanent'}
+        open={isMobile ? mobileOpen : true}
         onClose={handleDrawerToggle}
         ModalProps={{
           keepMounted: true, // Better open performance on mobile.

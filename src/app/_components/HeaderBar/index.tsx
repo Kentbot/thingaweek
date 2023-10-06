@@ -14,6 +14,7 @@ export default function HeaderBar() {
   return (
     <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
       <Toolbar>
+        <IconButton className="menu-icon-button"></IconButton>
         <Typography sx={{ flexGrow: 1}} variant="h6" noWrap component={"div"}>
           Kent&apos;s Code and Such
         </Typography>

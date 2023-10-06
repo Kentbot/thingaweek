@@ -17,9 +17,10 @@ export const ColorModeContext = React.createContext({ toggleColorMode: () => { c
  * @param props The child nodes, any normal React JSX stuff can go here
  */
 export default function Themed(props: React.PropsWithChildren) {
+  // TODO: Use local storage to allow for faster loading of theme
   // Pretty much all of this is shamelessly lifted from the MUI docs
   // https://mui.com/material-ui/customization/dark-mode
-  const defaultTheme = useMediaQuery('(prefers-color-scheme: dark)') ? 'dark' : 'light';
+  const defaultTheme = useMediaQuery('(prefers-color-scheme: light)') ? 'light' : 'dark';
   
   const [mode, setMode] = React.useState<'light' | 'dark'>(defaultTheme)
   const colorMode = React.useMemo(
@@ -31,13 +32,17 @@ export default function Themed(props: React.PropsWithChildren) {
     [],
   )
 
+  React.useMemo(() => {
+    setMode(defaultTheme);
+  }, [defaultTheme])
+
   const theme = React.useMemo(
     () => mode === 'dark' ?
       createTheme(darkThemeOptions) :
       createTheme(lightThemeOptions),
     [mode],
   )
-  
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
