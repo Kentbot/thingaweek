@@ -1,4 +1,4 @@
-import SiteOverview from './_components/SiteOverview'
+import SiteOverview from './components/SiteOverview/index'
 
 export default function Home() {
   return (

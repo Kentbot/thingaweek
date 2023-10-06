@@ -1,14 +1,12 @@
 import React from 'react'
 
-import { Typography } from '@mui/material'
-
 export default function About() {
   return (
     <>
-      <Typography variant="h4">
+      <h4>
         About the site
-      </Typography>
-      <Typography variant="body1" sx={{ pt: 3 }}>
+      </h4>
+      <body>
         My goal is to release one new &quot;thing&quot; every week. For this first week the &quot;thing&quot;
         is the website itself. I plan on having a responsive design, basic layout with navigation,
         and light/dark theme togglable. I will use Material UI (MUI) and create-react-app, though
@@ -17,7 +15,7 @@ export default function About() {
         <br/>
         <br/>
         As I come up with more ideas and organize them, I&apos;ll populate a list here (or somewhere else on the site, we&apos;ll see!)
-      </Typography>
+      </body>
     </>
   )
 }
