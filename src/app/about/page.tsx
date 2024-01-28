@@ -1,4 +1,4 @@
-export default function Overview() {
+export default function About() {
   return (
     <>This is about</>
   )
