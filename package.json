@@ -12,12 +12,17 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "luxon": "^3.4.4",
+    "nanoid": "^5.0.4",
     "next": "13.4.12",
+    "papaparse": "^5.4.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/luxon": "^3.4.2",
     "@types/node": "20.4.5",
+    "@types/papaparse": "^5.3.14",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
     "eslint": "8.46.0",
