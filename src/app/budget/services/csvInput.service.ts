@@ -2,11 +2,13 @@ import Papa from 'papaparse'
 
 import { Transaction } from '../models/transaction.model'
 import { nanoid } from 'nanoid'
+import { DateTime } from 'luxon'
 
 export async function parseCsv(file: File): Promise<Transaction[]> {
   return new Promise((res, rej) => {
     Papa.parse(file, {
       header: true,
+      skipEmptyLines: true,
       complete: function(results) {
         res(transformCsvRows(results.data))
       },
@@ -28,16 +30,26 @@ function transformCsvRows(rawRows: unknown[]): Transaction[] {
     const creditKey = keys.find((key) => key.toLowerCase() === 'credit')
     const descriptionKey = keys.find((key) => key.toLowerCase() === 'description')
 
+    let date: DateTime
+    const jsDate = new Date(raw[dateKey ?? ''])
+    const jsDateIsValid = !!jsDate.toJSON()
+
+    if (jsDateIsValid) {
+      date = DateTime.fromISO(jsDate.toISOString())
+    } else {
+      date = DateTime.invalid('Cannot parse date')
+    }
+    
     const result: Transaction = {
       // TODO: Calculate w/ credit/debit
       amount: amountKey ? raw[amountKey] : 0,
-      date: dateKey ? raw[dateKey] : 'Cannot find date',
+      date,
       description: descriptionKey ? raw[descriptionKey] : 'Cannot find description',
       id: nanoid()
     }
 
     return result
   })
-  
+
   return result
 }

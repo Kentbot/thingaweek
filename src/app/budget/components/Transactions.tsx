@@ -32,7 +32,7 @@ export function Transactions() {
               <td>{trans.id}</td>
               <td>{trans.description}</td>
               <td>{trans.amount}</td>
-              {/* <td>{trans.date.toISODate()}</td> */}
+              <td>{trans.date.invalidReason ?? trans.date.toISODate()}</td>
             </tr>
           )
           })}
