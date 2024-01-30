@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useMemo, useState } from 'react'
 
-import { Transaction } from '@/budget/models/transaction.model'
-import { parseCsv } from '../services/csvParser.service'
-import { getCsvRowKeys, transformCsvRows } from '../services/csvTransformer.service'
+import { Transaction } from '@budget/models/transaction.model'
+import { parseCsv } from '@budget/services/csvParser.service'
+import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer.service'
 
 export function Transactions() {
   const [ transactions, setTransactions ] = useState<Transaction[] | null>(null)

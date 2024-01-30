@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import currency from 'currency.js'
 
-import { Transaction } from '../models/transaction.model'
+import { Transaction } from '@budget/models/transaction.model'
 import { rawDateToDateTime } from './date.service'
 
 interface CsvKeysDefinition {
