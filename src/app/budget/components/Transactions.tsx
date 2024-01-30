@@ -3,21 +3,27 @@ import React, { ChangeEvent, useMemo, useState } from 'react'
 import { Transaction } from '@budget/models/transaction.model'
 import { parseCsv } from '@budget/services/csvParser.service'
 import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer.service'
+import { CategoryMonth } from '@budget/models/categoryMonth.model'
 
-export function Transactions() {
-  const [ transactions, setTransactions ] = useState<Transaction[] | null>(null)
+type Props = {
+  categories: CategoryMonth[]
+  transactions: Transaction[]
+  onTransactionsChanged: (transactions: Transaction[]) => void
+}
+
+export function Transactions({ categories, transactions, onTransactionsChanged }: Props) {
   const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       const rawData = await parseCsv(file)
       const csvRowKeys = getCsvRowKeys(rawData)
       const data = transformCsvRows(rawData, csvRowKeys)
-      setTransactions(data)
+      onTransactionsChanged(data)
     }
   }
 
   const removeTransaction = (transId: string) => {
-    setTransactions(transactions?.filter((t) => t.id !== transId) ?? [])
+    onTransactionsChanged(transactions?.filter((t) => t.id !== transId) ?? [])
   }
 
   return (
@@ -40,6 +46,13 @@ export function Transactions() {
               <td>{trans.description}</td>
               <td>{trans.amount}</td>
               <td>{trans.date.invalidReason ?? trans.date.toISODate()}</td>
+              <td>
+                <select>
+                  {categories.map((c) => (
+                    <option key={c.id} value={c.id}>{c.name}</option>
+                  ))}
+                </select>
+              </td>
               <td><button onClick={() => removeTransaction(trans.id)}>x</button></td>
             </tr>
           ))} 
