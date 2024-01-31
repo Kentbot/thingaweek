@@ -15,7 +15,7 @@ export default function Budget() {
       This be the budget
       <Categories
         categories={categories}
-        onCategoriesChanged={(c) => setCategories(c)} />
+        onCategoryAdded={(c) => setCategories([...categories, c])} />
       <Transactions
         categories={categories}
         transactions={transactions}

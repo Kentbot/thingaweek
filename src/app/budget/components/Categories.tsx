@@ -6,13 +6,13 @@ import { CategoryCreator } from './CategoryCreator'
 
 type Props = {
   categories: CategoryMonth[]
-  onCategoriesChanged: (categories: CategoryMonth[]) => void
+  onCategoryAdded: (category: CategoryMonth) => void
 }
 
-export function Categories({ categories, onCategoriesChanged }: Props) {
+export function Categories({ categories, onCategoryAdded }: Props) {
   return (
     <>
-      <CategoryCreator onCategoryCreate={() => {}}/>
+      <CategoryCreator onCategoryCreate={(c) => onCategoryAdded(c)}/>
       <table>
         <thead>
           <tr>
