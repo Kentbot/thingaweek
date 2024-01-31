@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import currency from 'currency.js'
@@ -28,12 +28,12 @@ export function Categories({ categories, onCategoryAdded }: Props) {
         <tbody>
           { categories.map((cat) => (
             <tr key={cat.id}>
-              <td>Bal Forward</td>
+              <td>-Bal Forward-</td>
               <td>{cat.budgetedAmount}</td>
-              <td>Addl Income</td>
-              <td>{cat.transactions.reduce((prev, curr) => prev += currency(curr.amount).value , 0)}</td>
-              <td>Available Balance</td>
-              <td>EOM Adjust</td>
+              <td>-Addl Income-</td>
+              <td>{cat.transactions.reduce((prev, curr) => currency(curr.amount).add(prev) , currency(0)).value}</td>
+              <td>-Available Balance-</td>
+              <td>-EOM Adjust-</td>
               <td>{cat.endOfMonthBalance}</td>
             </tr>
           ))}

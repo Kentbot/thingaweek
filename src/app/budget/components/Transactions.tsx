@@ -8,22 +8,34 @@ import { CategoryMonth } from '@budget/models/categoryMonth.model'
 type Props = {
   categories: CategoryMonth[]
   transactions: Transaction[]
-  onTransactionsChanged: (transactions: Transaction[]) => void
+  onTransactionsUploaded: (transactions: Transaction[]) => void
+  onAssignTransactionToCategory: (transactionId: string, categoryId: string) => void
+  onRemoveTransaction: (transactionId: string) => void
 }
 
-export function Transactions({ categories, transactions, onTransactionsChanged }: Props) {
+export function Transactions({
+  categories,
+  transactions,
+  onTransactionsUploaded,
+  onAssignTransactionToCategory,
+  onRemoveTransaction
+}: Props) {
   const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       const rawData = await parseCsv(file)
       const csvRowKeys = getCsvRowKeys(rawData)
       const data = transformCsvRows(rawData, csvRowKeys)
-      onTransactionsChanged(data)
+      onTransactionsUploaded(data)
     }
   }
 
   const removeTransaction = (transId: string) => {
-    onTransactionsChanged(transactions?.filter((t) => t.id !== transId) ?? [])
+    onRemoveTransaction(transId)
+  }
+
+  const handleAssignTransactionToCategory = (transId: string, catId: string) => {
+    onAssignTransactionToCategory(transId, catId)
   }
 
   return (
@@ -36,6 +48,7 @@ export function Transactions({ categories, transactions, onTransactionsChanged }
             <th scope='col'>Desc</th>
             <th scope='col'>Amt</th>
             <th scope='col'>Date</th>
+            <th scope='col'>Category</th>
             <th scope='col'>Delete</th>
           </tr>
         </thead>
@@ -47,7 +60,8 @@ export function Transactions({ categories, transactions, onTransactionsChanged }
               <td>{trans.amount}</td>
               <td>{trans.date.invalidReason ?? trans.date.toISODate()}</td>
               <td>
-                <select>
+                <select onChange={(v) => handleAssignTransactionToCategory(trans.id, v.target.value)}>
+                  <option value={undefined}>-</option>
                   {categories.map((c) => (
                     <option key={c.id} value={c.id}>{c.name}</option>
                   ))}
