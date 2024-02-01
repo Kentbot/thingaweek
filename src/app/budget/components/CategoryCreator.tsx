@@ -19,6 +19,7 @@ export function CategoryCreator({ onCategoryCreate }: Props) {
   const handleCategoryCreate = () => {
     onCategoryCreate({
       id: nanoid(),
+      groupId: null,
       name: name,
       budgetedAmount: currency(budgetAmt).value,
       transactions: [],

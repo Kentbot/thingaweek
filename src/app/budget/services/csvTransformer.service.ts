@@ -46,7 +46,7 @@ export function transformCsvRows(rawRows: unknown[], keys: CsvKeysDefinition): T
     
     if (keys.amount) {
       // Handle debit (checking/saving) accounts
-      amount = -13376969
+      amount = currency(raw[keys.amount]).multiply(-1).value
     } else {
       // Handle credit (credit card) accounts
       // If a credit exists, we want to convert it to a negative value.

@@ -1,0 +1,14 @@
+.transaction-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+
+  .header {
+    grid-column: 1 / 6;
+    grid-row: 1;
+    display: grid;
+
+    div {
+      grid-row: 1;
+    }
+  }
+}

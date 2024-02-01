@@ -5,6 +5,8 @@ import { parseCsv } from '@budget/services/csvParser.service'
 import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer.service'
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 
+import './styles.scss'
+
 type Props = {
   categories: CategoryMonth[]
   transactions: Transaction[]
@@ -41,18 +43,16 @@ export function Transactions({
   return (
     <>
       <input type='file' onChange={handleFileUpload} />
-      <table>
-        <thead>
-          <tr>
-            <th scope='col'>Id</th>
-            <th scope='col'>Desc</th>
-            <th scope='col'>Amt</th>
-            <th scope='col'>Date</th>
-            <th scope='col'>Category</th>
-            <th scope='col'>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div className='transaction-grid'>
+        <div className='header'>
+          <div>Id</div>
+          <div>Desc</div>
+          <div>Amt</div>
+          <div>Date</div>
+          <div>Category</div>
+          <div>Delete</div>
+        </div>
+        <div>
           { transactions?.map((trans: Transaction) => (
             <tr key={trans.id}>
               <td>{trans.id}</td>
@@ -70,8 +70,8 @@ export function Transactions({
               <td><button onClick={() => removeTransaction(trans.id)}>x</button></td>
             </tr>
           ))} 
-        </tbody>
-      </table>
+        </div>
+      </div>
     </>
   )
 }

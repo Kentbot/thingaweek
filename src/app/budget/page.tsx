@@ -2,10 +2,12 @@
 
 import React, { useState } from 'react'
 
-import { Transactions } from './components/Transactions'
+import { Transactions } from './components/transactions/Transactions'
 import { Categories } from './components/Categories'
 import { Transaction } from './models/transaction.model'
 import { CategoryMonth } from './models/categoryMonth.model'
+
+import './styles.scss'
 
 export default function Budget() {
   const [transactions, setTransactions] = useState<Transaction[]>([])
@@ -38,17 +40,21 @@ export default function Budget() {
   }
 
   return (
-    <>
-      <Categories
-        categories={categories}
-        onCategoryAdded={(c) => setCategories([...categories, c])} />
-      <Transactions
-        categories={categories}
-        transactions={transactions}
-        onTransactionsUploaded={setTransactions}
-        onAssignTransactionToCategory={assignTransToCategory}
-        onRemoveTransaction={removeTransaction}
-      />
-    </>
+    <div className="budget">
+      <div>
+        <Categories
+          categories={categories}
+          onCategoryAdded={(c) => setCategories([...categories, c])} />
+      </div>
+      <div>
+        <Transactions
+          categories={categories}
+          transactions={transactions}
+          onTransactionsUploaded={setTransactions}
+          onAssignTransactionToCategory={assignTransToCategory}
+          onRemoveTransaction={removeTransaction}
+        />
+      </div>
+    </div>
   )
 }
