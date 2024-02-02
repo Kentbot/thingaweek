@@ -1,14 +1,17 @@
+$description-col: 3fr;
+$amount-col: 1fr;
+$date-col: 1fr;
+$category-col: minmax(100px, 3fr);
+$delete-col: minmax(25px, auto);
+
 .transaction-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: $description-col $amount-col $date-col $category-col $delete-col;
 
-  .header {
-    grid-column: 1 / 6;
-    grid-row: 1;
-    display: grid;
-
-    div {
-      grid-row: 1;
-    }
+  .category-select {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

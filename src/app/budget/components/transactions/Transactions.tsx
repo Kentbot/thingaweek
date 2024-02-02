@@ -44,33 +44,27 @@ export function Transactions({
     <>
       <input type='file' onChange={handleFileUpload} />
       <div className='transaction-grid'>
-        <div className='header'>
-          <div>Id</div>
-          <div>Desc</div>
-          <div>Amt</div>
-          <div>Date</div>
-          <div>Category</div>
-          <div>Delete</div>
-        </div>
-        <div>
-          { transactions?.map((trans: Transaction) => (
-            <tr key={trans.id}>
-              <td>{trans.id}</td>
-              <td>{trans.description}</td>
-              <td>{trans.amount}</td>
-              <td>{trans.date.invalidReason ?? trans.date.toISODate()}</td>
-              <td>
-                <select onChange={(v) => handleAssignTransactionToCategory(trans.id, v.target.value)}>
-                  <option value={undefined}>-</option>
-                  {categories.map((c) => (
-                    <option key={c.id} value={c.id}>{c.name}</option>
-                  ))}
-                </select>
-              </td>
-              <td><button onClick={() => removeTransaction(trans.id)}>x</button></td>
-            </tr>
-          ))} 
-        </div>
+        <div>Desc</div>
+        <div>Amt</div>
+        <div>Date</div>
+        <div>Category</div>
+        <div>Delete</div>
+        { transactions?.map((trans: Transaction) => (
+          <React.Fragment key={trans.id}>
+            <div>{trans.description}</div>
+            <div>{trans.amount}</div>
+            <div>{trans.date.invalidReason ?? trans.date.toISODate()}</div>
+            <div>
+              <select className="category-select" onChange={(v) => handleAssignTransactionToCategory(trans.id, v.target.value)}>
+                <option value={undefined}>-</option>
+                {categories.map((c) => (
+                  <option key={c.id} value={c.id}>{c.name}</option>
+                ))}
+              </select>
+            </div>
+            <div><button onClick={() => removeTransaction(trans.id)}>x</button></div>
+          </React.Fragment>
+        ))}
       </div>
     </>
   )

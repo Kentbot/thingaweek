@@ -41,12 +41,12 @@ export default function Budget() {
 
   return (
     <div className="budget">
-      <div>
+      <div className="categories">
         <Categories
           categories={categories}
           onCategoryAdded={(c) => setCategories([...categories, c])} />
       </div>
-      <div>
+      <div className="transactions">
         <Transactions
           categories={categories}
           transactions={transactions}
