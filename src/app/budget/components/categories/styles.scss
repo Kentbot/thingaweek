@@ -1,0 +1,33 @@
+$num-columns: 12;
+$grid-columns: repeat($num-columns, 1fr);
+$gap: 8px;
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: $grid-columns;
+  gap: $gap;
+
+  @for $i from 1 through $num-columns {
+    .col-#{$i} {
+      grid-column: span $i;
+    }
+  }
+
+  .group {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / 13;
+    border: 3px dashed black;
+
+    .name {
+      grid-column: 1;
+      grid-row: 1 / -1;
+    }
+
+    .group-category {
+      display: grid;
+      grid-column: 3 / -1;
+      grid-template-columns: subgrid;
+    }
+  }
+}

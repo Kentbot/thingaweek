@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 
 import { Transactions } from './components/transactions/Transactions'
-import { Categories } from './components/Categories'
+import { Categories } from './components/categories/Categories'
 import { Transaction } from './models/transaction.model'
 import { CategoryMonth } from './models/categoryMonth.model'
 
