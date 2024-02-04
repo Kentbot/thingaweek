@@ -2,19 +2,24 @@ import React from 'react'
 
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import currency from 'currency.js'
-import { CategoryCreator } from '../CategoryCreator'
+import { CategoryCreator } from './CategoryCreator'
 
 import './styles.scss'
+import { CategoryGroup } from '@budget/models/categoryGroup.model'
 
 type Props = {
   categories: CategoryMonth[]
-  onCategoryAdded: (category: CategoryMonth) => void
+  onCategoryCreated: (category: CategoryMonth) => void
+  onCategoryGroupCreated: (group: CategoryGroup) => void
 }
 
-export function Categories({ categories, onCategoryAdded }: Props) {
+export function Categories({ categories, onCategoryCreated, onCategoryGroupCreated }: Props) {
   return (
     <>
-      <CategoryCreator onCategoryCreate={(c) => onCategoryAdded(c)}/>
+      <CategoryCreator
+        onCategoryCreate={onCategoryCreated}
+        onGroupCreate={onCategoryGroupCreated}
+      />
       <div className="categories-grid">
         <div className="col-2">Group</div>
         <div className="col-2">Description</div>
@@ -49,6 +54,33 @@ export function Categories({ categories, onCategoryAdded }: Props) {
         </div><div className="group">
           <div className="name">test Group</div>
           <div className="group-category">
+            <div className="col-2">test Description</div>
+            <div>test Bal Forward</div>
+            <div>test Budgeted Amount</div>
+            <div>test Addl Income</div>
+            <div className="col-2">test Spend</div>
+            <div>test Available Balance</div>
+            <div>test EOM Adjust</div>
+            <div>test EOM Balance</div>
+
+            <div className="col-2">test Description</div>
+            <div>test Bal Forward</div>
+            <div>test Budgeted Amount</div>
+            <div>test Addl Income</div>
+            <div className="col-2">test Spend</div>
+            <div>test Available Balance</div>
+            <div>test EOM Adjust</div>
+            <div>test EOM Balance</div>
+
+            <div className="col-2">test Description</div>
+            <div>test Bal Forward</div>
+            <div>test Budgeted Amount</div>
+            <div>test Addl Income</div>
+            <div className="col-2">test Spend</div>
+            <div>test Available Balance</div>
+            <div>test EOM Adjust</div>
+            <div>test EOM Balance</div>
+
             <div className="col-2">test Description</div>
             <div>test Bal Forward</div>
             <div>test Budgeted Amount</div>

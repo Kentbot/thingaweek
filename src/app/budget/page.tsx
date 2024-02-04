@@ -6,12 +6,14 @@ import { Transactions } from './components/transactions/Transactions'
 import { Categories } from './components/categories/Categories'
 import { Transaction } from './models/transaction.model'
 import { CategoryMonth } from './models/categoryMonth.model'
+import { CategoryGroup } from './models/categoryGroup.model'
 
 import './styles.scss'
 
 export default function Budget() {
   const [transactions, setTransactions] = useState<Transaction[]>([])
   const [categories, setCategories] = useState<CategoryMonth[]>([])
+  const [categoryGroups, setCategoryGroups] = useState<CategoryGroup[]>([])
 
   const assignTransToCategory = (transId: string, catId: string) => {
     setCategories(categories.map((c) => {
@@ -44,7 +46,9 @@ export default function Budget() {
       <div className="categories">
         <Categories
           categories={categories}
-          onCategoryAdded={(c) => setCategories([...categories, c])} />
+          onCategoryCreated={(c) => setCategories([...categories, c])}
+          onCategoryGroupCreated={(g) => setCategoryGroups([...categoryGroups, g])}
+        />
       </div>
       <div className="transactions">
         <Transactions
