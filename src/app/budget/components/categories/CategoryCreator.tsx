@@ -45,29 +45,33 @@ export function CategoryCreator({ onCategoryCreate, onGroupCreate }: Props) {
 
   return (
     <>
-      <input
-        id='category-name-input'
-        type='text'
-        placeholder='Category name'
-        value={categoryName}
-        onChange={(v) => setCategoryName(v.target.value)}
-      />
-      <input
-        id='budget-amt-input'
-        type='text'
-        placeholder='Budgeted amount'
-        value={budgetAmt}
-        onChange={(v) => handleBudgetChange(v.target.value)}
-      />
-      <button onClick={handleCategoryCreate}>Save</button>
-      <input
-        id='group-name-input'
-        type='text'
-        placeholder='Category name'
-        value={groupName}
-        onChange={(v) => setGroupName(v.target.value)}
-      />
-      <button onClick={handleGroupCreate}>Save</button>
+      <div>
+        <input
+          id='category-name-input'
+          type='text'
+          placeholder='Category name'
+          value={categoryName}
+          onChange={(v) => setCategoryName(v.target.value)}
+        />
+        <input
+          id='budget-amt-input'
+          type='text'
+          placeholder='Budgeted amount'
+          value={budgetAmt}
+          onChange={(v) => handleBudgetChange(v.target.value)}
+        />
+        <button onClick={handleCategoryCreate}>Save</button>
+      </div>
+      <div>
+        <input
+          id='group-name-input'
+          type='text'
+          placeholder='Category Group name'
+          value={groupName}
+          onChange={(v) => setGroupName(v.target.value)}
+        />
+        <button onClick={handleGroupCreate}>Save</button>
+      </div>
     </>
   )
 }

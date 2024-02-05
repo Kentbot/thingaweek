@@ -41,13 +41,28 @@ export default function Budget() {
     }))
   }
 
+  const handleCategoryMovedToGroup = (groupId: string, category: CategoryMonth) => {
+    setCategoryGroups(categoryGroups.map(g => {
+      // First remove the category from any other groups
+      g.categories = g.categories.filter(c => c.id !== category.id)
+
+      if (g.id === groupId) {
+        g.categories.push(category)
+      }
+
+      return g
+    }))
+  }
+
   return (
     <div className="budget">
       <div className="categories">
         <Categories
           categories={categories}
+          groups={categoryGroups}
           onCategoryCreated={(c) => setCategories([...categories, c])}
           onCategoryGroupCreated={(g) => setCategoryGroups([...categoryGroups, g])}
+          onCategoryMovedToGroup={handleCategoryMovedToGroup}
         />
       </div>
       <div className="transactions">
