@@ -52,7 +52,7 @@ export function Transactions({
         { transactions?.map((trans: Transaction) => (
           <React.Fragment key={trans.id}>
             <div>{trans.description}</div>
-            <div>{trans.amount}</div>
+            <div>{trans.amount.value}</div>
             <div>{trans.date.invalidReason ?? trans.date.toISODate()}</div>
             <div>
               <select className="category-select" onChange={(v) => handleAssignTransactionToCategory(trans.id, v.target.value)}>

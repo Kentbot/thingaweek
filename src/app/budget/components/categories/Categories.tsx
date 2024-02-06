@@ -61,14 +61,7 @@ export function Categories({
                 onGroupSelect={(gid) => handleGroupSelect(gid, cat)}
               />
             </div>
-            <div className="col-2">{cat.name}</div>
-            <div>-Bal Forward-</div>
-            <div>{cat.budgetedAmount}</div>
-            <div>-Addl Income-</div>
-            <div className="col-2">{cat.transactions.reduce((prev, curr) => currency(curr.amount).add(prev) , currency(0)).value}</div>
-            <div>-Available Balance-</div>
-            <div>-EOM Adjust-</div>
-            <div>{cat.endOfMonthBalance}</div>
+            <CategoryRow category={cat} />
           </React.Fragment>
         ))}
         { groups.map((group) => (
@@ -76,19 +69,32 @@ export function Categories({
             <div className="name">{group.name}</div>
             {group.categories.map((cat) => (
               <div key={cat.id} className="group-category">
-                <div className="col-2">{cat.name}</div>
-                <div>-Bal Forward-</div>
-                <div>{cat.budgetedAmount}</div>
-                <div>-Addl Income-</div>
-                <div className="col-2">{cat.transactions.reduce((prev, curr) => currency(curr.amount).add(prev) , currency(0)).value}</div>
-                <div>-Available Balance-</div>
-                <div>-EOM Adjust-</div>
-                <div>{cat.endOfMonthBalance}</div>
+                <CategoryRow category={cat} />
               </div>
             ))}
           </div>
         ))}
       </div>
+    </>
+  )
+}
+
+function CategoryRow({ category }: { category: CategoryMonth }) {
+  const spend = category.transactions.reduce(
+    (prev, curr) => curr.amount.add(prev), currency(0)
+  )
+  const balance = currency(category.budgetedAmount).subtract(spend)
+
+  return (
+    <>
+      <div className="col-2">{category.name}</div>
+      <div>{category.previousMonth?.endOfMonthBalance.format() ?? '0.00'}</div>
+      <div>{category.budgetedAmount.value}</div>
+      <div>-Addl Income-</div>
+      <div className="col-2">{spend.value}</div>
+      <div>{balance.value}</div>
+      <div>-EOM Adjust-</div>
+      <div>{category.endOfMonthBalance.value}</div>
     </>
   )
 }

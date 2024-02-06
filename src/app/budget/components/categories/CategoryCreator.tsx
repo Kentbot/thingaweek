@@ -1,6 +1,7 @@
 import { CategoryGroup } from '@budget/models/categoryGroup.model'
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import currency from 'currency.js'
+import { DateTime } from 'luxon'
 import { nanoid } from 'nanoid'
 import React, { useState } from 'react'
 
@@ -23,11 +24,12 @@ export function CategoryCreator({ onCategoryCreate, onGroupCreate }: Props) {
     onCategoryCreate({
       id: nanoid(),
       name: categoryName,
-      budgetedAmount: currency(budgetAmt).value,
+      budgetedAmount: currency(budgetAmt),
       transactions: [],
-      endOfMonthAdjust: 0,
-      endOfMonthBalance: 0,
-      previousMonth: null
+      endOfMonthAdjust: currency(0),
+      endOfMonthBalance: currency(0),
+      previousMonth: null,
+      month: DateTime.now()
     })
 
     setCategoryName('')

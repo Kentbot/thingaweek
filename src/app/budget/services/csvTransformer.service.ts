@@ -42,11 +42,11 @@ export function getCsvRowKeys(rawRows: unknown[]): CsvKeysDefinition {
 
 export function transformCsvRows(rawRows: unknown[], keys: CsvKeysDefinition): Transaction[] {
   const result = (rawRows as any[]).map((raw) => {
-    let amount: number
+    let amount: currency
     
     if (keys.amount) {
       // Handle debit (checking/saving) accounts
-      amount = currency(raw[keys.amount]).multiply(-1).value
+      amount = currency(raw[keys.amount]).multiply(-1)
     } else {
       // Handle credit (credit card) accounts
       // If a credit exists, we want to convert it to a negative value.
@@ -55,9 +55,9 @@ export function transformCsvRows(rawRows: unknown[], keys: CsvKeysDefinition): T
       const rawCredit = raw[keys?.credit ?? '']
       if (rawCredit?.length > 0) {
         const credit = currency(rawCredit)
-        amount = credit.value > 0 ? credit.multiply(-1).value : credit.value
+        amount = credit.value > 0 ? credit.multiply(-1) : credit
       } else {
-        amount = currency(raw[keys?.debit ?? '']).value
+        amount = currency(raw[keys?.debit ?? ''])
       }
     }
 
