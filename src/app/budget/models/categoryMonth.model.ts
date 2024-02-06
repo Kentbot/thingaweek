@@ -10,5 +10,5 @@ export interface CategoryMonth {
   endOfMonthAdjust: currency
   endOfMonthBalance: currency
   previousMonth: CategoryMonth | null
-  month: DateTime
+  budgetMonth: DateTime
 }

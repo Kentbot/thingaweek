@@ -1,4 +1,6 @@
-import React, { ChangeEvent, useMemo, useState } from 'react'
+import React, { ChangeEvent, useContext } from 'react'
+
+import { DateTime } from 'luxon'
 
 import { Transaction } from '@budget/models/transaction.model'
 import { parseCsv } from '@budget/services/csvParser.service'
@@ -6,6 +8,7 @@ import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 
 import './styles.scss'
+import { BudgetMonthContext } from '@budget/page'
 
 type Props = {
   categories: CategoryMonth[]
@@ -22,12 +25,14 @@ export function Transactions({
   onAssignTransactionToCategory,
   onRemoveTransaction
 }: Props) {
+  const budgetMonth = useContext(BudgetMonthContext)
+
   const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       const rawData = await parseCsv(file)
       const csvRowKeys = getCsvRowKeys(rawData)
-      const data = transformCsvRows(rawData, csvRowKeys)
+      const data = transformCsvRows(rawData, csvRowKeys, budgetMonth)
       onTransactionsUploaded(data)
     }
   }

@@ -1,9 +1,11 @@
 import { CategoryGroup } from '@budget/models/categoryGroup.model'
-import { CategoryMonth } from '@budget/models/categoryMonth.model'
+import React, { useContext, useState } from 'react'
+
 import currency from 'currency.js'
-import { DateTime } from 'luxon'
 import { nanoid } from 'nanoid'
-import React, { useState } from 'react'
+
+import { CategoryMonth } from '@budget/models/categoryMonth.model'
+import { BudgetMonthContext } from '@budget/page'
 
 type Props = {
   onCategoryCreate: (category: CategoryMonth) => void
@@ -11,6 +13,8 @@ type Props = {
 }
 
 export function CategoryCreator({ onCategoryCreate, onGroupCreate }: Props) {
+  const budgetMonth = useContext(BudgetMonthContext)
+
   const [categoryName, setCategoryName] = useState('')
   const [budgetAmt, setBudgetAmt] = useState('')
   const [groupName, setGroupName] = useState('')
@@ -29,7 +33,7 @@ export function CategoryCreator({ onCategoryCreate, onGroupCreate }: Props) {
       endOfMonthAdjust: currency(0),
       endOfMonthBalance: currency(0),
       previousMonth: null,
-      month: DateTime.now()
+      budgetMonth
     })
 
     setCategoryName('')
@@ -41,6 +45,7 @@ export function CategoryCreator({ onCategoryCreate, onGroupCreate }: Props) {
       id: nanoid(),
       name: groupName,
       categories: [],
+      budgetMonth
     })
     setGroupName('')
   }

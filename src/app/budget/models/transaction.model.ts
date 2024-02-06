@@ -6,4 +6,5 @@ export interface Transaction {
   date: DateTime
   description: string
   amount: currency
+  budgetMonth: DateTime
 }
