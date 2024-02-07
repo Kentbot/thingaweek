@@ -4,8 +4,12 @@ $gap: 8px;
 
 .categories-grid {
   display: grid;
-  grid-template-columns: $grid-columns;
   gap: $gap;
+  grid-template-columns: $grid-columns;
+
+  .header {
+    text-align: center;
+  }
 
   @for $i from 1 through $num-columns {
     .col-#{$i} {
@@ -29,5 +33,12 @@ $gap: 8px;
       grid-column: 3 / -1;
       grid-template-columns: subgrid;
     }
+  }
+
+  *:not(.header) {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

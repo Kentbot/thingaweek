@@ -12,6 +12,8 @@ import { CategoryMonth } from './models/categoryMonth.model'
 import { CategoryGroup } from './models/categoryGroup.model'
 
 import './styles.scss'
+import currency from 'currency.js'
+import { calculateEomBalance } from './services/category.service'
 
 const defaultDate = DateTime.now()
 
@@ -93,6 +95,17 @@ export default function Budget() {
     setCurrentBudgetMonth(DateTime.local(year, currentBudgetMonth.month))
   }
 
+  const handleCategoryUpdate = (category: CategoryMonth) => {
+    setCategories(categories.map((cat) => {
+      if (cat.id === category.id) {
+        category.endOfMonthBalance = calculateEomBalance(category)
+        return category
+      }
+      
+      return cat
+    }))
+  }
+
   return (
     <BudgetMonthContext.Provider value={currentBudgetMonth}>
       <div className="budget">
@@ -109,6 +122,7 @@ export default function Budget() {
             onCategoryCreated={(c) => setCategories([...categories, c])}
             onCategoryGroupCreated={(g) => setCategoryGroups([...categoryGroups, g])}
             onCategoryMovedToGroup={handleCategoryMovedToGroup}
+            onCategoryUpdated={handleCategoryUpdate}
           />
         </div>
         <div className="transactions">

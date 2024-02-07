@@ -25,13 +25,17 @@ export function CategoryCreator({ onCategoryCreate, onGroupCreate }: Props) {
   }
 
   const handleCategoryCreate = () => {
+    // Note that this only works for creating a new category from scratch.
+    // It will not work for copying from a previous month -- the EOM balance
+    // and previous month need set.
     onCategoryCreate({
       id: nanoid(),
       name: categoryName,
       budgetedAmount: currency(budgetAmt),
+      additionalIncome: currency(0),
       transactions: [],
       endOfMonthAdjust: currency(0),
-      endOfMonthBalance: currency(0),
+      endOfMonthBalance: currency(budgetAmt),
       previousMonth: null,
       budgetMonth
     })

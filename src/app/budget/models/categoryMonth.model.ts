@@ -7,6 +7,7 @@ export interface CategoryMonth {
   name: string
   transactions: Transaction[]
   budgetedAmount: currency
+  additionalIncome: currency
   endOfMonthAdjust: currency
   endOfMonthBalance: currency
   previousMonth: CategoryMonth | null

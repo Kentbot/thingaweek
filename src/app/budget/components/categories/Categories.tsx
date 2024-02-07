@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react'
 
-import currency from 'currency.js'
-
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import { CategoryGroup } from '@budget/models/categoryGroup.model'
 import { CategoryCreator } from './CategoryCreator'
 import { GroupSelector } from './GroupSelector'
+import { CategoryRow } from './CategoryRow'
 
 import './categories.styles.scss'
 
@@ -15,6 +14,7 @@ type Props = {
   onCategoryCreated: (category: CategoryMonth) => void
   onCategoryGroupCreated: (group: CategoryGroup) => void
   onCategoryMovedToGroup: (groupId: string, category: CategoryMonth) => void
+  onCategoryUpdated: (category: CategoryMonth) => void
 }
 
 export function Categories({
@@ -22,7 +22,8 @@ export function Categories({
   groups,
   onCategoryCreated,
   onCategoryGroupCreated,
-  onCategoryMovedToGroup
+  onCategoryMovedToGroup,
+  onCategoryUpdated
 }: Props) {
   const ungroupedCategories = useMemo(
     () => {
@@ -44,15 +45,15 @@ export function Categories({
         onGroupCreate={onCategoryGroupCreated}
       />
       <div className="categories-grid">
-        <div className="col-2">Group</div>
-        <div className="col-2">Description</div>
-        <div>Bal Forward</div>
-        <div>Budgeted Amount</div>
-        <div>Addl Income</div>
-        <div className="col-2">Spend</div>
-        <div>Available Balance</div>
-        <div>EOM Adjust</div>
-        <div>EOM Balance</div>
+        <div className="col-2 header">Group</div>
+        <div className="col-2 header">Description</div>
+        <div className="header">Bal Forward</div>
+        <div className="header">Budgeted Amount</div>
+        <div className="header">Additional Income</div>
+        <div className="col-2 header">Spend</div>
+        <div className="header">Available Balance</div>
+        <div className="header">EOM Adjust</div>
+        <div className="header">EOM Balance</div>
         { ungroupedCategories.map((cat) => (
           <React.Fragment key={cat.id}>
             <div className="col-2">
@@ -61,7 +62,7 @@ export function Categories({
                 onGroupSelect={(gid) => handleGroupSelect(gid, cat)}
               />
             </div>
-            <CategoryRow category={cat} />
+            <CategoryRow category={cat} onCategoryUpdated={onCategoryUpdated} />
           </React.Fragment>
         ))}
         { groups.map((group) => (
@@ -69,32 +70,12 @@ export function Categories({
             <div className="name">{group.name}</div>
             {group.categories.map((cat) => (
               <div key={cat.id} className="group-category">
-                <CategoryRow category={cat} />
+                <CategoryRow category={cat} onCategoryUpdated={onCategoryUpdated} />
               </div>
             ))}
           </div>
         ))}
       </div>
-    </>
-  )
-}
-
-function CategoryRow({ category }: { category: CategoryMonth }) {
-  const spend = category.transactions.reduce(
-    (prev, curr) => curr.amount.add(prev), currency(0)
-  )
-  const balance = currency(category.budgetedAmount).subtract(spend)
-
-  return (
-    <>
-      <div className="col-2">{category.name}</div>
-      <div>{category.previousMonth?.endOfMonthBalance.format() ?? '0.00'}</div>
-      <div>{category.budgetedAmount.value}</div>
-      <div>-Addl Income-</div>
-      <div className="col-2">{spend.value}</div>
-      <div>{balance.value}</div>
-      <div>-EOM Adjust-</div>
-      <div>{category.endOfMonthBalance.value}</div>
     </>
   )
 }
