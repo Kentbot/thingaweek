@@ -2,16 +2,19 @@ import React, { useEffect, useRef, useState } from 'react'
 
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import { NumericInput } from '@components/general/NumericInput'
+import { Transaction } from '@budget/models/transaction.model'
 
 import currency from 'currency.js'
 
 type Props = {
-  category: CategoryMonth,
+  category: CategoryMonth
+  transactions: Transaction[]
   onCategoryUpdated: (category: CategoryMonth) => void
 }
 
-export function CategoryRow({ category, onCategoryUpdated }: Props) {
-  const spend = category.transactions.reduce(
+export function CategoryRow({ category, transactions, onCategoryUpdated }: Props) {
+  const categoryTransactions = transactions.filter(t => category.transactionIds.includes(t.id))
+  const spend = categoryTransactions.reduce(
     (prev, curr) => curr.amount.add(prev), currency(0)
   )
   const balance = currency(category.budgetedAmount).subtract(spend)

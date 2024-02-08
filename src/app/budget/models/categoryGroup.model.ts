@@ -5,6 +5,6 @@ import { CategoryMonth } from './categoryMonth.model'
 export interface CategoryGroup {
   id: string
   name: string
-  categories: CategoryMonth[]
+  categoryIds: string[]
   budgetMonth: DateTime
 }

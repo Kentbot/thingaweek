@@ -5,7 +5,7 @@ import currency from 'currency.js'
 export interface CategoryMonth {
   id: string
   name: string
-  transactions: Transaction[]
+  transactionIds: string[]
   budgetedAmount: currency
   additionalIncome: currency
   endOfMonthAdjust: currency

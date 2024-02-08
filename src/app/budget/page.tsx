@@ -4,6 +4,7 @@ import React, { createContext, useMemo, useState } from 'react'
 
 import currency from 'currency.js'
 import { DateTime } from 'luxon'
+import { nanoid } from 'nanoid'
 
 import { Transactions } from './components/transactions/Transactions'
 import { Categories } from './components/categories/Categories'
@@ -14,7 +15,6 @@ import { CategoryGroup } from './models/categoryGroup.model'
 import { calculateEomBalance } from './services/category.service'
 
 import './styles.scss'
-import { nanoid } from 'nanoid'
 
 const defaultDate = DateTime.now()
 
@@ -50,14 +50,11 @@ export default function Budget() {
   const assignTransToCategory = (transId: string, catId: string) => {
     setCategories(categories.map((c) => {
       // Remove transaction from any other categories
-      c.transactions = c.transactions.filter((t) => t.id !== transId)
+      c.transactionIds = c.transactionIds.filter((tid) => tid !== transId)
 
       // Add transaction to relevant category
       if (c.id === catId) {
-        const transaction = transactions.find((t) => t.id === transId)
-
-        if (transaction) c.transactions.push(transaction)
-        else throw new Error('Attempted to add a non-existed transaction')
+        c.transactionIds.push(transId)
       }
 
       return c
@@ -68,18 +65,18 @@ export default function Budget() {
     setTransactions(transactions?.filter((t) => t.id !== transId) ?? [])
     setCategories(categories.map((c) => {
       // Remove transaction from all categories
-      c.transactions = c.transactions.filter((t) => t.id !== transId)
+      c.transactionIds = c.transactionIds.filter((tid) => tid !== transId)
       return c
     }))
   }
 
-  const handleCategoryMovedToGroup = (groupId: string, category: CategoryMonth) => {
+  const handleCategoryMovedToGroup = (groupId: string, categoryId: string) => {
     setCategoryGroups(categoryGroups.map(g => {
       // First remove the category from any other groups
-      g.categories = g.categories.filter(c => c.id !== category.id)
+      g.categoryIds = g.categoryIds.filter(cid => cid !== categoryId)
 
       if (g.id === groupId) {
-        g.categories.push(category)
+        g.categoryIds.push(categoryId)
       }
 
       return g
@@ -116,12 +113,10 @@ export default function Budget() {
     for (let cat of relevantCats) {
       let newCat: CategoryMonth = { ...cat }
       if (prev) {
-        console.log('rel with prev', newCat)
         newCat.balanceForward = prev.endOfMonthBalance
-        newCat.endOfMonthBalance = calculateEomBalance(newCat)
+        newCat.endOfMonthBalance = calculateEomBalance(newCat, transactions)
       } else {
-        console.log('rel no prev', newCat)
-        newCat.endOfMonthBalance = calculateEomBalance(cat)
+        newCat.endOfMonthBalance = calculateEomBalance(cat, transactions)
       }
       updatedCats.push(newCat)
       prev = newCat
@@ -137,25 +132,59 @@ export default function Budget() {
     const prevMonthCategories = categories.filter(c =>
       c.budgetMonth.year === prevMonth.year &&
       c.budgetMonth.month === prevMonth.month)
-    const copiedCategories: CategoryMonth[] = prevMonthCategories.flatMap((prevCat) => {
+    const prevMonthGroups = categoryGroups.filter(g =>
+      g.budgetMonth.year === prevMonth.year &&
+      g.budgetMonth.month === prevMonth.month)
+
+    const copiedGroups: CategoryGroup[] = []
+    
+    const groupCatMap: { [oldCatId: string]: string } = {}
+    for (let prevGroup of prevMonthGroups) {
+      const newGroupId = nanoid()
+      const oldCatIds = prevGroup.categoryIds
+
+      for (const oldCatId of oldCatIds) {
+        groupCatMap[oldCatId] = newGroupId
+      }
+
+      copiedGroups.push({
+        id: newGroupId,
+        budgetMonth: currentBudgetMonth,
+        categoryIds: [],
+        name: prevGroup.name
+      })
+    }
+
+    const copiedCategories: CategoryMonth[] = []
+    for (let prevCat of prevMonthCategories) {
+      const newCatId = nanoid()
+
+      // If this category belonged to a group, we re-add it to the newly
+      // created group
+      const newGroup = groupCatMap[prevCat.id]
+      if (newGroup) {
+        copiedGroups.find(g => g.id === newGroup)?.categoryIds.push(newCatId)
+      }
+
       const copiedCat: CategoryMonth = {
-        id: nanoid(),
+        id: newCatId,
         additionalIncome: currency(0),
+        balanceForward: prevCat.endOfMonthBalance,
         budgetMonth: currentBudgetMonth,
         budgetedAmount: prevCat.budgetedAmount,
         endOfMonthAdjust: currency(0),
         endOfMonthBalance: prevCat.budgetedAmount.add(prevCat.endOfMonthBalance),
-        balanceForward: prevCat.endOfMonthBalance,
-        transactions: [],
         name: prevCat.name,
+        transactionIds: [],
       }
       
-      return [copiedCat, { ...prevCat, nextMonthId: copiedCat.id }]
-    })
+      copiedCategories.push(copiedCat, { ...prevCat, nextMonthId: copiedCat.id })
+    }
     const unaffectedCategories = categories.filter(c => !prevMonthCategories.some(pc => pc.id === c.id))
 
-    const result = [...unaffectedCategories, ...copiedCategories]
-    setCategories(result)
+    const newCategories = [...unaffectedCategories, ...copiedCategories]
+    setCategories(newCategories)
+    setCategoryGroups([...categoryGroups, ...copiedGroups])
   }
 
   return (
@@ -171,6 +200,7 @@ export default function Budget() {
           <Categories
             categories={currentCategories}
             groups={currentGroups}
+            transactions={transactions}
             onCategoryCreated={(c) => setCategories([...categories, c])}
             onCategoryGroupCreated={(g) => setCategoryGroups([...categoryGroups, g])}
             onCategoryMovedToGroup={handleCategoryMovedToGroup}

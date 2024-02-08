@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import { CategoryGroup } from '@budget/models/categoryGroup.model'
+import { Transaction } from '@budget/models/transaction.model'
 import { CategoryCreator } from './CategoryCreator'
 import { GroupSelector } from './GroupSelector'
 import { CategoryRow } from './CategoryRow'
@@ -11,9 +12,10 @@ import './categories.styles.scss'
 type Props = {
   categories: CategoryMonth[]
   groups: CategoryGroup[]
+  transactions: Transaction[]
   onCategoryCreated: (category: CategoryMonth) => void
   onCategoryGroupCreated: (group: CategoryGroup) => void
-  onCategoryMovedToGroup: (groupId: string, category: CategoryMonth) => void
+  onCategoryMovedToGroup: (groupId: string, categoryId: string) => void
   onCategoryUpdated: (category: CategoryMonth) => void
   onMonthCarryover: () => void
 }
@@ -21,6 +23,7 @@ type Props = {
 export function Categories({
   categories,
   groups,
+  transactions,
   onCategoryCreated,
   onCategoryGroupCreated,
   onCategoryMovedToGroup,
@@ -29,15 +32,15 @@ export function Categories({
 }: Props) {
   const ungroupedCategories = useMemo(
     () => {
-      const catIdsInGroups = groups.flatMap(g => g.categories.map(c => c.id))
+      const catIdsInGroups = groups.flatMap(g => g.categoryIds)
       const ungroupedCats = categories.filter(cat => !catIdsInGroups.includes(cat.id))
 
       return ungroupedCats
     },
     [categories, groups])
 
-  const handleGroupSelect = (groupId: string, category: CategoryMonth) => {
-    onCategoryMovedToGroup(groupId, category)
+  const handleGroupSelect = (groupId: string, categoryId: string) => {
+    onCategoryMovedToGroup(groupId, categoryId)
   }
 
   const doCarryover = () => {
@@ -66,22 +69,33 @@ export function Categories({
             <div className="col-2">
               <GroupSelector
                 groups={groups}
-                onGroupSelect={(gid) => handleGroupSelect(gid, cat)}
+                onGroupSelect={(gid) => handleGroupSelect(gid, cat.id)}
               />
             </div>
-            <CategoryRow category={cat} onCategoryUpdated={onCategoryUpdated} />
+            <CategoryRow
+              category={cat}
+              onCategoryUpdated={onCategoryUpdated}
+              transactions={transactions}
+            />
           </React.Fragment>
         ))}
-        { groups.map((group) => (
-          <div key={group.id} className="group">
-            <div className="name">{group.name}</div>
-            {group.categories.map((cat) => (
-              <div key={cat.id} className="group-category">
-                <CategoryRow category={cat} onCategoryUpdated={onCategoryUpdated} />
-              </div>
-            ))}
-          </div>
-        ))}
+        { groups.map((group) => {
+          const groupCategories = categories.filter(c => group.categoryIds.includes(c.id))
+          return (
+            <div key={group.id} className="group">
+              <div className="name">{group.name}</div>
+              {groupCategories.map((cat) => (
+                <div key={cat.id} className="group-category">
+                  <CategoryRow
+                    category={cat}
+                    onCategoryUpdated={onCategoryUpdated}
+                    transactions={transactions}
+                  />
+                </div>
+              ))}
+            </div>
+          )
+        })}
       </div>
     </>
   )

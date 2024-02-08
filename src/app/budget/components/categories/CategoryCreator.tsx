@@ -34,7 +34,7 @@ export function CategoryCreator({ onCategoryCreate, onGroupCreate }: Props) {
       name: categoryName,
       budgetedAmount: currency(budgetAmt),
       additionalIncome: currency(0),
-      transactions: [],
+      transactionIds: [],
       endOfMonthAdjust: currency(0),
       endOfMonthBalance: currency(budgetAmt),
       balanceForward: currency(0),
@@ -49,7 +49,7 @@ export function CategoryCreator({ onCategoryCreate, onGroupCreate }: Props) {
     onGroupCreate({
       id: nanoid(),
       name: groupName,
-      categories: [],
+      categoryIds: [],
       budgetMonth
     })
     setGroupName('')
