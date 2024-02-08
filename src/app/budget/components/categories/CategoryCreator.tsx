@@ -6,6 +6,7 @@ import { nanoid } from 'nanoid'
 
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import { BudgetMonthContext } from '@budget/page'
+import { NumericInput } from '@components/general/NumericInput'
 
 type Props = {
   onCategoryCreate: (category: CategoryMonth) => void
@@ -36,7 +37,7 @@ export function CategoryCreator({ onCategoryCreate, onGroupCreate }: Props) {
       transactions: [],
       endOfMonthAdjust: currency(0),
       endOfMonthBalance: currency(budgetAmt),
-      previousMonth: null,
+      balanceForward: currency(0),
       budgetMonth
     })
 
@@ -64,12 +65,12 @@ export function CategoryCreator({ onCategoryCreate, onGroupCreate }: Props) {
           value={categoryName}
           onChange={(v) => setCategoryName(v.target.value)}
         />
-        <input
+        <NumericInput
           id='budget-amt-input'
           type='text'
           placeholder='Budgeted amount'
           value={budgetAmt}
-          onChange={(v) => handleBudgetChange(v.target.value)}
+          onValueUpdate={(v) => handleBudgetChange(v)}
         />
         <button onClick={handleCategoryCreate}>Save</button>
       </div>

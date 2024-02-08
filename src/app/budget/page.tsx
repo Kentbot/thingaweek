@@ -2,6 +2,7 @@
 
 import React, { createContext, useMemo, useState } from 'react'
 
+import currency from 'currency.js'
 import { DateTime } from 'luxon'
 
 import { Transactions } from './components/transactions/Transactions'
@@ -10,10 +11,10 @@ import { DateSelector } from './components/dateSelector/DateSelector'
 import { Transaction } from './models/transaction.model'
 import { CategoryMonth } from './models/categoryMonth.model'
 import { CategoryGroup } from './models/categoryGroup.model'
+import { calculateEomBalance } from './services/category.service'
 
 import './styles.scss'
-import currency from 'currency.js'
-import { calculateEomBalance } from './services/category.service'
+import { nanoid } from 'nanoid'
 
 const defaultDate = DateTime.now()
 
@@ -86,24 +87,75 @@ export default function Budget() {
   }
 
   const handleMonthChange = (month: number) => {
-    console.log('month select', month)
     setCurrentBudgetMonth(DateTime.local(currentBudgetMonth.year, month))
   }
 
   const handleYearChange = (year: number) => {
-    console.log('year select', year)
     setCurrentBudgetMonth(DateTime.local(year, currentBudgetMonth.month))
   }
 
-  const handleCategoryUpdate = (category: CategoryMonth) => {
-    setCategories(categories.map((cat) => {
-      if (cat.id === category.id) {
-        category.endOfMonthBalance = calculateEomBalance(category)
-        return category
+  const handleCategoryUpdate = (updatingCat: CategoryMonth) => {
+    const relevantCats = [updatingCat]
+
+    let nextCatId = updatingCat.nextMonthId
+    while (nextCatId) {
+      const nextCat = categories.find(c => c.id === nextCatId)
+
+      if (!nextCat) {
+        console.error('Skipping missing category', nextCatId)
+        continue
+      }
+      relevantCats.push(nextCat)
+      nextCatId = nextCat.nextMonthId
+    }
+
+    const relevantCatIds = relevantCats.map(c => c.id)
+    
+    const updatedCats = []
+    let prev: CategoryMonth | undefined = undefined
+    for (let cat of relevantCats) {
+      let newCat: CategoryMonth = { ...cat }
+      if (prev) {
+        console.log('rel with prev', newCat)
+        newCat.balanceForward = prev.endOfMonthBalance
+        newCat.endOfMonthBalance = calculateEomBalance(newCat)
+      } else {
+        console.log('rel no prev', newCat)
+        newCat.endOfMonthBalance = calculateEomBalance(cat)
+      }
+      updatedCats.push(newCat)
+      prev = newCat
+    }
+
+    const unrelatedCats = categories.filter(c => !relevantCatIds.includes(c.id))
+
+    setCategories([...unrelatedCats, ...updatedCats])
+  }
+
+  const handleMonthCarryover = () => {
+    const prevMonth = currentBudgetMonth.plus({ months: -1 })
+    const prevMonthCategories = categories.filter(c =>
+      c.budgetMonth.year === prevMonth.year &&
+      c.budgetMonth.month === prevMonth.month)
+    const copiedCategories: CategoryMonth[] = prevMonthCategories.flatMap((prevCat) => {
+      const copiedCat: CategoryMonth = {
+        id: nanoid(),
+        additionalIncome: currency(0),
+        budgetMonth: currentBudgetMonth,
+        budgetedAmount: prevCat.budgetedAmount,
+        endOfMonthAdjust: currency(0),
+        endOfMonthBalance: prevCat.budgetedAmount.add(prevCat.endOfMonthBalance),
+        balanceForward: prevCat.endOfMonthBalance,
+        transactions: [],
+        name: prevCat.name,
       }
       
-      return cat
-    }))
+      return [copiedCat, { ...prevCat, nextMonthId: copiedCat.id }]
+    })
+    const unaffectedCategories = categories.filter(c => !prevMonthCategories.some(pc => pc.id === c.id))
+
+    const result = [...unaffectedCategories, ...copiedCategories]
+    setCategories(result)
   }
 
   return (
@@ -123,6 +175,7 @@ export default function Budget() {
             onCategoryGroupCreated={(g) => setCategoryGroups([...categoryGroups, g])}
             onCategoryMovedToGroup={handleCategoryMovedToGroup}
             onCategoryUpdated={handleCategoryUpdate}
+            onMonthCarryover={handleMonthCarryover}
           />
         </div>
         <div className="transactions">

@@ -15,6 +15,7 @@ type Props = {
   onCategoryGroupCreated: (group: CategoryGroup) => void
   onCategoryMovedToGroup: (groupId: string, category: CategoryMonth) => void
   onCategoryUpdated: (category: CategoryMonth) => void
+  onMonthCarryover: () => void
 }
 
 export function Categories({
@@ -23,7 +24,8 @@ export function Categories({
   onCategoryCreated,
   onCategoryGroupCreated,
   onCategoryMovedToGroup,
-  onCategoryUpdated
+  onCategoryUpdated,
+  onMonthCarryover
 }: Props) {
   const ungroupedCategories = useMemo(
     () => {
@@ -38,12 +40,17 @@ export function Categories({
     onCategoryMovedToGroup(groupId, category)
   }
 
+  const doCarryover = () => {
+    onMonthCarryover()
+  }
+
   return (
     <>
       <CategoryCreator
         onCategoryCreate={onCategoryCreated}
         onGroupCreate={onCategoryGroupCreated}
       />
+      <button onClick={doCarryover}>Carryover from prev month</button>
       <div className="categories-grid">
         <div className="col-2 header">Group</div>
         <div className="col-2 header">Description</div>

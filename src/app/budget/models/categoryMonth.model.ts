@@ -10,6 +10,7 @@ export interface CategoryMonth {
   additionalIncome: currency
   endOfMonthAdjust: currency
   endOfMonthBalance: currency
-  previousMonth: CategoryMonth | null
+  balanceForward: currency
+  nextMonthId?: string
   budgetMonth: DateTime
 }

@@ -8,8 +8,10 @@ type Props = {
 // eslint-disable-next-line react/display-name
 export const NumericInput = forwardRef<HTMLInputElement, Props>(({ onValueUpdate, ...defaultInputProps }, ref) => {
   const handleInputChange = (value: string) => {
-    const sanitizedValue = value.replace(/[^\d.]/g, '')
-    onValueUpdate(sanitizedValue)
+    const negative = value.startsWith('-')
+    const sanitizedValue = value.replace(/[^\d.]+/g, '')
+
+    onValueUpdate(negative ? `-${sanitizedValue}` : sanitizedValue)
   }
 
   return (

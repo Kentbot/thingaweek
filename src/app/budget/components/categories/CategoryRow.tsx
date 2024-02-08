@@ -19,7 +19,7 @@ export function CategoryRow({ category, onCategoryUpdated }: Props) {
   return (
     <>
       <div className="col-2">{category.name}</div>
-      <div>{category.previousMonth?.endOfMonthBalance.format() ?? '0.00'}</div>
+      <div>{category.balanceForward.value ?? '0.00'}</div>
       <NewValueUpdater
         valueToUpdate={category.budgetedAmount.value.toString()}
         onValueSet={(value) => onCategoryUpdated({ ...category, budgetedAmount: currency(value) })}
