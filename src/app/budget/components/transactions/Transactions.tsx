@@ -1,31 +1,23 @@
-import React, { ChangeEvent, useContext } from 'react'
+import React, { ChangeEvent } from 'react'
 
-import { DateTime } from 'luxon'
+import { useDispatch, useSelector } from 'react-redux'
 
+import { RootState } from '@budget/store/store'
+import { createTransactions, deleteTransaction } from '@budget/store/transaction.slice'
+import { assignTransaction } from '@budget/store/category.slice'
 import { Transaction } from '@budget/models/transaction.model'
 import { parseCsv } from '@budget/services/csvParser.service'
 import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer.service'
-import { CategoryMonth } from '@budget/models/categoryMonth.model'
 
 import './styles.scss'
-import { BudgetMonthContext } from '@budget/oldpage'
 
-type Props = {
-  categories: CategoryMonth[]
-  transactions: Transaction[]
-  onTransactionsUploaded: (transactions: Transaction[]) => void
-  onAssignTransactionToCategory: (transactionId: string, categoryId: string) => void
-  onRemoveTransaction: (transactionId: string) => void
-}
+type Props = {}
 
-export function Transactions({
-  categories,
-  transactions,
-  onTransactionsUploaded,
-  onAssignTransactionToCategory,
-  onRemoveTransaction
-}: Props) {
-  const budgetMonth = useContext(BudgetMonthContext)
+export function Transactions({}: Props) {
+  const dispatch = useDispatch()
+  const budgetMonth = useSelector((state: RootState) => state.budgetMonth)
+  const transactions = useSelector((state: RootState) => state.transactions)
+  const categories = useSelector((state: RootState) => state.categories)
 
   const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -33,16 +25,16 @@ export function Transactions({
       const rawData = await parseCsv(file)
       const csvRowKeys = getCsvRowKeys(rawData)
       const data = transformCsvRows(rawData, csvRowKeys, budgetMonth)
-      onTransactionsUploaded(data)
+      dispatch(createTransactions(data))
     }
   }
 
   const removeTransaction = (transId: string) => {
-    onRemoveTransaction(transId)
+    dispatch(deleteTransaction({ id: transId }))
   }
 
   const handleAssignTransactionToCategory = (transId: string, catId: string) => {
-    onAssignTransactionToCategory(transId, catId)
+    dispatch(assignTransaction({ categoryId: catId, transactionId: transId }))
   }
 
   return (

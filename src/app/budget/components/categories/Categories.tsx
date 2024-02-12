@@ -1,37 +1,25 @@
 import React, { useMemo } from 'react'
 
-import { CategoryMonth } from '@budget/models/categoryMonth.model'
-import { CategoryGroup } from '@budget/models/categoryGroup.model'
-import { Transaction } from '@budget/models/transaction.model'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { AppDispatch, RootState } from '@budget/store/store'
+import { assignCategoryToGroup } from '@budget/store/group.slice'
+
 import { CategoryCreator } from './CategoryCreator'
 import { GroupSelector } from './GroupSelector'
 import { CategoryRow } from './CategoryRow'
 
 import './categories.styles.scss'
+import { carryoverMonthAction } from '@budget/store/actions'
 
-type Props = {
-  categories: CategoryMonth[]
-  groups: CategoryGroup[]
-  transactions: Transaction[]
-  onCategoryCreated: (category: CategoryMonth) => void
-  onCategoryRemoved: (categoryId: string) => void
-  onCategoryGroupCreated: (group: CategoryGroup) => void
-  onCategoryMovedToGroup: (groupId: string, categoryId: string) => void
-  onCategoryUpdated: (category: CategoryMonth) => void
-  onMonthCarryover: () => void
-}
+type Props = {}
 
-export function Categories({
-  categories,
-  groups,
-  transactions,
-  onCategoryCreated,
-  onCategoryRemoved,
-  onCategoryGroupCreated,
-  onCategoryMovedToGroup,
-  onCategoryUpdated,
-  onMonthCarryover
-}: Props) {
+export function Categories({}: Props) {
+  const dispatch = useDispatch<AppDispatch>()
+  const currentMonth = useSelector((state: RootState) => state.budgetMonth)
+  const categories = useSelector((state: RootState) => state.categories)
+  const groups = useSelector((state: RootState) => state.groups)
+
   const ungroupedCategories = useMemo(
     () => {
       const catIdsInGroups = groups.flatMap(g => g.categoryIds)
@@ -42,20 +30,15 @@ export function Categories({
     [categories, groups])
 
   const handleGroupSelect = (groupId: string, categoryId: string) => {
-    onCategoryMovedToGroup(groupId, categoryId)
-  }
-
-  const doCarryover = () => {
-    onMonthCarryover()
+    dispatch(assignCategoryToGroup({ groupId, categoryId }))
   }
 
   return (
     <>
-      <CategoryCreator
-        onCategoryCreate={onCategoryCreated}
-        onGroupCreate={onCategoryGroupCreated}
-      />
-      <button onClick={doCarryover}>Carryover from prev month</button>
+      <CategoryCreator />
+      <button onClick={() => dispatch(carryoverMonthAction(currentMonth))}>
+        Carryover from prev month
+      </button>
       <div className="categories-grid">
         <div className="col-2 header">Group</div>
         <div className="col-2 header">Description</div>
@@ -77,9 +60,6 @@ export function Categories({
             </div>
             <CategoryRow
               category={cat}
-              onCategoryUpdated={onCategoryUpdated}
-              onCategoryRemoved={onCategoryRemoved}
-              transactions={transactions}
             />
           </React.Fragment>
         ))}
@@ -92,9 +72,6 @@ export function Categories({
                 <div key={cat.id} className="group-category">
                   <CategoryRow
                     category={cat}
-                    onCategoryUpdated={onCategoryUpdated}
-                    onCategoryRemoved={onCategoryRemoved}
-                    transactions={transactions}
                   />
                 </div>
               ))}

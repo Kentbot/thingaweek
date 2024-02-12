@@ -1,22 +1,24 @@
-import { BudgetMonthContext } from '@budget/oldpage'
-import { DateTime } from 'luxon'
-import React, { useContext } from 'react'
+import React from 'react'
 
-type Props = {
-  onMonthChange: (month: number) => void
-  onYearChange: (year: number) => void
-}
+import { DateTime } from 'luxon'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { AppDispatch, RootState } from '@budget/store/store'
+import { changeMonth } from '@budget/store/budgetMonth.slice'
+
+type Props = {}
 
 const beginYear = 2024
 const endYear = DateTime.now().year + 1
 const yearSpan = endYear - beginYear + 1
 const years = Array(yearSpan).fill(beginYear).map((val, index) => val + index)
 
-export function DateSelector({ onMonthChange, onYearChange }: Props) {
-  const currentBudgetMonth = useContext(BudgetMonthContext)
+export function DateSelector({}: Props) {
+  const dispatch = useDispatch<AppDispatch>()
+  const currentMonth = useSelector((state: RootState) => state.budgetMonth)
 
-  const handleMonthSelect = (month: number) => {
-    onMonthChange(month)
+  const handleMonthSelect = (newMonth: number) => {
+    dispatch(changeMonth(DateTime.local(currentMonth.year, newMonth)))
   }
 
   const handleYearSelect = (year: string) => {
@@ -24,7 +26,7 @@ export function DateSelector({ onMonthChange, onYearChange }: Props) {
 
     if (Number.isNaN(newYear)) throw new Error(`Could not set new year, value is not a number: ${year}`)
     
-    onYearChange(newYear)
+    dispatch(changeMonth(DateTime.local(newYear, currentMonth.month)))
   }
 
   return (
@@ -53,7 +55,7 @@ export function DateSelector({ onMonthChange, onYearChange }: Props) {
         ))}
       </select>
       <div className="current-budget-month">
-        {currentBudgetMonth.monthLong} {currentBudgetMonth.year}
+        {currentMonth.monthLong} {currentMonth.year}
       </div>
     </>
   )

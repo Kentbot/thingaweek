@@ -1,20 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react'
 
+import { useDispatch, useSelector } from 'react-redux'
+import currency from 'currency.js'
+
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import { NumericInput } from '@components/general/NumericInput'
-import { Transaction } from '@budget/models/transaction.model'
-
-import currency from 'currency.js'
+import { AppDispatch, RootState } from '@budget/store/store'
+import { deleteCategory, updateCategory } from '@budget/store/category.slice'
 
 type Props = {
   category: CategoryMonth
-  transactions: Transaction[]
-  onCategoryUpdated: (category: CategoryMonth) => void
-  onCategoryRemoved: (categoryId: string) => void
 }
 
-export function CategoryRow({ category, transactions, onCategoryUpdated, onCategoryRemoved }: Props) {
-  const categoryTransactions = transactions.filter(t => category.transactionIds.includes(t.id))
+export function CategoryRow({ category }: Props) {
+  const dispatch = useDispatch<AppDispatch>()
+  const categoryTransactions = useSelector((state: RootState) =>
+    state.transactions.filter(t => category.transactionIds.includes(t.id)))
+
   const spend = categoryTransactions.reduce(
     (prev, curr) => curr.amount.add(prev), currency(0)
   )
@@ -26,20 +28,20 @@ export function CategoryRow({ category, transactions, onCategoryUpdated, onCateg
       <div>{category.balanceForward.value ?? '0.00'}</div>
       <NewValueUpdater
         valueToUpdate={category.budgetedAmount.value.toString()}
-        onValueSet={(value) => onCategoryUpdated({ ...category, budgetedAmount: currency(value) })}
+        onValueSet={(value) => dispatch(updateCategory({ ...category, budgetedAmount: currency(value) }))}
       />
       <NewValueUpdater
         valueToUpdate={category.additionalIncome.value.toString()}
-        onValueSet={(value) => onCategoryUpdated({ ...category, additionalIncome: currency(value) })}
+        onValueSet={(value) => dispatch(updateCategory({ ...category, additionalIncome: currency(value) }))}
       />
       <div className="col-2">{spend.value}</div>
       <div>{balance.value}</div>
       <NewValueUpdater
         valueToUpdate={category.endOfMonthAdjust.value.toString()}
-        onValueSet={(value) => onCategoryUpdated({ ...category, endOfMonthAdjust: currency(value) })}
+        onValueSet={(value) => dispatch(updateCategory({ ...category, endOfMonthAdjust: currency(value) }))}
       />
       <div>{category.endOfMonthBalance.value}</div>
-      <button onClick={() => onCategoryRemoved(category.id)}>x</button>
+      <button onClick={() => dispatch(deleteCategory({ id: category.id }))}>x</button>
     </>
   )
 }

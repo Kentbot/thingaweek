@@ -1,57 +1,57 @@
-import { CategoryGroup } from '@budget/models/categoryGroup.model'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 
+import { useDispatch, useSelector } from 'react-redux'
 import currency from 'currency.js'
 import { nanoid } from 'nanoid'
 
+import { CategoryGroup } from '@budget/models/categoryGroup.model'
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
-import { BudgetMonthContext } from '@budget/oldpage'
 import { NumericInput } from '@components/general/NumericInput'
+import { AppDispatch, RootState } from '@budget/store/store'
+import { createCategory } from '@budget/store/category.slice'
+import { createGroup } from '@budget/store/group.slice'
 
-type Props = {
-  onCategoryCreate: (category: CategoryMonth) => void
-  onGroupCreate: (group: CategoryGroup) => void
-}
+type Props = {}
 
-export function CategoryCreator({ onCategoryCreate, onGroupCreate }: Props) {
-  const budgetMonth = useContext(BudgetMonthContext)
+export function CategoryCreator({}: Props) {
+  const dispatch = useDispatch<AppDispatch>()
+  const currentMonth = useSelector((state: RootState) => state.budgetMonth)
 
   const [categoryName, setCategoryName] = useState('')
   const [budgetAmt, setBudgetAmt] = useState('')
   const [groupName, setGroupName] = useState('')
 
   const handleBudgetChange = (value: string) => {
-    let sanitizedValue = value.replace(/[^\d.]/g, '')
-    setBudgetAmt(sanitizedValue)
+    setBudgetAmt(value)
   }
 
   const handleCategoryCreate = () => {
     // Note that this only works for creating a new category from scratch.
     // It will not work for copying from a previous month -- the EOM balance
     // and previous month need set.
-    onCategoryCreate({
+    dispatch(createCategory({
       id: nanoid(),
       name: categoryName,
-      budgetedAmount: currency(budgetAmt),
       additionalIncome: currency(0),
-      transactionIds: [],
+      balanceForward: currency(0),
+      budgetedAmount: currency(budgetAmt),
       endOfMonthAdjust: currency(0),
       endOfMonthBalance: currency(budgetAmt),
-      balanceForward: currency(0),
-      budgetMonth
-    })
+      transactionIds: [],
+      budgetMonth: currentMonth
+    }))
 
     setCategoryName('')
     setBudgetAmt('')
   }
 
   const handleGroupCreate = () => {
-    onGroupCreate({
+    dispatch(createGroup({
       id: nanoid(),
       name: groupName,
       categoryIds: [],
-      budgetMonth
-    })
+      budgetMonth: currentMonth
+    }))
     setGroupName('')
   }
 
