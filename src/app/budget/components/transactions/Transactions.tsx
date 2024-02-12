@@ -8,7 +8,7 @@ import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 
 import './styles.scss'
-import { BudgetMonthContext } from '@budget/page'
+import { BudgetMonthContext } from '@budget/oldpage'
 
 type Props = {
   categories: CategoryMonth[]

@@ -14,6 +14,7 @@ type Props = {
   groups: CategoryGroup[]
   transactions: Transaction[]
   onCategoryCreated: (category: CategoryMonth) => void
+  onCategoryRemoved: (categoryId: string) => void
   onCategoryGroupCreated: (group: CategoryGroup) => void
   onCategoryMovedToGroup: (groupId: string, categoryId: string) => void
   onCategoryUpdated: (category: CategoryMonth) => void
@@ -25,6 +26,7 @@ export function Categories({
   groups,
   transactions,
   onCategoryCreated,
+  onCategoryRemoved,
   onCategoryGroupCreated,
   onCategoryMovedToGroup,
   onCategoryUpdated,
@@ -64,6 +66,7 @@ export function Categories({
         <div className="header">Available Balance</div>
         <div className="header">EOM Adjust</div>
         <div className="header">EOM Balance</div>
+        <div className="header"></div>
         { ungroupedCategories.map((cat) => (
           <React.Fragment key={cat.id}>
             <div className="col-2">
@@ -75,6 +78,7 @@ export function Categories({
             <CategoryRow
               category={cat}
               onCategoryUpdated={onCategoryUpdated}
+              onCategoryRemoved={onCategoryRemoved}
               transactions={transactions}
             />
           </React.Fragment>
@@ -89,6 +93,7 @@ export function Categories({
                   <CategoryRow
                     category={cat}
                     onCategoryUpdated={onCategoryUpdated}
+                    onCategoryRemoved={onCategoryRemoved}
                     transactions={transactions}
                   />
                 </div>

@@ -11,6 +11,4 @@ export interface CategoryMonth {
   endOfMonthAdjust: currency
   endOfMonthBalance: currency
   balanceForward: currency
-  nextMonthId?: string
-  budgetMonth: DateTime
 }

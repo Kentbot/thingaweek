@@ -10,9 +10,10 @@ type Props = {
   category: CategoryMonth
   transactions: Transaction[]
   onCategoryUpdated: (category: CategoryMonth) => void
+  onCategoryRemoved: (categoryId: string) => void
 }
 
-export function CategoryRow({ category, transactions, onCategoryUpdated }: Props) {
+export function CategoryRow({ category, transactions, onCategoryUpdated, onCategoryRemoved }: Props) {
   const categoryTransactions = transactions.filter(t => category.transactionIds.includes(t.id))
   const spend = categoryTransactions.reduce(
     (prev, curr) => curr.amount.add(prev), currency(0)
@@ -38,6 +39,7 @@ export function CategoryRow({ category, transactions, onCategoryUpdated }: Props
         onValueSet={(value) => onCategoryUpdated({ ...category, endOfMonthAdjust: currency(value) })}
       />
       <div>{category.endOfMonthBalance.value}</div>
+      <button onClick={() => onCategoryRemoved(category.id)}>x</button>
     </>
   )
 }

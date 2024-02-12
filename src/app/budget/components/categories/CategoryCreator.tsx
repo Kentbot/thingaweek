@@ -5,7 +5,7 @@ import currency from 'currency.js'
 import { nanoid } from 'nanoid'
 
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
-import { BudgetMonthContext } from '@budget/page'
+import { BudgetMonthContext } from '@budget/oldpage'
 import { NumericInput } from '@components/general/NumericInput'
 
 type Props = {
