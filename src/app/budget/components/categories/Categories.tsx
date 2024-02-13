@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
+import { DateTime } from 'luxon'
 
+import { carryoverMonthAction } from '@budget/store/actions'
 import { AppDispatch, RootState } from '@budget/store/store'
 import { assignCategoryToGroup } from '@budget/store/group.slice'
 
@@ -10,15 +12,25 @@ import { GroupSelector } from './GroupSelector'
 import { CategoryRow } from './CategoryRow'
 
 import './categories.styles.scss'
-import { carryoverMonthAction } from '@budget/store/actions'
+import { createSelector } from '@reduxjs/toolkit'
+import { filterToBudgetMonth } from '@budget/services/category.service'
+import { carryoverMonth } from '@budget/store/thunks'
 
 type Props = {}
 
 export function Categories({}: Props) {
   const dispatch = useDispatch<AppDispatch>()
   const currentMonth = useSelector((state: RootState) => state.budgetMonth)
-  const categories = useSelector((state: RootState) => state.categories)
-  const groups = useSelector((state: RootState) => state.groups)
+  const selectGroups = createSelector(
+    (state: RootState) => state.groups,
+    (groups) => filterToBudgetMonth(groups, DateTime.fromISO(currentMonth))
+  )
+  const groups = useSelector(selectGroups)
+  const selectCategories = createSelector(
+    (state: RootState) => state.categories,
+    (categories) => filterToBudgetMonth(categories, DateTime.fromISO(currentMonth))
+  )
+  const categories = useSelector(selectCategories)
 
   const ungroupedCategories = useMemo(
     () => {
@@ -36,7 +48,7 @@ export function Categories({}: Props) {
   return (
     <>
       <CategoryCreator />
-      <button onClick={() => dispatch(carryoverMonthAction(currentMonth))}>
+      <button onClick={() => dispatch(carryoverMonth(currentMonth))}>
         Carryover from prev month
       </button>
       <div className="categories-grid">

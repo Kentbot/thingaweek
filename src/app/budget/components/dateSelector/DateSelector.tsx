@@ -4,7 +4,9 @@ import { DateTime } from 'luxon'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { AppDispatch, RootState } from '@budget/store/store'
-import { changeMonth } from '@budget/store/budgetMonth.slice'
+import { changeMonth as changeBudgetMonth } from '@budget/store/budgetMonth.slice'
+import { ISODateString } from '@budget/store/types'
+import { createSelector } from '@reduxjs/toolkit'
 
 type Props = {}
 
@@ -15,10 +17,14 @@ const years = Array(yearSpan).fill(beginYear).map((val, index) => val + index)
 
 export function DateSelector({}: Props) {
   const dispatch = useDispatch<AppDispatch>()
-  const currentMonth = useSelector((state: RootState) => state.budgetMonth)
+  const selectCurrentMonth = createSelector(
+    (state: RootState) => state.budgetMonth,
+    (budgetMonth) => DateTime.fromISO(budgetMonth))
+  const currentMonth = useSelector(selectCurrentMonth)
 
   const handleMonthSelect = (newMonth: number) => {
-    dispatch(changeMonth(DateTime.local(currentMonth.year, newMonth)))
+    const newDateTime = DateTime.local(currentMonth.year, newMonth).toISODate()
+    newDateTime && dispatch(changeBudgetMonth(newDateTime))
   }
 
   const handleYearSelect = (year: string) => {
@@ -26,7 +32,8 @@ export function DateSelector({}: Props) {
 
     if (Number.isNaN(newYear)) throw new Error(`Could not set new year, value is not a number: ${year}`)
     
-    dispatch(changeMonth(DateTime.local(newYear, currentMonth.month)))
+    const newDateTime = DateTime.local(newYear, currentMonth.month).toISODate()
+    newDateTime && dispatch(changeBudgetMonth(newDateTime))
   }
 
   return (

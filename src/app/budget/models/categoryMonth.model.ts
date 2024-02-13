@@ -1,16 +1,15 @@
-import currency from 'currency.js'
-import { DateTime } from 'luxon'
+import { CurrencyString } from '@budget/store/types'
+import { WithBudgetMonth } from './types'
 
-export interface CategoryMonth {
+export interface CategoryMonth extends WithBudgetMonth {
   id: string
   name: string
   nextMonthId?: string
   prevMonthId?: string
   transactionIds: string[]
-  budgetedAmount: currency
-  additionalIncome: currency
-  endOfMonthAdjust: currency
-  endOfMonthBalance: currency
-  balanceForward: currency
-  budgetMonth: DateTime
+  budgetedAmount: CurrencyString
+  additionalIncome: CurrencyString
+  endOfMonthAdjust: CurrencyString
+  endOfMonthBalance: CurrencyString
+  balanceForward: CurrencyString
 }

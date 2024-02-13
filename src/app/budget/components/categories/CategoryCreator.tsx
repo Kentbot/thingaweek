@@ -32,11 +32,11 @@ export function CategoryCreator({}: Props) {
     dispatch(createCategory({
       id: nanoid(),
       name: categoryName,
-      additionalIncome: currency(0),
-      balanceForward: currency(0),
-      budgetedAmount: currency(budgetAmt),
-      endOfMonthAdjust: currency(0),
-      endOfMonthBalance: currency(budgetAmt),
+      additionalIncome: currency(0).toString(),
+      balanceForward: currency(0).toString(),
+      budgetedAmount: currency(budgetAmt).toString(),
+      endOfMonthAdjust: currency(0).toString(),
+      endOfMonthBalance: currency(budgetAmt).toString(),
       transactionIds: [],
       budgetMonth: currentMonth
     }))

@@ -66,11 +66,11 @@ export function transformCsvRows(rawRows: unknown[], keys: CsvKeysDefinition, bu
     const description = raw[keys.description]
 
     const transaction: Transaction = {
-      amount,
-      date,
+      amount: amount.toString(),
+      date: date.toISODate() ?? 'invalid',
       description,
       id: nanoid(),
-      budgetMonth
+      budgetMonth: budgetMonth.toISODate() ?? 'invalid'
     }
 
     return transaction

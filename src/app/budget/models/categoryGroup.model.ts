@@ -1,10 +1,23 @@
-import { DateTime } from 'luxon'
+import { WithBudgetMonth } from './types'
 
-import { CategoryMonth } from './categoryMonth.model'
-
-export interface CategoryGroup {
+/* Notes:
+ * Budget Month:
+ *   - only the two most recent months are to remain unlocked
+ *   - can be 'carried forward' with all groups/categories:
+ *      * doing this will overwrite any previous setup for the month
+ * Categories:
+ *   - are assigned any number of transactions
+ *   - can link back to the previous month
+ *   - are one-to-one
+ *   - propagate forward when updated
+ *   - can be 're-targeted' to a different previous month category
+ * Transactions:
+ *   - are assigned to one category
+ *   - can be 'split', maintaining the original total, with the split pieces
+ *     being able to be assigned to different categories
+ */
+export interface CategoryGroup extends WithBudgetMonth {
   id: string
   name: string
   categoryIds: string[]
-  budgetMonth: DateTime
 }

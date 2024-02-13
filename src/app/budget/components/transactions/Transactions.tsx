@@ -10,6 +10,7 @@ import { parseCsv } from '@budget/services/csvParser.service'
 import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer.service'
 
 import './styles.scss'
+import { DateTime } from 'luxon'
 
 type Props = {}
 
@@ -24,7 +25,7 @@ export function Transactions({}: Props) {
     if (file) {
       const rawData = await parseCsv(file)
       const csvRowKeys = getCsvRowKeys(rawData)
-      const data = transformCsvRows(rawData, csvRowKeys, budgetMonth)
+      const data = transformCsvRows(rawData, csvRowKeys, DateTime.fromISO(budgetMonth))
       dispatch(createTransactions(data))
     }
   }
@@ -49,8 +50,8 @@ export function Transactions({}: Props) {
         { transactions?.map((trans: Transaction) => (
           <React.Fragment key={trans.id}>
             <div>{trans.description}</div>
-            <div>{trans.amount.value}</div>
-            <div>{trans.date.invalidReason ?? trans.date.toISODate()}</div>
+            <div>{trans.amount}</div>
+            <div>{trans.date}</div>
             <div>
               <select className="category-select" onChange={(v) => handleAssignTransactionToCategory(trans.id, v.target.value)}>
                 <option value={undefined}>-</option>
