@@ -14,8 +14,6 @@ import './styles.scss'
 
 const defaultDate = DateTime.now()
 
-export const BudgetMonthContext = createContext<DateTime>(defaultDate)
-
 export default function Budget() {
   return (
     <Provider store={store}>
