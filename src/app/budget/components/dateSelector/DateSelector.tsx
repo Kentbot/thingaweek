@@ -4,7 +4,7 @@ import { DateTime } from 'luxon'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { AppDispatch, RootState } from '@budget/store/store'
-import { changeMonth as changeBudgetMonth } from '@budget/store/budgetMonth.slice'
+import { changeMonth as changeBudgetMonth } from '@budget/store/slices/budgetMonth.slice'
 import { ISODateString } from '@budget/store/types'
 import { createSelector } from '@reduxjs/toolkit'
 

@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid'
 import { CategoryGroup } from '@budget/models/categoryGroup.model'
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 
-import { ISODateString } from './types'
+import { ISODateString } from '../types'
 
 const initialState: CategoryGroup[] = []
 

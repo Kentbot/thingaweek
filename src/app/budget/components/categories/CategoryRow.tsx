@@ -6,7 +6,7 @@ import currency from 'currency.js'
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import { NumericInput } from '@components/general/NumericInput'
 import { AppDispatch, RootState } from '@budget/store/store'
-import { deleteCategory, updateCategory } from '@budget/store/category.slice'
+import { deleteCategory, updateCategory } from '@budget/store/slices/category.slice'
 import { createSelector } from '@reduxjs/toolkit'
 
 type Props = {

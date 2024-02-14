@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { DateTime } from "luxon"
 
-import { ISODateString } from "./types"
+import { ISODateString } from "../types"
 
 const initialState: ISODateString = DateTime.now().toISODate()
 

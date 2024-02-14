@@ -6,8 +6,8 @@ import currency from "currency.js"
 import { CategoryMonth } from "@budget/models/categoryMonth.model"
 import { calculateEomBalance } from "@budget/services/category.service"
 import { Transaction } from "@budget/models/transaction.model"
-import { ISODateString } from "./types"
-import { deleteTransactionAction } from "./actions"
+import { ISODateString } from "../types"
+import { deleteTransactionAction } from "../actions"
 
 const initialState: CategoryMonth[] = []
 

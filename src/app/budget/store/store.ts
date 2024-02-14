@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import categorySlice from './category.slice'
-import groupSlice from './group.slice'
-import transactionSlice from './transaction.slice'
-import budgetMonthSlice from './budgetMonth.slice'
+import categorySlice from './slices/category.slice'
+import groupSlice from './slices/group.slice'
+import transactionSlice from './slices/transaction.slice'
+import budgetMonthSlice from './slices/budgetMonth.slice'
 
 const store = configureStore({
   reducer: {

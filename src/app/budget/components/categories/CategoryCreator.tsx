@@ -8,8 +8,8 @@ import { CategoryGroup } from '@budget/models/categoryGroup.model'
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import { NumericInput } from '@components/general/NumericInput'
 import { AppDispatch, RootState } from '@budget/store/store'
-import { createCategory } from '@budget/store/category.slice'
-import { createGroup } from '@budget/store/group.slice'
+import { createCategory } from '@budget/store/slices/category.slice'
+import { createGroup } from '@budget/store/slices/group.slice'
 
 type Props = {}
 

@@ -5,10 +5,10 @@ import { filterToBudgetMonth } from '@budget/services/category.service'
 
 import { carryoverMonthAction, deleteTransactionAction } from './actions'
 import { AppDispatch, RootState } from './store'
-import { carryoverCategories, deleteTransactionFromCategory } from './category.slice'
-import { carryoverGroups } from './group.slice'
+import { carryoverCategories, deleteTransactionFromCategory } from './slices/category.slice'
+import { carryoverGroups } from './slices/group.slice'
 import { ISODateString } from './types'
-import { deleteTransaction } from './transaction.slice'
+import { deleteTransaction } from './slices/transaction.slice'
 
 type ThunkReturn<T> = T
 type ThunkArgs<T> = T

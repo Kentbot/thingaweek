@@ -3,8 +3,8 @@ import React, { ChangeEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { AppDispatch, RootState } from '@budget/store/store'
-import { createTransactions } from '@budget/store/transaction.slice'
-import { assignTransaction } from '@budget/store/category.slice'
+import { createTransactions } from '@budget/store/slices/transaction.slice'
+import { assignTransaction } from '@budget/store/slices/category.slice'
 import { useBudgetMonthCategories, useBudgetMonthTransactions } from '@budget/store/selectors'
 
 import { parseCsv } from '@budget/services/csvParser.service'

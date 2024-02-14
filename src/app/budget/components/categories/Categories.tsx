@@ -3,7 +3,7 @@ import React, { useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { AppDispatch, RootState } from '@budget/store/store'
-import { assignCategoryToGroup } from '@budget/store/group.slice'
+import { assignCategoryToGroup } from '@budget/store/slices/group.slice'
 import { carryoverMonthThunk  } from '@budget/store/thunks'
 import { useBudgetMonthCategories, useBudgetMonthGroups } from '@budget/store/selectors'
 
