@@ -2,8 +2,8 @@ import { nanoid } from 'nanoid'
 import currency from 'currency.js'
 
 import { Transaction } from '@budget/models/transaction.model'
+import { ISODateString } from '@budget/store/types'
 import { rawDateToDateTime } from './date.service'
-import { DateTime } from 'luxon'
 
 interface CsvKeysDefinition {
   date: string,
@@ -41,7 +41,7 @@ export function getCsvRowKeys(rawRows: unknown[]): CsvKeysDefinition {
   }
 }
 
-export function transformCsvRows(rawRows: unknown[], keys: CsvKeysDefinition, budgetMonth: DateTime): Transaction[] {
+export function transformCsvRows(rawRows: unknown[], keys: CsvKeysDefinition, budgetMonth: ISODateString): Transaction[] {
   const result = (rawRows as any[]).map((raw) => {
     let amount: currency
     
@@ -70,7 +70,7 @@ export function transformCsvRows(rawRows: unknown[], keys: CsvKeysDefinition, bu
       date: date.toISODate() ?? 'invalid',
       description,
       id: nanoid(),
-      budgetMonth: budgetMonth.toISODate() ?? 'invalid'
+      budgetMonth: budgetMonth
     }
 
     return transaction

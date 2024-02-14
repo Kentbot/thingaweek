@@ -1,12 +1,13 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { DateTime } from "luxon"
-
-import { CategoryMonth } from "@budget/models/categoryMonth.model"
 import { nanoid } from "nanoid"
 import currency from "currency.js"
-import { ISODateString } from "./types"
+
+import { CategoryMonth } from "@budget/models/categoryMonth.model"
 import { calculateEomBalance } from "@budget/services/category.service"
 import { Transaction } from "@budget/models/transaction.model"
+import { ISODateString } from "./types"
+import { deleteTransactionAction } from "./actions"
 
 const initialState: CategoryMonth[] = []
 
@@ -17,28 +18,36 @@ const categorySlice = createSlice({
     createCategory(state, action: PayloadAction<CategoryMonth>) {
       state.push(action.payload)
     },
-    updateCategory(state, action: PayloadAction<{ updateCategory: CategoryMonth, transactions: Transaction[] }>) {
-      const updatedCategory = action.payload.updateCategory
-      let prevEomBalance = calculateEomBalance(updatedCategory, action.payload.transactions).toString()
-      updatedCategory.endOfMonthBalance = prevEomBalance
-
-      state.splice(state.findIndex((stateCat) => stateCat.id === updatedCategory.id), 1, updatedCategory)
-      
-      let nextCategory = state.find(stateCategory => stateCategory.id === updatedCategory.nextMonthId)
-      while (nextCategory !== undefined) {
-        nextCategory.balanceForward = prevEomBalance
-        
-        prevEomBalance = calculateEomBalance(nextCategory, action.payload.transactions).toString()
-        nextCategory.endOfMonthBalance = prevEomBalance
-        
-        nextCategory = state.find(c => c.id === nextCategory?.nextMonthId)
-      }
+    updateCategory(state, action: PayloadAction<{ updatedCategory: CategoryMonth, transactions: Transaction[] }>) {
+      recalculateLinkedCategories(state, action.payload.updatedCategory, action.payload.transactions)
     },
     deleteCategory(state, action: PayloadAction<{ id: string }>) {
       return state.filter(cat => cat.id !== action.payload.id)
     },
-    assignTransaction(state, action: PayloadAction<{ categoryId: string, transactionId: string }>) {
+    assignTransaction(state, action: PayloadAction<{ categoryId: string, transactionId: string, allTransactions: Transaction[] }>) {
+      state.forEach(category => {
+        const shouldRemoveTransFromCategory =
+          category.transactionIds.includes(action.payload.transactionId) &&
+          category.id !== action.payload.categoryId
+        const shouldAddTransToCategory = category.id === action.payload.categoryId
 
+        if (shouldRemoveTransFromCategory) {
+          category.transactionIds = category.transactionIds.filter(tid => tid !== action.payload.transactionId)
+          recalculateLinkedCategories(state, category, action.payload.allTransactions)
+        } else if (shouldAddTransToCategory) {
+          category.transactionIds.push(action.payload.transactionId)
+          recalculateLinkedCategories(state, category, action.payload.allTransactions)
+        }
+      })
+    },
+    deleteTransactionFromCategory(state, action: PayloadAction<{ id: string, allTransactions: Transaction[] }>) {
+      state.forEach((category) => {
+        const shouldRemoveTransFromCategory = category.transactionIds.includes(action.payload.id)
+        if (shouldRemoveTransFromCategory) {
+          category.transactionIds = category.transactionIds.filter(tid => tid !== action.payload.id)
+          recalculateLinkedCategories(state, category, action.payload.allTransactions)
+        }
+      })
     },
     carryoverCategories(state, action: PayloadAction<{ newMonthISO: ISODateString }>) {
       const targetMonth = DateTime.fromISO(action.payload.newMonthISO)
@@ -68,11 +77,29 @@ const categorySlice = createSlice({
   },
 })
 
+const recalculateLinkedCategories = (state: CategoryMonth[], updatedCategory: CategoryMonth, allTransactions: Transaction[]) => {
+  let prevEomBalance = calculateEomBalance(updatedCategory, allTransactions).toString()
+  updatedCategory.endOfMonthBalance = prevEomBalance
+
+  state.splice(state.findIndex((stateCat) => stateCat.id === updatedCategory.id), 1, updatedCategory)
+  
+  let nextCategory = state.find(stateCategory => stateCategory.id === updatedCategory.nextMonthId)
+  while (nextCategory !== undefined) {
+    nextCategory.balanceForward = prevEomBalance
+
+    prevEomBalance = calculateEomBalance(nextCategory, allTransactions).toString()
+    nextCategory.endOfMonthBalance = prevEomBalance
+    
+    nextCategory = state.find(c => c.id === nextCategory?.nextMonthId)
+  }
+}
+
 export const {
   createCategory,
   updateCategory,
   deleteCategory,
   assignTransaction,
-  carryoverCategories
+  deleteTransactionFromCategory,
+  carryoverCategories,
 } = categorySlice.actions
 export default categorySlice.reducer

@@ -2,40 +2,43 @@ import React, { ChangeEvent } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import { RootState } from '@budget/store/store'
-import { createTransactions, deleteTransaction } from '@budget/store/transaction.slice'
+import { AppDispatch, RootState } from '@budget/store/store'
+import { createTransactions } from '@budget/store/transaction.slice'
 import { assignTransaction } from '@budget/store/category.slice'
-import { Transaction } from '@budget/models/transaction.model'
+import { useBudgetMonthCategories, useBudgetMonthTransactions } from '@budget/store/selectors'
+
 import { parseCsv } from '@budget/services/csvParser.service'
 import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer.service'
 
+import { Transaction } from '@budget/models/transaction.model'
+
 import './styles.scss'
-import { DateTime } from 'luxon'
+import { deleteTransactionThunk } from '@budget/store/thunks'
 
 type Props = {}
 
 export function Transactions({}: Props) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const budgetMonth = useSelector((state: RootState) => state.budgetMonth)
-  const transactions = useSelector((state: RootState) => state.transactions)
-  const categories = useSelector((state: RootState) => state.categories)
+  const transactions = useBudgetMonthTransactions(budgetMonth)
+  const categories = useBudgetMonthCategories(budgetMonth)
 
   const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       const rawData = await parseCsv(file)
       const csvRowKeys = getCsvRowKeys(rawData)
-      const data = transformCsvRows(rawData, csvRowKeys, DateTime.fromISO(budgetMonth))
+      const data = transformCsvRows(rawData, csvRowKeys, budgetMonth)
       dispatch(createTransactions(data))
     }
   }
 
   const removeTransaction = (transId: string) => {
-    dispatch(deleteTransaction({ id: transId }))
+    dispatch(deleteTransactionThunk(transId))
   }
 
   const handleAssignTransactionToCategory = (transId: string, catId: string) => {
-    dispatch(assignTransaction({ categoryId: catId, transactionId: transId }))
+    dispatch(assignTransaction({ categoryId: catId, transactionId: transId, allTransactions: transactions }))
   }
 
   return (
@@ -53,7 +56,11 @@ export function Transactions({}: Props) {
             <div>{trans.amount}</div>
             <div>{trans.date}</div>
             <div>
-              <select className="category-select" onChange={(v) => handleAssignTransactionToCategory(trans.id, v.target.value)}>
+              <select
+                className="category-select"
+                onChange={(v) => handleAssignTransactionToCategory(trans.id, v.target.value)}
+                value={categories.find(c => c.transactionIds.includes(trans.id))?.id}
+              >
                 <option value={undefined}>-</option>
                 {categories.map((c) => (
                   <option key={c.id} value={c.id}>{c.name}</option>

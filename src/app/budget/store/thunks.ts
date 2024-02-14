@@ -3,18 +3,20 @@ import { DateTime } from 'luxon'
 
 import { filterToBudgetMonth } from '@budget/services/category.service'
 
-import { carryoverMonthAction } from './actions'
+import { carryoverMonthAction, deleteTransactionAction } from './actions'
 import { AppDispatch, RootState } from './store'
-import { carryoverCategories } from './category.slice'
+import { carryoverCategories, deleteTransactionFromCategory } from './category.slice'
 import { carryoverGroups } from './group.slice'
 import { ISODateString } from './types'
+import { deleteTransaction } from './transaction.slice'
 
-type ThunkReturn = void
-type ThunkArgs = ISODateString
+type ThunkReturn<T> = T
+type ThunkArgs<T> = T
 type ThunkApi = { state: RootState, dispatch: AppDispatch }
-export const carryoverMonth = createAsyncThunk<
-  ThunkReturn,
-  ThunkArgs,
+
+export const carryoverMonthThunk = createAsyncThunk<
+  ThunkReturn<void>,
+  ThunkArgs<ISODateString>,
   ThunkApi>(
   carryoverMonthAction.type,
   (newMonth, thunk) => {
@@ -26,8 +28,18 @@ export const carryoverMonth = createAsyncThunk<
     thunk.dispatch(carryoverCategories({ newMonthISO: newMonth }))
 
     const currentState = thunk.getState()
-    console.log('new state, does it work?', currentState)
     const newCategories = filterToBudgetMonth(currentState.categories, newMonthDateTime)
     thunk.dispatch(carryoverGroups({ newMonth: newMonth, newCategories }))
   }
 )
+
+export const deleteTransactionThunk = createAsyncThunk<
+  ThunkReturn<void>,
+  ThunkArgs<string>,
+  ThunkApi>(
+    deleteTransactionAction.type,
+    (transactionId, thunk) => {
+      thunk.dispatch(deleteTransaction({ id: transactionId }))
+      thunk.dispatch(deleteTransactionFromCategory({ id: transactionId, allTransactions: thunk.getState().transactions }))
+    }
+  )

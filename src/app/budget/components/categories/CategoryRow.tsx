@@ -32,17 +32,17 @@ export function CategoryRow({ category }: Props) {
       <div>{category.balanceForward ?? '0.00'}</div>
       <NewValueUpdater
         valueToUpdate={category.budgetedAmount}
-        onValueSet={(value) => dispatch(updateCategory({ updateCategory: { ...category, budgetedAmount: currency(value).toString() }, transactions: allTransactions }))}
+        onValueSet={(value) => dispatch(updateCategory({ updatedCategory: { ...category, budgetedAmount: currency(value).toString() }, transactions: allTransactions }))}
       />
       <NewValueUpdater
         valueToUpdate={category.additionalIncome}
-        onValueSet={(value) => dispatch(updateCategory({ updateCategory: { ...category, additionalIncome: currency(value).toString() }, transactions: allTransactions  }))}
+        onValueSet={(value) => dispatch(updateCategory({ updatedCategory: { ...category, additionalIncome: currency(value).toString() }, transactions: allTransactions  }))}
       />
       <div className="col-2">{spend.value}</div>
       <div>{balance.value}</div>
       <NewValueUpdater
         valueToUpdate={category.endOfMonthAdjust}
-        onValueSet={(value) => dispatch(updateCategory({updateCategory: { ...category, endOfMonthAdjust: currency(value).toString() }, transactions: allTransactions  }))}
+        onValueSet={(value) => dispatch(updateCategory({updatedCategory: { ...category, endOfMonthAdjust: currency(value).toString() }, transactions: allTransactions  }))}
       />
       <div>{category.endOfMonthBalance}</div>
       <button onClick={() => dispatch(deleteCategory({ id: category.id }))}>x</button>
