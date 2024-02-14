@@ -5,7 +5,7 @@ import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import { Transaction } from '@budget/models/transaction.model'
 import { WithBudgetMonth } from '@budget/models/types'
 
-export function calculateEomBalance(category: CategoryMonth, transactions: Transaction[]) {
+export function calculateEomBalance(category: CategoryMonth, transactions: Transaction[]): currency {
   const categoryTransactions = transactions.filter(t => category.transactionIds.includes(t.id))
   const prevMonthBalance = currency(category.balanceForward) ?? currency(0)
   const spend = categoryTransactions.reduce(

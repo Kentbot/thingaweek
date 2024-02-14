@@ -5,6 +5,8 @@ import { CategoryMonth } from "@budget/models/categoryMonth.model"
 import { nanoid } from "nanoid"
 import currency from "currency.js"
 import { ISODateString } from "./types"
+import { calculateEomBalance } from "@budget/services/category.service"
+import { Transaction } from "@budget/models/transaction.model"
 
 const initialState: CategoryMonth[] = []
 
@@ -15,12 +17,22 @@ const categorySlice = createSlice({
     createCategory(state, action: PayloadAction<CategoryMonth>) {
       state.push(action.payload)
     },
-    updateCategory(state, action: PayloadAction<CategoryMonth>) {
-      const updateCategory = action.payload
-      return state.map(cat => {
-        if (cat.id === updateCategory.id) return updateCategory
-        return cat
-      })
+    updateCategory(state, action: PayloadAction<{ updateCategory: CategoryMonth, transactions: Transaction[] }>) {
+      const updatedCategory = action.payload.updateCategory
+      let prevEomBalance = calculateEomBalance(updatedCategory, action.payload.transactions).toString()
+      updatedCategory.endOfMonthBalance = prevEomBalance
+
+      state.splice(state.findIndex((stateCat) => stateCat.id === updatedCategory.id), 1, updatedCategory)
+      
+      let nextCategory = state.find(stateCategory => stateCategory.id === updatedCategory.nextMonthId)
+      while (nextCategory !== undefined) {
+        nextCategory.balanceForward = prevEomBalance
+        
+        prevEomBalance = calculateEomBalance(nextCategory, action.payload.transactions).toString()
+        nextCategory.endOfMonthBalance = prevEomBalance
+        
+        nextCategory = state.find(c => c.id === nextCategory?.nextMonthId)
+      }
     },
     deleteCategory(state, action: PayloadAction<{ id: string }>) {
       return state.filter(cat => cat.id !== action.payload.id)
