@@ -6,8 +6,8 @@ import currency from "currency.js"
 import { CategoryMonth } from "@budget/models/categoryMonth.model"
 import { calculateEomBalance } from "@budget/services/category.service"
 import { Transaction } from "@budget/models/transaction.model"
+
 import { ISODateString } from "../types"
-import { deleteTransactionAction } from "../actions"
 
 const initialState: CategoryMonth[] = []
 
@@ -17,6 +17,9 @@ const categorySlice = createSlice({
   reducers: {
     createCategory(state, action: PayloadAction<CategoryMonth>) {
       state.push(action.payload)
+    },
+    createCategories(state, action: PayloadAction<CategoryMonth[]>) {
+      state.push(...action.payload)
     },
     updateCategory(state, action: PayloadAction<{ updatedCategory: CategoryMonth, transactions: Transaction[] }>) {
       recalculateLinkedCategories(state, action.payload.updatedCategory, action.payload.transactions)
@@ -96,6 +99,7 @@ const recalculateLinkedCategories = (state: CategoryMonth[], updatedCategory: Ca
 
 export const {
   createCategory,
+  createCategories,
   updateCategory,
   deleteCategory,
   assignTransaction,

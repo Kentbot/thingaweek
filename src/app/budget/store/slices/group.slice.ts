@@ -16,6 +16,9 @@ const groupSlice = createSlice({
     createGroup(state, action: PayloadAction<CategoryGroup>) {
       state.push(action.payload)
     },
+    createGroups(state, action: PayloadAction<CategoryGroup[]>) {
+      state.push(...action.payload)
+    },
     assignCategoryToGroup(state, action: PayloadAction<{ groupId: string, categoryId: string }>) {
       state.forEach(g => {
         if (g.id === action.payload.groupId) {
@@ -58,6 +61,7 @@ const groupSlice = createSlice({
 
 export const {
   createGroup,
+  createGroups,
   assignCategoryToGroup,
   deleteGroup,
   carryoverGroups

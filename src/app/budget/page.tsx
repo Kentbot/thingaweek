@@ -1,18 +1,16 @@
 'use client'
 
-import React, { createContext } from 'react'
+import React from 'react'
 
-import { DateTime } from 'luxon'
-import { Provider } from 'react-redux'
+import { Provider, useDispatch } from 'react-redux'
 
 import store from './store/store'
 import { Transactions } from './components/transactions/Transactions'
 import { Categories } from './components/categories/Categories'
 import { DateSelector } from './components/dateSelector/DateSelector'
+import { Persister } from './Persister'
 
 import './styles.scss'
-
-const defaultDate = DateTime.now()
 
 export default function Budget() {
   return (
@@ -20,6 +18,9 @@ export default function Budget() {
       <div className="budget">
         <div className="date-selector">
           <DateSelector />
+        </div>
+        <div className="persister">
+          <Persister />
         </div>
         <div className="categories">
           <Categories />
