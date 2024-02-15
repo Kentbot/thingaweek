@@ -25,7 +25,16 @@ const categorySlice = createSlice({
       recalculateLinkedCategories(state, action.payload.updatedCategory, action.payload.transactions)
     },
     deleteCategory(state, action: PayloadAction<{ id: string }>) {
-      return state.filter(cat => cat.id !== action.payload.id)
+      state.forEach(cat => {
+        if (cat.nextMonthId === action.payload.id) {
+          cat.nextMonthId = undefined
+        }
+      })
+      
+      const existingCatIndex = state.findIndex(c => c.id === action.payload.id)
+      if (existingCatIndex !== -1) {
+        state.splice(existingCatIndex, 1)
+      }
     },
     assignTransaction(state, action: PayloadAction<{ categoryId: string, transactionId: string, allTransactions: Transaction[] }>) {
       state.forEach(category => {
@@ -58,7 +67,8 @@ const categorySlice = createSlice({
       const prevCategories: CategoryMonth[] = state
         .filter(c =>
           DateTime.fromISO(c.budgetMonth).month === prevMonth.month &&
-          DateTime.fromISO(c.budgetMonth).year === prevMonth.year)
+          DateTime.fromISO(c.budgetMonth).year === prevMonth.year &&
+          c.nextMonthId === undefined)
       const newCategories: CategoryMonth[] = prevCategories
         .map(c => ({
           ...c,
@@ -84,7 +94,12 @@ const recalculateLinkedCategories = (state: CategoryMonth[], updatedCategory: Ca
   let prevEomBalance = calculateEomBalance(updatedCategory, allTransactions).toString()
   updatedCategory.endOfMonthBalance = prevEomBalance
 
-  state.splice(state.findIndex((stateCat) => stateCat.id === updatedCategory.id), 1, updatedCategory)
+  const categoryToUpdateIndex = state.findIndex((stateCat) => stateCat.id === updatedCategory.id)
+  if (categoryToUpdateIndex !== -1) {
+    state.splice(categoryToUpdateIndex, 1, updatedCategory)
+  } else {
+    console.warn('Could not replace category in state while recalculating linked categories')
+  }
   
   let nextCategory = state.find(stateCategory => stateCategory.id === updatedCategory.nextMonthId)
   while (nextCategory !== undefined) {
