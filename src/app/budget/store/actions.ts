@@ -8,3 +8,5 @@ export const deleteTransactionAction = createAction<{ id: string }>('delete-tran
 export const hydrateStateAction = createAction('hydrate-state')
 
 export const persistStateAction = createAction('persist-state')
+
+export const resetStateAction = createAction('reset-state')

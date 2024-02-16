@@ -1,14 +1,19 @@
 'use client'
-
 import React from 'react'
 
-import { Provider, useDispatch } from 'react-redux'
+import dynamic from "next/dynamic";
+
+import { Provider } from 'react-redux'
 
 import store from './store/store'
 import { Transactions } from './components/transactions/Transactions'
 import { Categories } from './components/categories/Categories'
 import { DateSelector } from './components/dateSelector/DateSelector'
-import { Persister } from './Persister'
+
+// This has to be done because the blob for downloading the state JSON file differs
+// on the server and client (breaking SSR). This defers the component to render only
+// after the client has recieved the SSR markup from the server.
+const Persister = dynamic(() => import('./components/Persister'), { ssr: false });
 
 import './styles.scss'
 

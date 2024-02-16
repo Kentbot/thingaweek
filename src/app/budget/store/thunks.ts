@@ -62,13 +62,13 @@ export const hydrateState = createAsyncThunk<
     }
   )
 
-export const persistState = createAsyncThunk<
-  ThunkReturn<void>,
-  ThunkArgs<void>,
-  ThunkApi> (
-    hydrateStateAction.type,
-    (_, thunk) => {
-      const state = thunk.getState()
-      localStorage.setItem('state', JSON.stringify(state))
-    }
-  )
+  export const persistState = createAsyncThunk<
+    ThunkReturn<void>,
+    ThunkArgs<void>,
+    ThunkApi> (
+      hydrateStateAction.type,
+      (_, thunk) => {
+        const state = thunk.getState()
+        localStorage.setItem('state', JSON.stringify(state))
+      }
+    )
