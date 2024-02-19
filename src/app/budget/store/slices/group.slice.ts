@@ -6,6 +6,7 @@ import { CategoryGroup } from '@budget/models/categoryGroup.model'
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 
 import { ISODateString } from '../types'
+import { resetStateAction } from '../actions'
 
 const initialState: CategoryGroup[] = []
 
@@ -57,6 +58,8 @@ const groupSlice = createSlice({
       state.push(...newGroups)
     }
   },
+  extraReducers: (builder) =>
+    builder.addCase(resetStateAction, () => initialState)
 })
 
 export const {

@@ -4,7 +4,7 @@ import { DateTime } from 'luxon'
 import { filterToBudgetMonth } from '@budget/services/category.service'
 
 import { AppDispatch, RootState } from './store'
-import { carryoverMonthAction, deleteTransactionAction, hydrateStateAction } from './actions'
+import { carryoverMonthAction, deleteTransactionAction, hydrateStateAction, resetStateAction } from './actions'
 import { ISODateString } from './types'
 import { carryoverCategories, createCategories, deleteTransactionFromCategory } from './slices/category.slice'
 import { carryoverGroups, createGroups } from './slices/group.slice'
@@ -47,28 +47,28 @@ export const deleteTransactionThunk = createAsyncThunk<
 
 export const hydrateState = createAsyncThunk<
   ThunkReturn<void>,
+  ThunkArgs<RootState>,
+  ThunkApi> (
+    hydrateStateAction.type,
+    (hydrationSource, thunk) => {
+
+      // Wipe state clean first, then hydrate
+      thunk.dispatch(resetStateAction())
+
+      thunk.dispatch(createCategories(hydrationSource.categories))
+      thunk.dispatch(createTransactions(hydrationSource.transactions))
+      thunk.dispatch(createGroups(hydrationSource.groups))
+      thunk.dispatch(changeMonth(hydrationSource.budgetMonth))
+    }
+  )
+
+export const persistState = createAsyncThunk<
+  ThunkReturn<void>,
   ThunkArgs<void>,
   ThunkApi> (
     hydrateStateAction.type,
     (_, thunk) => {
-      const rawState = localStorage.getItem('state')
-      const defaultState: RootState = { categories: [], transactions: [], budgetMonth: DateTime.now().toISODate(), groups: [] }
-      const hydrationRoot: RootState = JSON.parse(rawState || JSON.stringify(defaultState))
-
-      thunk.dispatch(createCategories(hydrationRoot.categories))
-      thunk.dispatch(createTransactions(hydrationRoot.transactions))
-      thunk.dispatch(createGroups(hydrationRoot.groups))
-      thunk.dispatch(changeMonth(hydrationRoot.budgetMonth))
+      const state = thunk.getState()
+      localStorage.setItem('state', JSON.stringify(state))
     }
   )
-
-  export const persistState = createAsyncThunk<
-    ThunkReturn<void>,
-    ThunkArgs<void>,
-    ThunkApi> (
-      hydrateStateAction.type,
-      (_, thunk) => {
-        const state = thunk.getState()
-        localStorage.setItem('state', JSON.stringify(state))
-      }
-    )

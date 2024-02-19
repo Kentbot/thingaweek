@@ -8,6 +8,7 @@ import { calculateEomBalance } from "@budget/services/category.service"
 import { Transaction } from "@budget/models/transaction.model"
 
 import { ISODateString } from "../types"
+import { resetStateAction } from "../actions"
 
 const initialState: CategoryMonth[] = []
 
@@ -88,6 +89,8 @@ const categorySlice = createSlice({
       state.push(...newCategories)
     }
   },
+  extraReducers: (builder) =>
+    builder.addCase(resetStateAction, () => initialState)
 })
 
 const recalculateLinkedCategories = (state: CategoryMonth[], updatedCategory: CategoryMonth, allTransactions: Transaction[]) => {

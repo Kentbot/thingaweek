@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { DateTime } from "luxon"
 
 import { ISODateString } from "../types"
+import { resetStateAction } from "../actions"
 
 const initialState: ISODateString = DateTime.now().toISODate()
 
@@ -13,6 +14,8 @@ const budgetMonthSlice = createSlice({
       return action.payload
     },
   },
+  extraReducers: (builder) =>
+    builder.addCase(resetStateAction, () => initialState)
 })
 
 export const { changeMonth } = budgetMonthSlice.actions
