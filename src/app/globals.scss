@@ -1,0 +1,27 @@
+@use './variables' as vars;
+
+.btn {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  user-select: none;
+
+  background-color: vars.$light-blue;
+  color: white;
+
+  border: none;
+  border-radius: 5px;
+  
+  padding: .375rem .5rem;
+  margin: 5px;
+
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  cursor: pointer;
+
+  &:hover {
+    background-color: vars.$blue;
+  }
+}

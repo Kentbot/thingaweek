@@ -4,7 +4,7 @@
   grid-template-areas: 
     'date-selector persister'
     'categories transactions';
-  gap: 2em;
+  gap: 8px;
 
   .date-selector {
     grid-area: date-selector

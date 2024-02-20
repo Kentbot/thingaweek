@@ -39,31 +39,36 @@ export function DateSelector() {
     <>
       <div className="date-selection">
         <div className="month-select">
-          <button className="month" onClick={() => handleMonthSelect(1)}>Jan</button>
-          <button className="month" onClick={() => handleMonthSelect(2)}>Feb</button>
-          <button className="month" onClick={() => handleMonthSelect(3)}>Mar</button>
-          <button className="month" onClick={() => handleMonthSelect(4)}>Apr</button>
-          <button className="month" onClick={() => handleMonthSelect(5)}>May</button>
-          <button className="month" onClick={() => handleMonthSelect(6)}>Jun</button>
-          <button className="month" onClick={() => handleMonthSelect(7)}>Jul</button>
-          <button className="month" onClick={() => handleMonthSelect(8)}>Aug</button>
-          <button className="month" onClick={() => handleMonthSelect(9)}>Sep</button>
-          <button className="month" onClick={() => handleMonthSelect(10)}>Oct</button>
-          <button className="month" onClick={() => handleMonthSelect(11)}>Nov</button>
-          <button className="month" onClick={() => handleMonthSelect(12)}>Dec</button>
+          <button className="month btn" onClick={() => handleMonthSelect(1)}>Jan</button>
+          <button className="month btn" onClick={() => handleMonthSelect(2)}>Feb</button>
+          <button className="month btn" onClick={() => handleMonthSelect(3)}>Mar</button>
+          <button className="month btn" onClick={() => handleMonthSelect(4)}>Apr</button>
+          <button className="month btn" onClick={() => handleMonthSelect(5)}>May</button>
+          <button className="month btn" onClick={() => handleMonthSelect(6)}>Jun</button>
+          <button className="month btn" onClick={() => handleMonthSelect(7)}>Jul</button>
+          <button className="month btn" onClick={() => handleMonthSelect(8)}>Aug</button>
+          <button className="month btn" onClick={() => handleMonthSelect(9)}>Sep</button>
+          <button className="month btn" onClick={() => handleMonthSelect(10)}>Oct</button>
+          <button className="month btn" onClick={() => handleMonthSelect(11)}>Nov</button>
+          <button className="month btn" onClick={() => handleMonthSelect(12)}>Dec</button>
         </div>
-        <select
-          className="year-select"
-          onChange={(event) => handleYearSelect(event.target.value)}
-          defaultValue={DateTime.now().year.toString()}
-        >
-          {years.map((year) => (
-            <option key={year} value={year}>{year}</option>
-          ))}
-        </select>
-      </div>
-      <div className="current-budget-month">
-        Currently Viewing: <span className="date">{currentMonth.monthLong} {currentMonth.year}</span>
+        <div className="year">
+          <select
+            className="year-select btn"
+            onChange={(event) => handleYearSelect(event.target.value)}
+            defaultValue={DateTime.now().year.toString()}
+          >
+            {years.map((year) => (
+              <option key={year} value={year}>{year}</option>
+            ))}
+          </select>
+          <div className="current-budget-month">
+            Currently Viewing:
+          </div>
+          <div className="date">
+            {currentMonth.monthLong} {currentMonth.year}
+          </div>
+        </div>
       </div>
     </>
   )

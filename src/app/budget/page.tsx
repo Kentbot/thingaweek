@@ -13,7 +13,7 @@ import { DateSelector } from './components/dateSelector/DateSelector'
 // This has to be done because the blob for downloading the state JSON file differs
 // on the server and client (breaking SSR). This defers the component to render only
 // after the client has recieved the SSR markup from the server.
-const Persister = dynamic(() => import('./components/Persister'), { ssr: false });
+const Persister = dynamic(() => import('./components/persister/Persister'), { ssr: false });
 
 import './styles.scss'
 

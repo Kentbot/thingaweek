@@ -2,8 +2,13 @@ import React from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import { AppDispatch, RootState, defaultState } from '../store/store'
-import { hydrateState, persistState } from '../store/thunks'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSave, faFileArrowUp, faDownload } from '@fortawesome/free-solid-svg-icons'
+
+import { AppDispatch, RootState, defaultState } from '../../store/store'
+import { hydrateState, persistState } from '../../store/thunks'
+
+import './styles.scss'
 
 export default function Persister() {
   const dispatch = useDispatch<AppDispatch>()
@@ -34,15 +39,17 @@ export default function Persister() {
   }
 
   return (
-    <>
-      <button onClick={() => dispatch(persistState())}>
-        Persist it yo
+    <div className="persister-buttons">
+      <button onClick={() => dispatch(persistState())} className="btn">
+        Browser Save <FontAwesomeIcon icon={faSave} size={'lg'} />
       </button>
-      <button onClick={() => handleHydrationFromLocalStorage()}>
-        Load it yo
+      <button onClick={() => handleHydrationFromLocalStorage()} className="btn">
+        Browser Load <FontAwesomeIcon icon={faFileArrowUp} size={'lg'} />
       </button>
-      <a download="budget.json" href={stateUrl}>Download it</a>
-      <input type='file' onChange={handleFileUpload} />
-    </>
+      <a download="budget.json" href={stateUrl} className="btn download">
+        Local Save <FontAwesomeIcon icon={faDownload} />
+      </a>
+      <input type='file' onChange={handleFileUpload} className="btn" />
+    </div>
   )
 }

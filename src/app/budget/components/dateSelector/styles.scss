@@ -1,50 +1,55 @@
+@use './variables' as vars;
+
 $padding: 0px 20px 20px;
 
 .date-selection {
   display: grid;
   grid-template-columns: repeat(4, 1fr) 2fr;
-  gap: 15px;
+  grid-template-rows: repeat(3, minmax(30px, auto));
+  gap: 8px;
   padding: $padding;
-  max-width: 40%;
+  max-width: 70%;
+
+  *:not(.year-select) {
+    align-self: center;
+    justify-self: center;
+  }
 
   .month-select {
     display: grid;
     grid-template-columns: subgrid;
+    grid-template-rows: subgrid;
     grid-column: 1 / 5;
-    gap: 15px;
+    grid-row: 1 / -1;
 
     .month {
-      height: 30px;
       width: 100%;
-      align-self: center;
-      justify-self: center;
-      background-color: #5050ff;
-      border: none;
-      color: white;
-      border-radius: 5px;
+
+      &:hover {
+        background-color: vars.$blue;
+        cursor: pointer;
+      }
     }
   }
 
-  .year-select {
-    height: 30px;
-    align-self: center;
-    background-color: #5050ff;
-    border: none;
-    color: white;
-    border-radius: 5px;
-    padding-left: 5px;
-
-    option {
-      background-color: grey;
+  .year {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: subgrid;
+    grid-column: 5;
+    grid-row: 1 / -1;
+    
+    .year-select {
+      padding-left: 5px;
+  
+      option {
+        background-color: grey;
+      }
     }
   }
 }
 
-.current-budget-month {
-  padding: $padding;
-
-  .date {
-    font-weight: bold;
-    text-decoration: underline;
-  }
+.date {
+  font-weight: bold;
+  text-decoration: underline;
 }
