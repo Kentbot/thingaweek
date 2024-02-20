@@ -5,17 +5,16 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { AppDispatch, RootState } from '@budget/store/store'
 import { changeMonth as changeBudgetMonth } from '@budget/store/slices/budgetMonth.slice'
-import { ISODateString } from '@budget/store/types'
 import { createSelector } from '@reduxjs/toolkit'
-
-type Props = {}
 
 const beginYear = 2024
 const endYear = DateTime.now().year + 1
 const yearSpan = endYear - beginYear + 1
 const years = Array(yearSpan).fill(beginYear).map((val, index) => val + index)
 
-export function DateSelector({}: Props) {
+import './styles.scss'
+
+export function DateSelector() {
   const dispatch = useDispatch<AppDispatch>()
   const selectCurrentMonth = createSelector(
     (state: RootState) => state.budgetMonth,
@@ -38,31 +37,33 @@ export function DateSelector({}: Props) {
 
   return (
     <>
-      <div className="month-select">
-        <button onClick={() => handleMonthSelect(1)}>Jan</button>
-        <button onClick={() => handleMonthSelect(2)}>Feb</button>
-        <button onClick={() => handleMonthSelect(3)}>Mar</button>
-        <button onClick={() => handleMonthSelect(4)}>Apr</button>
-        <button onClick={() => handleMonthSelect(5)}>May</button>
-        <button onClick={() => handleMonthSelect(6)}>Jun</button>
-        <button onClick={() => handleMonthSelect(7)}>Jul</button>
-        <button onClick={() => handleMonthSelect(8)}>Aug</button>
-        <button onClick={() => handleMonthSelect(9)}>Sep</button>
-        <button onClick={() => handleMonthSelect(10)}>Oct</button>
-        <button onClick={() => handleMonthSelect(11)}>Nov</button>
-        <button onClick={() => handleMonthSelect(12)}>Dec</button>
+      <div className="date-selection">
+        <div className="month-select">
+          <button className="month" onClick={() => handleMonthSelect(1)}>Jan</button>
+          <button className="month" onClick={() => handleMonthSelect(2)}>Feb</button>
+          <button className="month" onClick={() => handleMonthSelect(3)}>Mar</button>
+          <button className="month" onClick={() => handleMonthSelect(4)}>Apr</button>
+          <button className="month" onClick={() => handleMonthSelect(5)}>May</button>
+          <button className="month" onClick={() => handleMonthSelect(6)}>Jun</button>
+          <button className="month" onClick={() => handleMonthSelect(7)}>Jul</button>
+          <button className="month" onClick={() => handleMonthSelect(8)}>Aug</button>
+          <button className="month" onClick={() => handleMonthSelect(9)}>Sep</button>
+          <button className="month" onClick={() => handleMonthSelect(10)}>Oct</button>
+          <button className="month" onClick={() => handleMonthSelect(11)}>Nov</button>
+          <button className="month" onClick={() => handleMonthSelect(12)}>Dec</button>
+        </div>
+        <select
+          className="year-select"
+          onChange={(event) => handleYearSelect(event.target.value)}
+          defaultValue={DateTime.now().year.toString()}
+        >
+          {years.map((year) => (
+            <option key={year} value={year}>{year}</option>
+          ))}
+        </select>
       </div>
-      <select
-        className="year-select"
-        onChange={(event) => handleYearSelect(event.target.value)}
-        defaultValue={DateTime.now().year.toString()}
-      >
-        {years.map((year) => (
-          <option key={year} value={year}>{year}</option>
-        ))}
-      </select>
       <div className="current-budget-month">
-        {currentMonth.monthLong} {currentMonth.year}
+        Currently Viewing: <span className="date">{currentMonth.monthLong} {currentMonth.year}</span>
       </div>
     </>
   )
