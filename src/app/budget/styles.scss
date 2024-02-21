@@ -2,19 +2,21 @@
   display: grid;
   grid-template-columns: 5fr 3fr;
   grid-template-areas: 
-    'date-selector persister'
-    'categories transactions';
+    'persister persister'
+    'categories transactions'
+    'date-selector date-selector';
   gap: 8px;
 
   .date-selector {
-    grid-area: date-selector
+    grid-area: date-selector;
   }
 
   .categories {
-    grid-area: categories
+    grid-area: categories;
+    padding-bottom: 60px;
   }
 
   .transactions {
-    grid-area: transactions
+    grid-area: transactions;
   }
 }

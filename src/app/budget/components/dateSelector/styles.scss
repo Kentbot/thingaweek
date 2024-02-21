@@ -1,14 +1,14 @@
 @use './variables' as vars;
 
-$padding: 0px 20px 20px;
-
 .date-selection {
   display: grid;
-  grid-template-columns: repeat(4, 1fr) 2fr;
-  grid-template-rows: repeat(3, minmax(30px, auto));
+  grid-template-columns: repeat(12, 1fr) 2fr 2fr;
   gap: 8px;
-  padding: $padding;
-  max-width: 70%;
+  border-top: 1px solid black;
+  padding-top: 10px;
+  background-color: white;
+  position: fixed;
+  bottom: 0;
 
   *:not(.year-select) {
     align-self: center;
@@ -18,9 +18,7 @@ $padding: 0px 20px 20px;
   .month-select {
     display: grid;
     grid-template-columns: subgrid;
-    grid-template-rows: subgrid;
-    grid-column: 1 / 5;
-    grid-row: 1 / -1;
+    grid-column: 1 / 13;
 
     .month {
       width: 100%;
@@ -35,9 +33,7 @@ $padding: 0px 20px 20px;
   .year {
     display: grid;
     grid-template-columns: subgrid;
-    grid-template-rows: subgrid;
-    grid-column: 5;
-    grid-row: 1 / -1;
+    grid-column: 13;
     
     .year-select {
       padding-left: 5px;
