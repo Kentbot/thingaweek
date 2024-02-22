@@ -7,7 +7,7 @@ import transactionSlice from './slices/transaction.slice'
 import budgetMonthSlice from './slices/budgetMonth.slice'
 
 export const defaultState = {
-  categories: [],
+  categories: { incomeCategories: [], monthCategories: [] },
   transactions: [],
   budgetMonth: DateTime.now().toISODate(),
   groups: []

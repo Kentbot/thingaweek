@@ -64,10 +64,7 @@ export function DateSelector() {
           </select>
         </div>
         <div className="current-budget-month">
-          Currently Viewing: <span className="date">{currentMonth.monthLong} {currentMonth.year}</span>
-        </div>
-        <div className="date">
-          
+          Currently Viewing: <br/> <span className="date">{currentMonth.monthLong} {currentMonth.year}</span>
         </div>
       </div>
     </>

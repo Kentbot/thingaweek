@@ -1,6 +1,7 @@
 @use './variables' as vars;
 
 .date-selection {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(12, 1fr) 2fr 2fr;
   gap: 8px;

@@ -1,5 +1,6 @@
 import currency from 'currency.js'
 import { DateTime } from 'luxon'
+import { nanoid } from 'nanoid'
 
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import { Transaction } from '@budget/models/transaction.model'
@@ -24,3 +25,15 @@ export function filterToBudgetMonth<T extends WithBudgetMonth>(modelWithBudgetMo
     DateTime.fromISO(m.budgetMonth).month === newMonth.month &&
     DateTime.fromISO(m.budgetMonth).year === newMonth.year)
 }
+
+export const createIncomeCategory = (budgetMonth: DateTime): CategoryMonth => ({
+  id: nanoid(),
+  additionalIncome: '0',
+  balanceForward: '0',
+  budgetedAmount: '0',
+  budgetMonth: budgetMonth.toISODate()!,
+  endOfMonthAdjust: '0',
+  endOfMonthBalance: '0',
+  name: `${budgetMonth.monthShort} Income`,
+  transactionIds: [],
+})

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { AppDispatch, RootState } from '@budget/store/store'
 import { assignCategoryToGroup } from '@budget/store/slices/group.slice'
-import { useBudgetMonthCategories, useBudgetMonthGroups } from '@budget/store/selectors'
+import { useBudgetMonthCategories, useBudgetMonthGroups, useBudgetMonthIncome } from '@budget/store/selectors'
 
 import { CategoryCreator } from './CategoryCreator'
 import { GroupSelector } from './GroupSelector'
@@ -18,6 +18,7 @@ export function Categories({}: Props) {
   const dispatch = useDispatch<AppDispatch>()
   const currentMonth = useSelector((state: RootState) => state.budgetMonth)
   const groups = useBudgetMonthGroups(currentMonth)
+  const incomeCategory = useBudgetMonthIncome(currentMonth)
   const categories = useBudgetMonthCategories(currentMonth)
 
   const ungroupedCategories = useMemo(
@@ -36,6 +37,9 @@ export function Categories({}: Props) {
   return (
     <>
       <CategoryCreator />
+      <div className="income-category">
+        {incomeCategory?.name} {incomeCategory?.id}
+      </div>
       <div className="categories-grid">
         <div className="col-2 header">Group</div>
         <div className="col-2 header">Description</div>

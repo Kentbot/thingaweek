@@ -16,8 +16,16 @@ export const useBudgetMonthTransactions = (budgetMonth: ISODateString) => {
 
 export const useBudgetMonthCategories = (budgetMonth: ISODateString) => {
   const selectCategories = createSelector(
-    (state: RootState) => state.categories,
+    (state: RootState) => state.categories.monthCategories,
     (categories) => filterToBudgetMonth(categories, DateTime.fromISO(budgetMonth))
+  )
+  return useSelector(selectCategories)
+}
+
+export const useBudgetMonthIncome = (budgetMonth: ISODateString) => {
+  const selectCategories = createSelector(
+    (state: RootState) => state.categories.incomeCategories,
+    (categories) => filterToBudgetMonth(categories, DateTime.fromISO(budgetMonth))[0]
   )
   return useSelector(selectCategories)
 }
