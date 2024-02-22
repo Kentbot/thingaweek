@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 5fr 3fr;
   grid-template-areas: 
-    'persister persister'
+    'persister transactions'
     'categories transactions'
     'date-selector date-selector';
   gap: 8px;

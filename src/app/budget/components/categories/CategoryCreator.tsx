@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import currency from 'currency.js'
 import { nanoid } from 'nanoid'
 
-import { CategoryGroup } from '@budget/models/categoryGroup.model'
-import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import { NumericInput } from '@components/general/NumericInput'
+
 import { AppDispatch, RootState } from '@budget/store/store'
 import { createCategory } from '@budget/store/slices/category.slice'
 import { createGroup } from '@budget/store/slices/group.slice'
+import { carryoverMonthThunk } from '@budget/store/thunks'
+
+import './categoryCreator.styles.scss'
 
 type Props = {}
 
@@ -56,34 +58,36 @@ export function CategoryCreator({}: Props) {
   }
 
   return (
-    <>
-      <div>
-        <input
-          id='category-name-input'
-          type='text'
-          placeholder='Category name'
-          value={categoryName}
-          onChange={(v) => setCategoryName(v.target.value)}
-        />
-        <NumericInput
-          id='budget-amt-input'
-          type='text'
-          placeholder='Budgeted amount'
-          value={budgetAmt}
-          onValueUpdate={(v) => handleBudgetChange(v)}
-        />
-        <button onClick={handleCategoryCreate}>Save</button>
-      </div>
-      <div>
-        <input
-          id='group-name-input'
-          type='text'
-          placeholder='Category Group name'
-          value={groupName}
-          onChange={(v) => setGroupName(v.target.value)}
-        />
-        <button onClick={handleGroupCreate}>Save</button>
-      </div>
-    </>
+    <div className="creation-controls">
+      <input
+        id='category-name-input'
+        className='category-input'
+        type='text'
+        placeholder='Category name'
+        value={categoryName}
+        onChange={(v) => setCategoryName(v.target.value)}
+      />
+      <NumericInput
+        id='budget-amt-input'
+        className='category-input'
+        type='text'
+        placeholder='Budgeted amount'
+        value={budgetAmt}
+        onValueUpdate={(v) => handleBudgetChange(v)}
+      />
+      <button className="btn" onClick={handleCategoryCreate}>Save</button>
+      <input
+        id='group-name-input'
+        className='category-input gap-left'
+        type='text'
+        placeholder='Category Group name'
+        value={groupName}
+        onChange={(v) => setGroupName(v.target.value)}
+      />
+      <button className="btn" onClick={handleGroupCreate}>Save</button>
+      <button className="btn gap-left" onClick={() => dispatch(carryoverMonthThunk(currentMonth))}>
+        Carryover from prev month
+      </button>
+    </div>
   )
 }

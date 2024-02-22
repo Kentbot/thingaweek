@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { AppDispatch, RootState } from '@budget/store/store'
 import { assignCategoryToGroup } from '@budget/store/slices/group.slice'
-import { carryoverMonthThunk  } from '@budget/store/thunks'
 import { useBudgetMonthCategories, useBudgetMonthGroups } from '@budget/store/selectors'
 
 import { CategoryCreator } from './CategoryCreator'
@@ -37,9 +36,6 @@ export function Categories({}: Props) {
   return (
     <>
       <CategoryCreator />
-      <button onClick={() => dispatch(carryoverMonthThunk(currentMonth))}>
-        Carryover from prev month
-      </button>
       <div className="categories-grid">
         <div className="col-2 header">Group</div>
         <div className="col-2 header">Description</div>

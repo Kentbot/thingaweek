@@ -3,7 +3,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave, faFileArrowUp, faDownload } from '@fortawesome/free-solid-svg-icons'
+import { faSave, faFileArrowUp, faDownload, faUpload } from '@fortawesome/free-solid-svg-icons'
 
 import { AppDispatch, RootState, defaultState } from '../../store/store'
 import { hydrateState, persistState } from '../../store/thunks'
@@ -41,15 +41,18 @@ export default function Persister() {
   return (
     <div className="persister-buttons">
       <button onClick={() => dispatch(persistState())} className="btn">
-        Browser Save <FontAwesomeIcon icon={faSave} size={'lg'} />
+        Browser Save&nbsp;&nbsp;<FontAwesomeIcon icon={faSave} size={'lg'} />
       </button>
       <button onClick={() => handleHydrationFromLocalStorage()} className="btn">
-        Browser Load <FontAwesomeIcon icon={faFileArrowUp} size={'lg'} />
+        Browser Load&nbsp;&nbsp;<FontAwesomeIcon icon={faFileArrowUp} size={'lg'} />
       </button>
       <a download="budget.json" href={stateUrl} className="btn download">
-        Local Save <FontAwesomeIcon icon={faDownload} />
+        Save Budget to File&nbsp;&nbsp;<FontAwesomeIcon icon={faDownload} />
       </a>
-      <input type='file' onChange={handleFileUpload} className="btn" />
+      <label htmlFor="state-upload" className="btn">
+        Load Budget from File&nbsp;&nbsp;<FontAwesomeIcon icon={faUpload} />
+      </label>
+      <input id="state-upload" type="file" onChange={handleFileUpload} />
     </div>
   )
 }
