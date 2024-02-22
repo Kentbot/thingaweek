@@ -13,7 +13,10 @@ import { DateSelector } from './components/dateSelector/DateSelector'
 // This has to be done because the blob for downloading the state JSON file differs
 // on the server and client (breaking SSR). This defers the component to render only
 // after the client has recieved the SSR markup from the server.
-const Persister = dynamic(() => import('./components/persister/Persister'), { ssr: false });
+const Persister = dynamic(() => import('./components/persister/Persister'), {
+  ssr: false,
+  loading: () => <>Loading persistence buttons...<button className="btn" style={{opacity: 0}}>load</button></>,
+});
 
 import './styles.scss'
 
@@ -21,9 +24,6 @@ export default function Budget() {
   return (
     <Provider store={store}>
       <div className="budget">
-        <div className="date-selector">
-          <DateSelector />
-        </div>
         <div className="persister">
           <Persister />
         </div>
@@ -32,6 +32,9 @@ export default function Budget() {
         </div>
         <div className="transactions">
           <Transactions />
+        </div>
+        <div className="date-selector">
+          <DateSelector />
         </div>
       </div>
     </Provider>
