@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '@budget/store/store'
 import { createTransactions } from '@budget/store/slices/transaction.slice'
 import { assignTransaction } from '@budget/store/slices/category.slice'
-import { useBudgetMonthCategories, useBudgetMonthTransactions } from '@budget/store/selectors'
+import { useBudgetMonthCategories, useBudgetMonthIncome, useBudgetMonthTransactions } from '@budget/store/selectors'
 
 import { parseCsv } from '@budget/services/csvParser.service'
 import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer.service'
@@ -22,6 +22,8 @@ export function Transactions({}: Props) {
   const budgetMonth = useSelector((state: RootState) => state.budgetMonth)
   const transactions = useBudgetMonthTransactions(budgetMonth)
   const categories = useBudgetMonthCategories(budgetMonth)
+  const income = useBudgetMonthIncome(budgetMonth)
+  const categoriesAndIncome = [income, ...categories]
 
   const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -59,10 +61,10 @@ export function Transactions({}: Props) {
               <select
                 className="category-select"
                 onChange={(v) => handleAssignTransactionToCategory(trans.id, v.target.value)}
-                value={categories.find(c => c.transactionIds.includes(trans.id))?.id}
+                value={categoriesAndIncome.find(c => c.transactionIds.includes(trans.id))?.id}
               >
                 <option value={undefined}>-</option>
-                {categories.map((c) => (
+                {categoriesAndIncome.map((c) => (
                   <option key={c.id} value={c.id}>{c.name}</option>
                 ))}
               </select>

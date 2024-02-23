@@ -2,10 +2,21 @@ $num-columns: 12;
 $grid-columns: repeat($num-columns, 2fr) 1fr;
 $gap: 8px;
 
+.income-category {
+  margin: 20px;
+}
+
 .categories-grid {
   display: grid;
-  gap: $gap;
   grid-template-columns: $grid-columns;
+  gap: 1px;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+
+  * {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+  }
 
   .header {
     text-align: center;
@@ -35,8 +46,13 @@ $gap: 8px;
     }
   }
 
-  *:not(.header) {
-    width: 100%;
+  .group-select {
+    * {
+      width: 90%;
+    }
+  }
+
+  *:not(.header, .group-select) {
     overflow: hidden;
     text-overflow: ellipsis;
   }

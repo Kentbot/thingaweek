@@ -29,7 +29,7 @@ export const carryoverMonthThunk = createAsyncThunk<
       thunk.dispatch(carryoverCategories({ newMonthISO: newMonth }))
 
       const currentState = thunk.getState()
-      const newCategories = filterToBudgetMonth(currentState.categories, newMonthDateTime)
+      const newCategories = filterToBudgetMonth(currentState.categories.monthCategories, newMonthDateTime)
       thunk.dispatch(carryoverGroups({ newMonth: newMonth, newCategories }))
     }
   )
@@ -55,7 +55,7 @@ export const hydrateState = createAsyncThunk<
       // Wipe state clean first, then hydrate
       thunk.dispatch(resetStateAction())
 
-      thunk.dispatch(createCategories(hydrationSource.categories))
+      thunk.dispatch(createCategories(hydrationSource.categories.monthCategories))
       thunk.dispatch(createTransactions(hydrationSource.transactions))
       thunk.dispatch(createGroups(hydrationSource.groups))
       thunk.dispatch(changeMonth(hydrationSource.budgetMonth))

@@ -8,6 +8,7 @@ import { NumericInput } from '@components/general/NumericInput'
 import { AppDispatch, RootState } from '@budget/store/store'
 import { deleteCategory, updateCategory } from '@budget/store/slices/category.slice'
 import { createSelector } from '@reduxjs/toolkit'
+import { useCategoryTransactions } from '@budget/store/selectors'
 
 type Props = {
   category: CategoryMonth
@@ -15,15 +16,12 @@ type Props = {
 
 export function CategoryRow({ category }: Props) {
   const dispatch = useDispatch<AppDispatch>()
-  const selectCategoryTransactions = createSelector(
-    (state: RootState) => state.transactions,
-    (transactions) => transactions.filter(t => category.transactionIds.includes(t.id)))
-  const categoryTransactions = useSelector(selectCategoryTransactions)
+  const categoryTransactions = useCategoryTransactions(category)
   const allTransactions = useSelector((state: RootState) => state.transactions)
 
-  const spend = categoryTransactions.reduce(
+ const spend = categoryTransactions.reduce(
     (prev, curr) => currency(curr.amount).add(prev), currency(0)
-  )
+  ) 
   const balance = currency(category.budgetedAmount).subtract(spend)
 
   return (

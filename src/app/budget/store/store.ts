@@ -1,16 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { DateTime } from 'luxon'
 
-import categorySlice from './slices/category.slice'
-import groupSlice from './slices/group.slice'
-import transactionSlice from './slices/transaction.slice'
-import budgetMonthSlice from './slices/budgetMonth.slice'
+import categorySlice, { initialState as initialCategoryState } from './slices/category.slice'
+import groupSlice, { initialState as initialGroupState } from './slices/group.slice'
+import transactionSlice, { initialState as initialTransactionState } from './slices/transaction.slice'
+import budgetMonthSlice, { initialState as initialBudgetMonthState } from './slices/budgetMonth.slice'
 
 export const defaultState = {
-  categories: { incomeCategories: [], monthCategories: [] },
-  transactions: [],
-  budgetMonth: DateTime.now().toISODate(),
-  groups: []
+  categories: initialCategoryState,
+  transactions: initialTransactionState,
+  budgetMonth: initialBudgetMonthState,
+  groups: initialGroupState
 }
 
 const store = configureStore({

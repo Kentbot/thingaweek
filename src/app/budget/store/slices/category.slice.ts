@@ -18,7 +18,7 @@ type CategoryState = {
 
 const initialIncomeCategory = createIncomeCategory(DateTime.now())
 
-const initialState: CategoryState = {
+export const initialState: CategoryState = {
   monthCategories: [],
   incomeCategories: [initialIncomeCategory]
 }
@@ -49,18 +49,19 @@ const categorySlice = createSlice({
       }
     },
     assignTransaction(state, action: PayloadAction<{ categoryId: string, transactionId: string, allTransactions: Transaction[] }>) {
-      state.monthCategories.forEach(category => {
+      [...state.monthCategories, ...state.incomeCategories].forEach(category => {
         const shouldRemoveTransFromCategory =
           category.transactionIds.includes(action.payload.transactionId) &&
           category.id !== action.payload.categoryId
         const shouldAddTransToCategory = category.id === action.payload.categoryId
+        const shouldCalculateLinks = !state.incomeCategories.some(c => c.id === action.payload.categoryId)
 
         if (shouldRemoveTransFromCategory) {
           category.transactionIds = category.transactionIds.filter(tid => tid !== action.payload.transactionId)
-          recalculateLinkedCategories(state.monthCategories, category, action.payload.allTransactions)
+          shouldCalculateLinks && recalculateLinkedCategories(state.monthCategories, category, action.payload.allTransactions)
         } else if (shouldAddTransToCategory) {
           category.transactionIds.push(action.payload.transactionId)
-          recalculateLinkedCategories(state.monthCategories, category, action.payload.allTransactions)
+          shouldCalculateLinks && recalculateLinkedCategories(state.monthCategories, category, action.payload.allTransactions)
         }
       })
     },

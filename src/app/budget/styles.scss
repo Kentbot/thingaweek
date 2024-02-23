@@ -1,6 +1,7 @@
 .budget {
   display: grid;
   grid-template-columns: 5fr 3fr;
+  grid-template-rows: minmax(auto, 50px);
   grid-template-areas: 
     'persister transactions'
     'categories transactions'

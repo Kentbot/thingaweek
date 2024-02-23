@@ -4,7 +4,7 @@ import { Transaction } from '@budget/models/transaction.model'
 
 import { resetStateAction } from '../actions'
 
-const initialState: Transaction[] = []
+export const initialState: Transaction[] = []
 
 const transactionSlice = createSlice({
   name: 'transactions',

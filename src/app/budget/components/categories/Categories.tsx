@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
+import currency from 'currency.js'
 
 import { AppDispatch, RootState } from '@budget/store/store'
 import { assignCategoryToGroup } from '@budget/store/slices/group.slice'
-import { useBudgetMonthCategories, useBudgetMonthGroups, useBudgetMonthIncome } from '@budget/store/selectors'
+import { useBudgetMonthCategories, useBudgetMonthGroups, useBudgetMonthIncome, useCategoryTransactions } from '@budget/store/selectors'
 
 import { CategoryCreator } from './CategoryCreator'
 import { GroupSelector } from './GroupSelector'
@@ -18,8 +19,13 @@ export function Categories({}: Props) {
   const dispatch = useDispatch<AppDispatch>()
   const currentMonth = useSelector((state: RootState) => state.budgetMonth)
   const groups = useBudgetMonthGroups(currentMonth)
-  const incomeCategory = useBudgetMonthIncome(currentMonth)
   const categories = useBudgetMonthCategories(currentMonth)
+  const incomeCategory = useBudgetMonthIncome(currentMonth)
+  const incomeTransactions = useCategoryTransactions(incomeCategory)
+
+  const income = incomeTransactions.reduce(
+     (prev, curr) => currency(curr.amount).add(prev), currency(0)
+   ) 
 
   const ungroupedCategories = useMemo(
     () => {
@@ -38,7 +44,7 @@ export function Categories({}: Props) {
     <>
       <CategoryCreator />
       <div className="income-category">
-        {incomeCategory?.name} {incomeCategory?.id}
+        {incomeCategory?.name} {income.value}
       </div>
       <div className="categories-grid">
         <div className="col-2 header">Group</div>
@@ -53,7 +59,7 @@ export function Categories({}: Props) {
         <div className="header"></div>
         { ungroupedCategories.map((cat) => (
           <React.Fragment key={cat.id}>
-            <div className="col-2">
+            <div className="col-2 group-select">
               <GroupSelector
                 groups={groups}
                 onGroupSelect={(gid) => handleGroupSelect(gid, cat.id)}

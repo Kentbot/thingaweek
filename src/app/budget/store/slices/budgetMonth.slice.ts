@@ -4,7 +4,7 @@ import { DateTime } from "luxon"
 import { ISODateString } from "../types"
 import { resetStateAction } from "../actions"
 
-const initialState: ISODateString = DateTime.now().toISODate()
+export const initialState: ISODateString = DateTime.now().toISODate()
 
 const budgetMonthSlice = createSlice({
   name: 'budgetMonth',
