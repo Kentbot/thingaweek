@@ -57,8 +57,8 @@ export function Categories({}: Props) {
         <div className="header">EOM Adjust</div>
         <div className="header">EOM Balance</div>
         <div className="header"></div>
-        { ungroupedCategories.map((cat) => (
-          <React.Fragment key={cat.id}>
+        { ungroupedCategories.map((cat, index) => (
+          <div className={index % 2 === 0 ? "category-row-even" : "category-row-odd"} key={cat.id}>
             <div className="col-2 group-select">
               <GroupSelector
                 groups={groups}
@@ -68,15 +68,15 @@ export function Categories({}: Props) {
             <CategoryRow
               category={cat}
             />
-          </React.Fragment>
+          </div>
         ))}
         { groups.map((group) => {
           const groupCategories = categories.filter(c => group.categoryIds.includes(c.id))
           return (
             <div key={group.id} className="group">
               <div className="name">{group.name}</div>
-              {groupCategories.map((cat) => (
-                <div key={cat.id} className="group-category">
+              {groupCategories.map((cat, index) => (
+                <div key={cat.id} className={index % 2 === 0 ? "group-category" : "group-category highlight"}>
                   <CategoryRow
                     category={cat}
                   />

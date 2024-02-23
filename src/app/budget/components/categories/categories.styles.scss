@@ -1,3 +1,5 @@
+@use './variables' as vars;
+
 $num-columns: 12;
 $grid-columns: repeat($num-columns, 2fr) 1fr;
 $gap: 8px;
@@ -6,17 +8,21 @@ $gap: 8px;
   margin: 20px;
 }
 
+.highlight, .category-row-even, .category-row-odd {
+  display: contents;
+}
+
+.highlight, .category-row-even {
+  > * {
+    background-color: vars.$light-blue-1;
+    color: white;
+  }
+}
+
 .categories-grid {
   display: grid;
   grid-template-columns: $grid-columns;
-  gap: 1px;
-  border-left: 1px solid black;
-  border-bottom: 1px solid black;
-
-  * {
-    border-top: 1px solid black;
-    border-right: 1px solid black;
-  }
+  margin: 0px 5px;
 
   .header {
     text-align: center;
@@ -32,7 +38,9 @@ $gap: 8px;
     display: grid;
     grid-template-columns: subgrid;
     grid-column: 1 / 14;
-    border: 3px dashed black;
+    border: 2px solid vars.$light-grey-2;
+    border-radius: 5px;
+    margin: 5px 0px;
 
     .name {
       grid-column: 1 / 3;
