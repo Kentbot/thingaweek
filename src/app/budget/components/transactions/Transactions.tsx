@@ -1,8 +1,11 @@
 import React, { ChangeEvent } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashCan, faUpload } from '@fortawesome/free-solid-svg-icons'
 
 import { AppDispatch, RootState } from '@budget/store/store'
+import { deleteTransactionThunk } from '@budget/store/thunks'
 import { createTransactions } from '@budget/store/slices/transaction.slice'
 import { assignTransaction } from '@budget/store/slices/category.slice'
 import { useBudgetMonthCategories, useBudgetMonthIncome, useBudgetMonthTransactions } from '@budget/store/selectors'
@@ -13,7 +16,7 @@ import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer
 import { Transaction } from '@budget/models/transaction.model'
 
 import './styles.scss'
-import { deleteTransactionThunk } from '@budget/store/thunks'
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 
 type Props = {}
 
@@ -45,13 +48,18 @@ export function Transactions({}: Props) {
 
   return (
     <>
-      <input type='file' onChange={handleFileUpload} />
+      <label htmlFor="transactions-upload" className="btn">
+        Load Transactions from File&nbsp;&nbsp;<FontAwesomeIcon icon={faUpload}/>
+      </label>
+      <input id="transactions-upload" accept=".csv" type="file" onChange={handleFileUpload} />
       <div className='transaction-grid'>
-        <div>Desc</div>
-        <div>Amt</div>
-        <div>Date</div>
-        <div>Category</div>
-        <div>Delete</div>
+        <div className="header">
+          <div>Description</div>
+          <div>Amount</div>
+          <div>Date</div>
+          <div>Category</div>
+          <div></div>
+        </div>
         { transactions?.map((trans: Transaction) => (
           <React.Fragment key={trans.id}>
             <div>{trans.description}</div>
@@ -69,7 +77,9 @@ export function Transactions({}: Props) {
                 ))}
               </select>
             </div>
-            <div><button onClick={() => removeTransaction(trans.id)}>x</button></div>
+            <button className="btn delete-trans-button" onClick={() => removeTransaction(trans.id)}>
+              x
+            </button>
           </React.Fragment>
         ))}
       </div>

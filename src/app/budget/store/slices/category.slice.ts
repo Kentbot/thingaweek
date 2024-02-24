@@ -88,10 +88,10 @@ const categorySlice = createSlice({
           id: nanoid(),
           prevMonthId: c.id,
           transactionIds: [],
-          additionalIncome: '0',
+          additionalIncome: '0.00',
           balanceForward: c.endOfMonthBalance,
           budgetMonth: targetMonth.toISODate()!,
-          endOfMonthAdjust: '0',
+          endOfMonthAdjust: '0.00',
           endOfMonthBalance: currency(c.endOfMonthBalance).add(c.budgetedAmount).toString(),
         }))
       prevCategories.forEach(c => {

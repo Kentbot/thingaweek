@@ -1,12 +1,20 @@
-$description-col: 3fr;
-$amount-col: 1fr;
-$date-col: 1fr;
-$category-col: minmax(100px, 3fr);
-$delete-col: minmax(25px, auto);
-
 .transaction-grid {
   display: grid;
-  grid-template-columns: $description-col $amount-col $date-col $category-col $delete-col;
+  grid-template-columns: 2fr 1fr 1fr 1fr 30px;
+
+  .header {
+    display: contents;
+    justify-self: center;
+  }
+
+  *:not(.header>*) {
+    align-self: center;
+    justify-self: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+  }
 
   .category-select {
     width: 100%;
@@ -14,4 +22,28 @@ $delete-col: minmax(25px, auto);
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  .delete-trans-button {
+    height: 26px;
+    width: 26px;
+    font-size: 1rem;
+    padding: 0px;
+    margin: 2px 10px;
+  }
+}
+
+.upload-label {
+  height: 50px;
+}
+
+#transactions-upload {
+  // This is important for assistive technology. visibility: hidden
+  // and display: none are interpreted as the input being disabled.
+  // See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#examples
+  opacity: 0;
+
+  // This ensures that users can't click the input that's "hidden" beside the
+  // label.
+  width: 0;
+  height: 0;
 }

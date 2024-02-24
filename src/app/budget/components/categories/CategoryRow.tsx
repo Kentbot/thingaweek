@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import currency from 'currency.js'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import { NumericInput } from '@components/general/NumericInput'
 import { AppDispatch, RootState } from '@budget/store/store'
 import { deleteCategory, updateCategory } from '@budget/store/slices/category.slice'
-import { createSelector } from '@reduxjs/toolkit'
 import { useCategoryTransactions } from '@budget/store/selectors'
 
 type Props = {
@@ -26,29 +27,41 @@ export function CategoryRow({ category }: Props) {
 
   return (
     <>
-      <div className="col-2">{category.name}</div>
+      <div className="col-3">
+        <TextValueUpdater
+          valueToUpdate={category.name}
+          onValueSet={(value) => dispatch(updateCategory({ updatedCategory: { ...category, name: value }, transactions: allTransactions }))}
+        />
+      </div>
       <div>{category.balanceForward ?? '0.00'}</div>
-      <NewValueUpdater
+      <NumericValueUpdater
         valueToUpdate={category.budgetedAmount}
         onValueSet={(value) => dispatch(updateCategory({ updatedCategory: { ...category, budgetedAmount: currency(value).toString() }, transactions: allTransactions }))}
       />
-      <NewValueUpdater
+      <NumericValueUpdater
         valueToUpdate={category.additionalIncome}
         onValueSet={(value) => dispatch(updateCategory({ updatedCategory: { ...category, additionalIncome: currency(value).toString() }, transactions: allTransactions  }))}
       />
-      <div className="col-2">{spend.value}</div>
-      <div>{balance.value}</div>
-      <NewValueUpdater
+      <div>{spend.toString()}</div>
+      <div>{balance.toString()}</div>
+      <NumericValueUpdater
         valueToUpdate={category.endOfMonthAdjust}
         onValueSet={(value) => dispatch(updateCategory({updatedCategory: { ...category, endOfMonthAdjust: currency(value).toString() }, transactions: allTransactions  }))}
       />
       <div>{category.endOfMonthBalance}</div>
-      <button onClick={() => dispatch(deleteCategory({ id: category.id }))}>x</button>
+      <button className="btn delete-cat-button" onClick={() => dispatch(deleteCategory({ id: category.id }))}>
+        <FontAwesomeIcon icon={faTrashCan} />
+      </button>
     </>
   )
 }
 
-function NewValueUpdater({ valueToUpdate, onValueSet }: { valueToUpdate: string, onValueSet: (newValue: string) => void }) {
+type ValueUpdaterProps = {
+  valueToUpdate: string
+  onValueSet: (newValue: string) => void
+}
+
+function NumericValueUpdater({ valueToUpdate, onValueSet }: ValueUpdaterProps) {
   const numericInputRef = useRef<HTMLInputElement>(null)
   const [isUpdating, setIsUpdating] = useState(false)
   const [newValue, setNewValue] = useState(valueToUpdate.replace(/\.(0{2,}\d*)/, ''))
@@ -71,6 +84,38 @@ function NewValueUpdater({ valueToUpdate, onValueSet }: { valueToUpdate: string,
             setIsUpdating(false)
           }}
           ref={numericInputRef}
+        /> :
+        <div onClick={() => setIsUpdating(true)}>
+          {valueToUpdate}
+        </div>
+      }
+    </>
+  )
+}
+
+function TextValueUpdater({ valueToUpdate, onValueSet }: ValueUpdaterProps) {
+  const textInputRef = useRef<HTMLInputElement>(null)
+  const [isUpdating, setIsUpdating] = useState(false)
+  const [newValue, setNewValue] = useState(valueToUpdate)
+
+  useEffect(() => {
+    if (isUpdating) {
+      textInputRef.current?.focus()
+    }
+  }, [isUpdating])
+
+  return (
+    <>
+      { isUpdating ?
+        <input
+          className="new-value-updater"
+          value={newValue.replace(/^0+/g, '')}
+          onChange={(event) => setNewValue(event.target.value)}
+          onBlur={() => {
+            onValueSet(newValue)
+            setIsUpdating(false)
+          }}
+          ref={textInputRef}
         /> :
         <div onClick={() => setIsUpdating(true)}>
           {valueToUpdate}
