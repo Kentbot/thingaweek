@@ -23,7 +23,7 @@ export function Nav() {
         </li>
         <li>
           <Link
-            className={`link ${pathname === '/budget' ? 'active' : ''}`}
+            className={`link ${pathname.startsWith('/budget') ? 'active' : ''}`}
             href="/budget"
           >
             Budget

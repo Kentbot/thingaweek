@@ -21,13 +21,20 @@
     grid-template-columns: subgrid;
     grid-column: 1 / 13;
 
-    .month {
-      width: 100%;
+    .selected {
+      background-color: white;
+      outline: 3px solid vars.$light-blue-2;
+      color: vars.$light-blue-2;
 
       &:hover {
-        background-color: vars.$blue;
-        cursor: pointer;
+        outline: 3px solid vars.$dark-yellow;
+        background-color: vars.$dark-blue;
+        color: white;
       }
+    }
+
+    .month {
+      width: 100%;
     }
   }
 

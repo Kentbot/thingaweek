@@ -1,8 +1,10 @@
+'use client'
+
 import React, { ChangeEvent } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashCan, faUpload } from '@fortawesome/free-solid-svg-icons'
+import { faUpload } from '@fortawesome/free-solid-svg-icons'
 
 import { AppDispatch, RootState } from '@budget/store/store'
 import { deleteTransactionThunk } from '@budget/store/thunks'
@@ -16,11 +18,8 @@ import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer
 import { Transaction } from '@budget/models/transaction.model'
 
 import './styles.scss'
-import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 
-type Props = {}
-
-export function Transactions({}: Props) {
+export default function Transactions() {
   const dispatch = useDispatch<AppDispatch>()
   const budgetMonth = useSelector((state: RootState) => state.budgetMonth)
   const transactions = useBudgetMonthTransactions(budgetMonth)

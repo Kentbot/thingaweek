@@ -2,10 +2,10 @@ import React from 'react'
 
 import { DateTime } from 'luxon'
 import { useDispatch, useSelector } from 'react-redux'
+import { createSelector } from '@reduxjs/toolkit'
 
 import { AppDispatch, RootState } from '@budget/store/store'
 import { changeMonth as changeBudgetMonth } from '@budget/store/slices/budgetMonth.slice'
-import { createSelector } from '@reduxjs/toolkit'
 
 const beginYear = 2024
 const endYear = DateTime.now().year + 1
@@ -20,6 +20,7 @@ export function DateSelector() {
     (state: RootState) => state.budgetMonth,
     (budgetMonth) => DateTime.fromISO(budgetMonth))
   const currentMonth = useSelector(selectCurrentMonth)
+  const currentMonthNumber = currentMonth.month
 
   const handleMonthSelect = (newMonth: number) => {
     const newDateTime = DateTime.local(currentMonth.year, newMonth).toISODate()
@@ -39,18 +40,18 @@ export function DateSelector() {
     <>
       <div className="date-selection">
         <div className="month-select">
-          <button className="month btn" onClick={() => handleMonthSelect(1)}>Jan</button>
-          <button className="month btn" onClick={() => handleMonthSelect(2)}>Feb</button>
-          <button className="month btn" onClick={() => handleMonthSelect(3)}>Mar</button>
-          <button className="month btn" onClick={() => handleMonthSelect(4)}>Apr</button>
-          <button className="month btn" onClick={() => handleMonthSelect(5)}>May</button>
-          <button className="month btn" onClick={() => handleMonthSelect(6)}>Jun</button>
-          <button className="month btn" onClick={() => handleMonthSelect(7)}>Jul</button>
-          <button className="month btn" onClick={() => handleMonthSelect(8)}>Aug</button>
-          <button className="month btn" onClick={() => handleMonthSelect(9)}>Sep</button>
-          <button className="month btn" onClick={() => handleMonthSelect(10)}>Oct</button>
-          <button className="month btn" onClick={() => handleMonthSelect(11)}>Nov</button>
-          <button className="month btn" onClick={() => handleMonthSelect(12)}>Dec</button>
+          <button className={"month btn " + (currentMonthNumber === 1 ? "selected" : "")} onClick={() => handleMonthSelect(1)}>Jan</button>
+          <button className={"month btn " + (currentMonthNumber === 2 ? "selected" : "")} onClick={() => handleMonthSelect(2)}>Feb</button>
+          <button className={"month btn " + (currentMonthNumber === 3 ? "selected" : "")} onClick={() => handleMonthSelect(3)}>Mar</button>
+          <button className={"month btn " + (currentMonthNumber === 4 ? "selected" : "")} onClick={() => handleMonthSelect(4)}>Apr</button>
+          <button className={"month btn " + (currentMonthNumber === 5 ? "selected" : "")} onClick={() => handleMonthSelect(5)}>May</button>
+          <button className={"month btn " + (currentMonthNumber === 6 ? "selected" : "")} onClick={() => handleMonthSelect(6)}>Jun</button>
+          <button className={"month btn " + (currentMonthNumber === 7 ? "selected" : "")} onClick={() => handleMonthSelect(7)}>Jul</button>
+          <button className={"month btn " + (currentMonthNumber === 8 ? "selected" : "")} onClick={() => handleMonthSelect(8)}>Aug</button>
+          <button className={"month btn " + (currentMonthNumber === 9 ? "selected" : "")} onClick={() => handleMonthSelect(9)}>Sep</button>
+          <button className={"month btn " + (currentMonthNumber === 10 ? "selected" : "")} onClick={() => handleMonthSelect(10)}>Oct</button>
+          <button className={"month btn " + (currentMonthNumber === 11 ? "selected" : "")} onClick={() => handleMonthSelect(11)}>Nov</button>
+          <button className={"month btn " + (currentMonthNumber === 12 ? "selected" : "")} onClick={() => handleMonthSelect(12)}>Dec</button>
         </div>
         <div className="year">
           <select

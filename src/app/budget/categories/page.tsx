@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useMemo } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,11 +13,11 @@ import { CategoryCreator } from './CategoryCreator'
 import { GroupSelector } from './GroupSelector'
 import { CategoryRow } from './CategoryRow'
 
-import './categories.styles.scss'
+import './styles.scss'
 
 type Props = {}
 
-export function Categories({}: Props) {
+export default function Categories({}: Props) {
   const dispatch = useDispatch<AppDispatch>()
   const currentMonth = useSelector((state: RootState) => state.budgetMonth)
   const allTransactions = useBudgetMonthTransactions(currentMonth)
