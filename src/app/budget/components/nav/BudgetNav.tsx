@@ -3,11 +3,13 @@ import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
+import styles from './style.module.scss'
+
 export function BudgetNav() {
   const pathname = usePathname()
  
   return (
-    <nav className="nav">
+    <nav className={styles.budgetNav}>
       <ul>
         <li>
           <Link

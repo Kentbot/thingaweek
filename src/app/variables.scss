@@ -1,11 +1,28 @@
-$border-radius: 6px;
+/****************
+ * Measurements *
+ ****************/
+
+$border-radius: 5px;
+$nav-width: 200px;
+
+/****************
+ *    Colors    *
+ ****************/
 
 $light-grey-0: #cacaca;
 $light-grey-1: #a0a0a0;
 $light-grey-2: #686868;
-$light-grey-3: #4b4b4b;
+$grey: #4b4b4b;
 $dark-grey: #292929;
 
+$primary-dark:    #069142;
+$primary:         #04bf55;
+$primary-light:   #51d680;
+$secondary-dark:  #76a68b;
+$secondary:       #bfbfbf;
+$secondary-light: #e0e0e0;
+
+$light-blue-0: #9e9eff;
 $light-blue-1: #7171ff;
 $light-blue-2: #5151ff;
 $blue: #1D1DFF;
@@ -17,5 +34,15 @@ $purple: #5F1FAD;
 $yellow: #fff170;
 $dark-yellow: #f1b900;
 
-$background-color: $dark-grey;
+/*****************
+ *  Definitions  *
+ *****************/
+
+$background-dark: $dark-grey;
+$background-light: $secondary-light;
+
+$outline: $secondary-dark;
+$outline-light: $secondary-light;
+$outline-highlight: $dark-yellow;
+
 $color: white;

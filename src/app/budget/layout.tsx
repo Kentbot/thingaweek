@@ -8,6 +8,8 @@ import store from './store/store'
 import { BudgetNav } from './components/nav/BudgetNav'
 import { DateSelector } from './dateSelector/DateSelector'
 
+import './styles.scss'
+
 export default function BudgetLayout({
   children,
 }: {
@@ -16,9 +18,11 @@ export default function BudgetLayout({
   return (
     <Provider store={store}>
       <BudgetNav />
-      {children}
-      <div className="date-selector">
-        <DateSelector />
+      <div className="page-contents">
+        {children}
+        <div className="date-selector">
+          <DateSelector />
+        </div>
       </div>
     </Provider>
   )

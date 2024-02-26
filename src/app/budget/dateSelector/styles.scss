@@ -5,8 +5,8 @@
   display: grid;
   grid-template-columns: repeat(12, 1fr) 2fr 2fr;
   gap: 8px;
-  border-top: 1px solid black;
-  padding-top: 10px;
+  border-top: 1px solid vars.$secondary-dark;
+  padding: 10px 0px 0px 8px;
   background-color: white;
   position: fixed;
   bottom: 0;
@@ -23,18 +23,22 @@
 
     .selected {
       background-color: white;
-      outline: 3px solid vars.$light-blue-2;
-      color: vars.$light-blue-2;
+      outline: 3px solid vars.$primary;
+      color: vars.$primary-dark;
 
       &:hover {
         outline: 3px solid vars.$dark-yellow;
-        background-color: vars.$dark-blue;
+        background-color: vars.$primary-dark;
         color: white;
       }
     }
 
     .month {
       width: 100%;
+    
+      &:hover {
+        outline: 3px solid vars.$dark-yellow;
+      }
     }
   }
 

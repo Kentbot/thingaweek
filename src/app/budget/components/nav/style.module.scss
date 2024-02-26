@@ -1,0 +1,42 @@
+@use './variables' as vars;
+
+$nav-highlight: vars.$primary;
+
+.budgetNav {
+  width: vars.$nav-width;
+  position: fixed;
+  height: 100%;
+  background-color: vars.$secondary-light;
+  font-size: 18px;
+
+  ul {
+    list-style: none;
+  }
+
+  li {
+    padding: 18px 8px 8px 18px;
+
+    a {
+      color: vars.$primary-dark;
+      text-decoration: none;
+      transition: .3s;
+
+      &::after {
+        content: '';
+        width: 0px;
+        height: 1px;
+        display: block;
+        background: $nav-highlight;
+        transition: .3s;
+      }
+
+      &:hover {
+        color: $nav-highlight;
+        
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

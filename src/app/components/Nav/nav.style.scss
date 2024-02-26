@@ -1,4 +1,10 @@
+@use './variables' as vars;
+
 .nav {
+  border-bottom: 2px solid vars.$secondary-dark;
+  background-color: vars.$grey;
+  padding: 4px 0px;
+  
   ul {
     list-style-type: none;
 
@@ -10,7 +16,7 @@
 
   .link {
     text-decoration: none;
-    color: black;
+    color: white;
     
     &.active {
       text-decoration: underline;

@@ -1,3 +1,4 @@
+@use './reset';
 @use './variables' as vars;
 
 .btn {
@@ -7,11 +8,11 @@
   vertical-align: middle;
   user-select: none;
 
-  background-color: vars.$light-blue-2;
+  background-color: vars.$primary;
   color: white;
 
   border: none;
-  border-radius: 5px;
+  border-radius: vars.$border-radius;
   
   padding: .375rem .5rem;
   margin: 5px;
@@ -21,7 +22,13 @@
   line-height: 1.5;
   cursor: pointer;
 
+  transition: background-color .3s;
+
   &:hover {
-    background-color: vars.$dark-blue;
+    background-color: vars.$primary-dark;
+  }
+
+  &:active {
+    background-color: vars.$primary-light;
   }
 }

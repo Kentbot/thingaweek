@@ -1,24 +1,5 @@
-.budget {
-  display: grid;
-  grid-template-columns: 5fr 3fr;
-  grid-template-rows: minmax(auto, 50px);
-  grid-template-areas: 
-    'persister transactions'
-    'categories transactions'
-    'date-selector date-selector';
-  gap: 8px;
+@use './variables' as vars;
 
-  .date-selector {
-    grid-area: date-selector;
-  }
-
-  .categories {
-    grid-area: categories;
-    padding-bottom: 60px;
-  }
-
-  .transactions {
-    grid-area: transactions;
-    padding-bottom: 60px;
-  }
+.page-contents {
+  margin-left: vars.$nav-width;
 }

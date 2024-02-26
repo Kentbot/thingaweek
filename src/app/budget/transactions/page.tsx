@@ -10,7 +10,7 @@ import { AppDispatch, RootState } from '@budget/store/store'
 import { deleteTransactionThunk } from '@budget/store/thunks'
 import { createTransactions } from '@budget/store/slices/transaction.slice'
 import { assignTransaction } from '@budget/store/slices/category.slice'
-import { useBudgetMonthCategories, useBudgetMonthIncome, useBudgetMonthTransactions } from '@budget/store/selectors'
+import { useBudgetMonthCategories, useBudgetMonthTransactions } from '@budget/store/selectors'
 
 import { parseCsv } from '@budget/services/csvParser.service'
 import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer.service'
@@ -24,8 +24,7 @@ export default function Transactions() {
   const budgetMonth = useSelector((state: RootState) => state.budgetMonth)
   const transactions = useBudgetMonthTransactions(budgetMonth)
   const categories = useBudgetMonthCategories(budgetMonth)
-  const income = useBudgetMonthIncome(budgetMonth)
-  const categoriesAndIncome = [income, ...categories]
+  // const income = useBudgetMonthIncome(budgetMonth)
 
   const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -68,10 +67,10 @@ export default function Transactions() {
               <select
                 className="category-select"
                 onChange={(v) => handleAssignTransactionToCategory(trans.id, v.target.value)}
-                value={categoriesAndIncome.find(c => c.transactionIds.includes(trans.id))?.id}
+                value={categories.find(c => c.transactionIds.includes(trans.id))?.id}
               >
                 <option value={undefined}>-</option>
-                {categoriesAndIncome.map((c) => (
+                {categories.map((c) => (
                   <option key={c.id} value={c.id}>{c.name}</option>
                 ))}
               </select>

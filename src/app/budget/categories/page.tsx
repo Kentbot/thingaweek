@@ -7,7 +7,7 @@ import currency from 'currency.js'
 
 import { AppDispatch, RootState } from '@budget/store/store'
 import { assignCategoryToGroup } from '@budget/store/slices/group.slice'
-import { useBudgetMonthCategories, useBudgetMonthGroups, useBudgetMonthIncome, useBudgetMonthTransactions, useCategoryTransactions } from '@budget/store/selectors'
+import { useBudgetMonthCategories, useBudgetMonthGroups, useBudgetMonthTransactions, useCategoryTransactions } from '@budget/store/selectors'
 
 import { CategoryCreator } from './CategoryCreator'
 import { GroupSelector } from './GroupSelector'
@@ -23,7 +23,6 @@ export default function Categories({}: Props) {
   const allTransactions = useBudgetMonthTransactions(currentMonth)
   const groups = useBudgetMonthGroups(currentMonth)
   const categories = useBudgetMonthCategories(currentMonth)
-  const incomeCategory = useBudgetMonthIncome(currentMonth)
 
   const totalIncome = allTransactions.reduce(
     (prev, curr) => currency(curr.amount).value < 0 ? currency(curr.amount).add(prev) : prev, currency(0)
@@ -50,7 +49,7 @@ export default function Categories({}: Props) {
     <>
       <CategoryCreator />
       <div className="income-category">
-        {incomeCategory?.name} {totalIncome.toString()} Total Spend: {totalSpend.toString()} Net Balance: {netBalance.toString()}
+        {'Income'} {totalIncome.toString()} Total Spend: {totalSpend.toString()} Net Balance: {netBalance.toString()}
       </div>
       <div className="categories-grid">
         <div className="header">
@@ -83,13 +82,15 @@ export default function Categories({}: Props) {
           return (
             <div key={group.id} className="group">
               <div className="name">{group.name}</div>
-              {groupCategories.map((cat, index) => (
-                <div key={cat.id} className={index % 2 === 0 ? "group-category" : "group-category highlight"}>
-                  <CategoryRow
-                    category={cat}
-                  />
-                </div>
-              ))}
+              <div className="group-categories">
+                {groupCategories.map((cat, index) => (
+                  <div key={cat.id} className={index % 2 === 0 ? "group-category" : "group-category highlight"}>
+                    <CategoryRow
+                      category={cat}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           )
         })}
