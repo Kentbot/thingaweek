@@ -13,9 +13,7 @@ import { carryoverMonthThunk } from '@budget/store/thunks'
 
 import './categoryCreator.styles.scss'
 
-type Props = {}
-
-export function CategoryCreator({}: Props) {
+export function CategoryCreator() {
   const dispatch = useDispatch<AppDispatch>()
   const currentMonth = useSelector((state: RootState) => state.budgetMonth)
 
@@ -86,7 +84,7 @@ export function CategoryCreator({}: Props) {
       />
       <button className="btn" onClick={handleGroupCreate}>Save</button>
       <button className="btn gap-left" onClick={() => dispatch(carryoverMonthThunk(currentMonth))}>
-        Carryover from prev month
+        Carry Over Categories
       </button>
     </div>
   )

@@ -7,7 +7,7 @@ import { createSelector } from '@reduxjs/toolkit'
 import { AppDispatch, RootState } from '@budget/store/store'
 import { changeMonth as changeBudgetMonth } from '@budget/store/slices/budgetMonth.slice'
 
-const beginYear = 2024
+const beginYear = 2023
 const endYear = DateTime.now().year + 1
 const yearSpan = endYear - beginYear + 1
 const years = Array(yearSpan).fill(beginYear).map((val, index) => val + index)

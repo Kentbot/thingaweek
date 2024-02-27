@@ -1,12 +1,14 @@
 import React from 'react'
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { useBudgetMonthGroups, useUngroupedCategories } from '@budget/store/selectors'
 import { assignCategoryToGroup } from '@budget/store/slices/group.slice'
 
 import { GroupSelector } from '../GroupSelector'
 import { CategoryRow } from '../CategoryRow'
+
+import styles from './styles.module.scss'
 
 export function UngroupedCategories() {
   const dispatch = useDispatch()
@@ -19,18 +21,16 @@ export function UngroupedCategories() {
   }
 
   return (
-    <div className="ungrouped">
-      {categories.map((cat, index) => (
-        <div className={"category-row" + (index % 2 === 1 ? " highlight" : "")} key={cat.id}>
+    <div className={styles.ungroupedCategories}>
+      {categories.map((category, index) => (
+        <div className={"category-row" + (index % 2 === 1 ? " highlight" : "")} key={category.id}>
           <div className="col-2 group-select">
             <GroupSelector
               groups={groups}
-              onGroupSelect={(gid) => handleGroupSelect(gid, cat.id)}
+              onGroupSelect={(gid) => handleGroupSelect(gid, category.id)}
             />
           </div>
-          <CategoryRow
-            category={cat}
-          />
+          <CategoryRow category={category} />
         </div>
       ))}
     </div>
