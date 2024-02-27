@@ -8,34 +8,29 @@ $nav-highlight: vars.$primary;
   height: 100%;
   background-color: vars.$secondary-light;
   font-size: 18px;
+  padding-top: vars.$nav-height;
 
-  ul {
-    list-style: none;
-  }
-
-  li {
+  .link {
     padding: 18px 8px 8px 18px;
+    color: vars.$primary-dark;
+    text-decoration: none;
+    transition: .3s;
+    display: block;
 
-    a {
-      color: vars.$primary-dark;
-      text-decoration: none;
+    &::after {
+      content: '';
+      width: 0px;
+      height: 1px;
+      display: block;
+      background: $nav-highlight;
       transition: .3s;
+    }
 
+    &:hover {
+      color: $nav-highlight;
+      
       &::after {
-        content: '';
-        width: 0px;
-        height: 1px;
-        display: block;
-        background: $nav-highlight;
-        transition: .3s;
-      }
-
-      &:hover {
-        color: $nav-highlight;
-        
-        &::after {
-          width: 100%;
-        }
+        width: 100%;
       }
     }
   }

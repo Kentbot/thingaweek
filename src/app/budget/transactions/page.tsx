@@ -22,9 +22,8 @@ import './styles.scss'
 export default function Transactions() {
   const dispatch = useDispatch<AppDispatch>()
   const budgetMonth = useSelector((state: RootState) => state.budgetMonth)
-  const transactions = useBudgetMonthTransactions(budgetMonth)
-  const categories = useBudgetMonthCategories(budgetMonth)
-  // const income = useBudgetMonthIncome(budgetMonth)
+  const transactions = useBudgetMonthTransactions()
+  const categories = useBudgetMonthCategories()
 
   const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]

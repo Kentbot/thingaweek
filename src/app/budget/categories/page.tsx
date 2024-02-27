@@ -14,15 +14,12 @@ import { GroupSelector } from './GroupSelector'
 import { CategoryRow } from './CategoryRow'
 
 import './styles.scss'
+import { UngroupedCategories } from './ungrouped/UngroupedCategories'
 
-type Props = {}
-
-export default function Categories({}: Props) {
-  const dispatch = useDispatch<AppDispatch>()
-  const currentMonth = useSelector((state: RootState) => state.budgetMonth)
-  const allTransactions = useBudgetMonthTransactions(currentMonth)
-  const groups = useBudgetMonthGroups(currentMonth)
-  const categories = useBudgetMonthCategories(currentMonth)
+export default function CategoriesPage() {
+  const allTransactions = useBudgetMonthTransactions()
+  const groups = useBudgetMonthGroups()
+  const categories = useBudgetMonthCategories()
 
   const totalIncome = allTransactions.reduce(
     (prev, curr) => currency(curr.amount).value < 0 ? currency(curr.amount).add(prev) : prev, currency(0)
@@ -32,22 +29,10 @@ export default function Categories({}: Props) {
   )
   const netBalance = totalIncome.add(totalSpend)
 
-  const ungroupedCategories = useMemo(
-    () => {
-      const catIdsInGroups = groups.flatMap(g => g.categoryIds)
-      const ungroupedCats = categories.filter(cat => !catIdsInGroups.includes(cat.id))
-
-      return ungroupedCats
-    },
-    [categories, groups])
-
-  const handleGroupSelect = (groupId: string, categoryId: string) => {
-    dispatch(assignCategoryToGroup({ groupId, categoryId }))
-  }
-
   return (
     <>
       <CategoryCreator />
+      <UngroupedCategories />
       <div className="income-category">
         {'Income'} {totalIncome.toString()} Total Spend: {totalSpend.toString()} Net Balance: {netBalance.toString()}
       </div>
@@ -64,19 +49,6 @@ export default function Categories({}: Props) {
           <div>EOM Balance</div>
           <div></div>
         </div>
-        { ungroupedCategories.map((cat, index) => (
-          <div className={"category-row" + (index % 2 === 1 ? " highlight" : "")} key={cat.id}>
-            <div className="col-2 group-select">
-              <GroupSelector
-                groups={groups}
-                onGroupSelect={(gid) => handleGroupSelect(gid, cat.id)}
-              />
-            </div>
-            <CategoryRow
-              category={cat}
-            />
-          </div>
-        ))}
         { groups.map((group) => {
           const groupCategories = categories.filter(c => group.categoryIds.includes(c.id))
           return (

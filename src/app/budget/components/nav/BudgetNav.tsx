@@ -3,6 +3,9 @@ import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChartLine, faListUl, faMoneyBillTransfer, faMoneyBills } from '@fortawesome/free-solid-svg-icons'
+
 import styles from './style.module.scss'
 
 export function BudgetNav() {
@@ -10,32 +13,25 @@ export function BudgetNav() {
  
   return (
     <nav className={styles.budgetNav}>
-      <ul>
-        <li>
-          <Link
-            className={`link ${pathname === '/budget' ? 'active' : ''}`}
-            href="/budget"
-          >
-            Overview
-          </Link>
-        </li>
-        <li>
-          <Link
-            className={`link ${pathname.endsWith('/categories') ? 'active' : ''}`}
-            href="/budget/categories"
-          >
-            Categories
-          </Link>
-        </li>
-        <li>
-          <Link
-            className={`link ${pathname.endsWith('/transactions') ? 'active' : ''}`}
-            href="/budget/transactions"
-          >
-            Transactions
-          </Link>
-        </li>
-      </ul>
+      <Link
+        className={`${styles.link} ${pathname === '/budget' ? `${styles.active}` : ''}`}
+        href="/budget"
+      >
+        <FontAwesomeIcon icon={faChartLine} /> Overview
+      </Link>
+      <Link
+        
+        className={`${styles.link} ${pathname.endsWith('/categories') ? `${styles.active}` : ''}`}
+        href="/budget/categories"
+      >
+        <FontAwesomeIcon icon={faListUl} /> Categories
+      </Link>
+      <Link
+        className={`${styles.link} ${pathname.endsWith('/transactions') ? `${styles.active}` : ''}`}
+        href="/budget/transactions"
+      >
+        <FontAwesomeIcon icon={faMoneyBills} /> Transactions
+      </Link>
     </nav>
   )
 }

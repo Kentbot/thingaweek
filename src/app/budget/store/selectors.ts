@@ -9,34 +9,39 @@ import { Transaction } from '@budget/models/transaction.model'
 import { RootState } from './store'
 import { ISODateString } from './types'
 
-export const useBudgetMonthTransactions = (budgetMonth: ISODateString): Transaction[] => {
+export const useBudgetMonthTransactions = (): Transaction[] => {
   const selectTransactions = createSelector(
-    (state: RootState) => state.transactions,
-    (transactions) => filterToBudgetMonth(transactions, DateTime.fromISO(budgetMonth))
+    (state: RootState) => state,
+    (state => filterToBudgetMonth(state.transactions, DateTime.fromISO(state.budgetMonth)))
   )
   return useSelector(selectTransactions)
 }
 
-export const useBudgetMonthCategories = (budgetMonth: ISODateString): CategoryMonth[] => {
+export const useBudgetMonthCategories = (): CategoryMonth[] => {
   const selectCategories = createSelector(
-    (state: RootState) => state.categories,
-    (categories) => filterToBudgetMonth(categories, DateTime.fromISO(budgetMonth))
+    (state: RootState) => state,
+    (state) => filterToBudgetMonth(state.categories, DateTime.fromISO(state.budgetMonth))
   )
   return useSelector(selectCategories)
 }
 
-// export const useBudgetMonthIncome = (budgetMonth: ISODateString) => {
-//   const selectCategories = createSelector(
-//     (state: RootState) => state.categories.incomeCategories,
-//     (categories) => filterToBudgetMonth(categories, DateTime.fromISO(budgetMonth))[0]
-//   )
-//   return useSelector(selectCategories)
-// }
+export const useUngroupedCategories = (): CategoryMonth[] => {
+  const selectCategories = createSelector(
+    (state: RootState) => state,
+    (state) => {
+      const catIdsInGroups = state.groups.flatMap(g => g.categoryIds)
+      const ungroupedCats = state.categories.filter(cat => !catIdsInGroups.includes(cat.id))
 
-export const useBudgetMonthGroups = (budgetMonth: ISODateString) => {
+      return filterToBudgetMonth(ungroupedCats, DateTime.fromISO(state.budgetMonth))
+    }
+  )
+  return useSelector(selectCategories)
+}
+
+export const useBudgetMonthGroups = () => {
   const selectGroups = createSelector(
-    (state: RootState) => state.groups,
-    (groups) => filterToBudgetMonth(groups, DateTime.fromISO(budgetMonth))
+    (state: RootState) => state,
+    (state) => filterToBudgetMonth(state.groups, DateTime.fromISO(state.budgetMonth))
   )
   return useSelector(selectGroups)
 }
