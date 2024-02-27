@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChartLine, faListUl, faMoneyBillTransfer, faMoneyBills } from '@fortawesome/free-solid-svg-icons'
+import { faChartLine, faListUl, faMoneyBills } from '@fortawesome/free-solid-svg-icons'
 
 import styles from './style.module.scss'
 
