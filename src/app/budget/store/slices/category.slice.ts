@@ -46,14 +46,13 @@ const categorySlice = createSlice({
           category.transactionIds.includes(action.payload.transactionId) &&
           category.id !== action.payload.categoryId
         const shouldAddTransToCategory = category.id === action.payload.categoryId
-        const shouldCalculateLinks = !state.some(c => c.id === action.payload.categoryId)
 
         if (shouldRemoveTransFromCategory) {
           category.transactionIds = category.transactionIds.filter(tid => tid !== action.payload.transactionId)
-          shouldCalculateLinks && recalculateLinkedCategories(state, category, action.payload.allTransactions)
+          recalculateLinkedCategories(state, category, action.payload.allTransactions)
         } else if (shouldAddTransToCategory) {
           category.transactionIds.push(action.payload.transactionId)
-          shouldCalculateLinks && recalculateLinkedCategories(state, category, action.payload.allTransactions)
+          recalculateLinkedCategories(state, category, action.payload.allTransactions)
         }
       })
     },
