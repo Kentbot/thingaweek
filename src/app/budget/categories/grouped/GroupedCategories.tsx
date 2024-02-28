@@ -60,34 +60,32 @@ function CategoryRow({ category, highlight }: { category: CategoryMonth, highlig
   const balance = currency(category.budgetedAmount).subtract(spend)
 
   return (
-    <>
-      <div key={category.id} className={`group-category ${(highlight ? " highlight" : "")}`}>
-        <div className="category-name">
-          {category.name}
-        </div>
-        <div>
-          {category.balanceForward ?? '0.00'}
-        </div>
-        <div>
-          {category.budgetedAmount}
-        </div>
-        <div>
-          {category.additionalIncome}
-        </div>
-        <div>
-          {spend.toString()}
-        </div>
-        <div>
-          {balance.toString()}
-        </div>
-        <div>
-          {category.endOfMonthAdjust}
-        </div>
-        <div>{category.endOfMonthBalance}</div>
-        <button className="btn category-edit-button">
-          <FontAwesomeIcon icon={faEllipsisH} />
-        </button>
+    <div key={category.id} className={`group-category ${(highlight ? " highlight" : "")}`}>
+      <div className="category-name">
+        {category.name}
       </div>
-    </>
+      <div>
+        {category.balanceForward ?? '0.00'}
+      </div>
+      <div>
+        {category.budgetedAmount}
+      </div>
+      <div>
+        {category.additionalIncome}
+      </div>
+      <div>
+        {spend.toString()}
+      </div>
+      <div>
+        {balance.toString()}
+      </div>
+      <div>
+        {category.endOfMonthAdjust}
+      </div>
+      <div>{category.endOfMonthBalance}</div>
+      <button className="btn category-edit-button">
+        <FontAwesomeIcon icon={faEllipsisH} />
+      </button>
+    </div>
   )
 }

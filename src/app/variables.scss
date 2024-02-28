@@ -3,8 +3,11 @@
  ****************/
 
 $border-radius: 5px;
+
 $nav-width: 200px;
 $nav-height: 35px;
+
+$category-context-width: 45px;
 
 /****************
  *    Colors    *
@@ -40,7 +43,7 @@ $dark-yellow: #f1b900;
  *****************/
 
 $background-dark: $dark-grey;
-$background-light: $secondary-light;
+$background-light: #e7f0eb;
 
 $outline: $secondary-dark;
 $outline-light: $secondary-light;
