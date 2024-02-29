@@ -6,15 +6,25 @@
   margin: 0px 10px 10px 10px;
   padding-bottom: 100px;
 
+  .header-row {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+    background-color: vars.$background-light;
+    position: sticky;
+    top: vars.$nav-height;
+  }
+  
   .header {
     text-align: center;
-    display: contents;
+    background-color: vars.$background-light;
 
-    .group-header {
+    &.group-header {
       grid-column: 1 / 3;
+      visibility: none;
     }
 
-    .category {
+    &.category {
       grid-column: 3 / 6;
     }
   }
@@ -37,8 +47,10 @@
       align-self: start;
       justify-self: center;
 
+      position: sticky;
+      top: vars.$nav-height;
+
       max-width: 90%;
-      height: 100%;
       padding: 4px 8px;
       margin: -1.5rem;
       

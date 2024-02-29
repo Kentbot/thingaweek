@@ -19,7 +19,7 @@ export function UngroupedCategories() {
   const hidden = categories.length === 0
 
   return (
-    <div className={`ungrouped-categories ${hidden ? 'hidden' : ''}`}>
+    <div className={`ungrouped-categories labelled-border ${hidden ? 'hidden' : ''}`}>
       <HeaderRow />
       {categories.map((category, index) => (
         <React.Fragment key={category.id}>
@@ -36,7 +36,7 @@ export function UngroupedCategories() {
 function HeaderRow() {
   return (
     <div className="header">
-      <div className="ungrouped-label">Ungrouped Categories</div>
+      <div className="border-label">Ungrouped Categories</div>
       <div>{/* Group Selector */}</div>
       <div className="category">Category</div>
       <div>Balance Forward</div>

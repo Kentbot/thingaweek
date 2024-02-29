@@ -6,7 +6,9 @@ import currency from 'currency.js'
 
 import { useBudgetMonthTransactions } from '@budget/store/selectors'
 
-import { CategoryCreator } from './CategoryCreator'
+import { CategoryCreator } from './categoryCreator/CategoryCreator'
+import { GroupCreator } from './groupCreator/GroupCreator'
+import { MonthCarryover } from './monthCarryover/MonthCarryover'
 import { UngroupedCategories } from './ungrouped/UngroupedCategories'
 import { GroupedCategories } from './grouped/GroupedCategories'
 
@@ -25,7 +27,11 @@ export default function CategoriesPage() {
 
   return (
     <>
-      <CategoryCreator />
+      <div className="creation-controls">
+        <CategoryCreator />
+        <GroupCreator />
+        <MonthCarryover />
+      </div>
       <UngroupedCategories />
       <div className="income-category">
         {'Income'} {totalIncome.toString()} Total Spend: {totalSpend.toString()} Net Balance: {netBalance.toString()}

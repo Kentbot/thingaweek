@@ -8,10 +8,8 @@ import { NumericInput } from '@components/general/NumericInput'
 
 import { AppDispatch, RootState } from '@budget/store/store'
 import { createCategory } from '@budget/store/slices/category.slice'
-import { createGroup } from '@budget/store/slices/group.slice'
-import { carryoverMonthThunk } from '@budget/store/thunks'
 
-import './categoryCreator.styles.scss'
+import './styles.scss'
 
 export function CategoryCreator() {
   const dispatch = useDispatch<AppDispatch>()
@@ -19,7 +17,6 @@ export function CategoryCreator() {
 
   const [categoryName, setCategoryName] = useState('')
   const [budgetAmt, setBudgetAmt] = useState('')
-  const [groupName, setGroupName] = useState('')
 
   const handleBudgetChange = (value: string) => {
     setBudgetAmt(value)
@@ -45,18 +42,9 @@ export function CategoryCreator() {
     setBudgetAmt('')
   }
 
-  const handleGroupCreate = () => {
-    dispatch(createGroup({
-      id: nanoid(),
-      name: groupName,
-      categoryIds: [],
-      budgetMonth: currentMonth
-    }))
-    setGroupName('')
-  }
-
   return (
-    <div className="creation-controls">
+    <div className="category-creator">
+      {/* TODO: Add form validation logic so that empty group/category names are impossible */}
       <input
         id='category-name-input'
         className='category-input'
@@ -73,18 +61,8 @@ export function CategoryCreator() {
         value={budgetAmt}
         onValueUpdate={(v) => handleBudgetChange(v)}
       />
-      <button className="btn" onClick={handleCategoryCreate}>Save</button>
-      <input
-        id='group-name-input'
-        className='category-input gap-left'
-        type='text'
-        placeholder='Category Group name'
-        value={groupName}
-        onChange={(v) => setGroupName(v.target.value)}
-      />
-      <button className="btn" onClick={handleGroupCreate}>Save</button>
-      <button className="btn gap-left" onClick={() => dispatch(carryoverMonthThunk(currentMonth))}>
-        Carry Over Categories
+      <button className="btn" onClick={handleCategoryCreate}>
+        Add Category
       </button>
     </div>
   )

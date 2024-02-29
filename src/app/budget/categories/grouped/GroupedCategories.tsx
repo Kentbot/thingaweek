@@ -17,16 +17,16 @@ export function GroupedCategories() {
 
   return (
     <div className="grouped-categories-grid">
-      <div className="header">
-        <div></div>
-        <div className="category">Category</div>
-        <div>Balance Forward</div>
-        <div>Budgeted Amount</div>
-        <div>Additional Income</div>
-        <div>Spend</div>
-        <div>Available Balance</div>
-        <div>EOM Adjust</div>
-        <div>EOM Balance</div>
+      <div className="header-row">
+        <div className="header group-header"></div>
+        <div className="header category">Category</div>
+        <div className="header">Balance Forward</div>
+        <div className="header">Budgeted Amount</div>
+        <div className="header">Additional Income</div>
+        <div className="header">Spend</div>
+        <div className="header">Available Balance</div>
+        <div className="header">EOM Adjust</div>
+        <div className="header">EOM Balance</div>
         <div></div>
       </div>
       { groups.map((group) => {

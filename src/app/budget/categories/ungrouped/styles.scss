@@ -6,9 +6,6 @@ $transition-time: 1s;
   display: grid;
   grid-template-columns: repeat(9, 1fr) vars.$category-context-width;
 
-  border: 1px solid vars.$outline;
-  border-radius: vars.$border-radius;
-
   padding: 15px;
   margin: 10px;
   
@@ -35,16 +32,5 @@ $transition-time: 1s;
 
   .category-row, .header {
     display: contents;
-  }
-
-  .ungrouped-label {
-    position: absolute;
-    margin: -2rem 0px;
-    background: vars.$background-light;
-    padding: 4px;
-    line-height: 1.5rem;
-    font-size: 1.5rem;
-
-    color: vars.$primary-dark;
   }
 }

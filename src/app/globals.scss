@@ -36,3 +36,21 @@ body {
     background-color: vars.$primary-light;
   }
 }
+
+.labelled-border {
+  border: 1px solid vars.$outline;
+  border-radius: vars.$border-radius;
+
+  margin-top: 1rem !important;
+
+  .border-label {
+    position: absolute;
+    margin: -2rem 0;
+    background: vars.$background-light;
+    padding: 4px;
+    line-height: 1.5rem;
+    font-size: 1.5rem;
+
+    color: vars.$primary-dark;
+  }
+}
