@@ -1,6 +1,6 @@
 @use './variables' as vars;
 
-$transition-time: .5s;
+$transition-time: 1s;
 
 .ungrouped-categories {
   display: grid;
@@ -16,17 +16,12 @@ $transition-time: .5s;
   min-height: 100px;
 
   transition:
-    height $transition-time ease-in-out,
-    min-height $transition-time ease-in-out;
-
-  &.shown {
-    visibility: inherit;
-    opacity: 100;
-    height: initial;
-    margin: 10px;
-    padding: 15px;
-    min-height: 100px;
-  }
+    visibility $transition-time ease-in-out,
+    opacity $transition-time ease-in-out,
+    min-height $transition-time ease-in-out,
+    margin $transition-time ease-in-out,
+    padding $transition-time ease-in-out,
+    border-width $transition-time ease-in-out;
 
   &.hidden {
     visibility: hidden;
@@ -35,6 +30,7 @@ $transition-time: .5s;
     margin: 0;
     padding: 0;
     min-height: 0;
+    border-width: 0;
   }
 
   .category-row, .header {

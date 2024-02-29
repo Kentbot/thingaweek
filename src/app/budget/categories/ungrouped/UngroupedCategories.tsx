@@ -19,7 +19,7 @@ export function UngroupedCategories() {
   const hidden = categories.length === 0
 
   return (
-    <div className={`ungrouped-categories ${hidden ? 'hidden' : 'shown'}`}>
+    <div className={`ungrouped-categories ${hidden ? 'hidden' : ''}`}>
       <HeaderRow />
       {categories.map((category, index) => (
         <React.Fragment key={category.id}>
