@@ -13,6 +13,13 @@
     background-color: vars.$background-light;
     position: sticky;
     top: vars.$nav-height;
+
+    transition: opacity .3s, visibility .3s;
+
+    &.hidden {
+      visibility: hidden;
+      opacity: 0;
+    }
   }
   
   .header {
@@ -37,8 +44,9 @@
     display: grid;
     grid-template-columns: subgrid;
     grid-column: 1 / 14;
-    border: 2px solid vars.$outline;
-    border-radius: vars.$border-radius;
+
+    @include vars.styled-border(2px);
+    
     margin: 1rem 0;
     min-height: 2rem;
 

@@ -10,6 +10,8 @@ import { AppDispatch, RootState } from '@budget/store/store'
 import { createCategory } from '@budget/store/slices/category.slice'
 
 import './styles.scss'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 
 export function CategoryCreator() {
   const dispatch = useDispatch<AppDispatch>()
@@ -43,8 +45,8 @@ export function CategoryCreator() {
   }
 
   return (
-    <div className="category-creator labelled-border">
-      <div className="border-label">Test</div>
+    <div className="category-creator creation-group">
+      <div className="label">Create New Category <span className="tooltip-btn">?</span></div>
       {/* TODO: Add form validation logic so that empty group/category names are impossible */}
       <input
         id='category-name-input'

@@ -15,9 +15,11 @@ export function GroupedCategories() {
   const groups = useBudgetMonthGroups()
   const categories = useBudgetMonthCategories()
 
+  const hidden = groups.length === 0
+
   return (
     <div className="grouped-categories-grid">
-      <div className="header-row">
+      <div className={`header-row ${hidden ? 'hidden' : ''}`}>
         <div className="header group-header"></div>
         <div className="header category">Category</div>
         <div className="header">Balance Forward</div>

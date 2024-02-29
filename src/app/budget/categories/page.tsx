@@ -13,6 +13,7 @@ import { UngroupedCategories } from './groupDisplay/ungroupedCategories/Ungroupe
 import { GroupedCategories } from './groupDisplay/groupedCategories/GroupedCategories'
 
 import './styles.scss'
+import { CreationControls } from './creationControls/CreationControls'
 
 export default function CategoriesPage() {
   const allTransactions = useBudgetMonthTransactions()
@@ -27,14 +28,10 @@ export default function CategoriesPage() {
 
   return (
     <>
-      <div className="creation-controls">
-        <CategoryCreator />
-        <GroupCreator />
-        <MonthCarryover />
-      </div>
+      <CreationControls />
       <UngroupedCategories />
       <div className="income-category">
-        {'Income'} {totalIncome.toString()} Total Spend: {totalSpend.toString()} Net Balance: {netBalance.toString()}
+        {'TODO: Income'} {totalIncome.toString()} Total Spend: {totalSpend.toString()} Net Balance: {netBalance.toString()}
       </div>
       <GroupedCategories />
     </>

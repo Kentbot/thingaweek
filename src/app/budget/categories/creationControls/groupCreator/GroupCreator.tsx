@@ -25,10 +25,11 @@ export function GroupCreator() {
   }
 
   return (
-    <>
+    <div className="creation-group">
+      <div className="label">Create New Group <span className="tooltip-btn">?</span></div>
       <input
         id='group-name-input'
-        className='category-input gap-left'
+        className='category-input'
         type='text'
         placeholder='Category Group name'
         value={groupName}
@@ -37,6 +38,6 @@ export function GroupCreator() {
       <button className="btn" onClick={handleGroupCreate}>
         Create Group
       </button>
-    </>
+    </div>
   )
 }

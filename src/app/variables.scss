@@ -49,4 +49,9 @@ $outline: $secondary-dark;
 $outline-light: $secondary-light;
 $outline-highlight: $dark-yellow;
 
+@mixin styled-border($width: 1px) {
+  border: $width solid $outline;
+  border-radius: $border-radius;
+}
+
 $color: white;
