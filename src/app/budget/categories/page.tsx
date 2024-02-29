@@ -6,11 +6,11 @@ import currency from 'currency.js'
 
 import { useBudgetMonthTransactions } from '@budget/store/selectors'
 
-import { CategoryCreator } from './categoryCreator/CategoryCreator'
-import { GroupCreator } from './groupCreator/GroupCreator'
-import { MonthCarryover } from './monthCarryover/MonthCarryover'
-import { UngroupedCategories } from './ungrouped/UngroupedCategories'
-import { GroupedCategories } from './grouped/GroupedCategories'
+import { CategoryCreator } from './creationControls/categoryCreator/CategoryCreator'
+import { GroupCreator } from './creationControls/groupCreator/GroupCreator'
+import { MonthCarryover } from './creationControls/monthCarryover/MonthCarryover'
+import { UngroupedCategories } from './groupDisplay/ungroupedCategories/UngroupedCategories'
+import { GroupedCategories } from './groupDisplay/groupedCategories/GroupedCategories'
 
 import './styles.scss'
 

@@ -43,7 +43,8 @@ export function CategoryCreator() {
   }
 
   return (
-    <div className="category-creator">
+    <div className="category-creator labelled-border">
+      <div className="border-label">Test</div>
       {/* TODO: Add form validation logic so that empty group/category names are impossible */}
       <input
         id='category-name-input'
