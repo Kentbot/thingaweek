@@ -16,7 +16,7 @@ export function MonthCarryover() {
       <button className="btn" onClick={() => dispatch(carryoverMonthThunk(currentMonth))}>
         Carry Over Categories
       </button>
-      <span className="tooltip-btn">?</span>
+      <span className="tooltip-btn" onClick={() => alert('TODO')}>?</span>
     </div>
   )
 }

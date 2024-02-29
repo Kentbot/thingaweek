@@ -26,7 +26,7 @@ export function GroupCreator() {
 
   return (
     <div className="creation-group">
-      <div className="label">Create New Group <span className="tooltip-btn">?</span></div>
+      <div className="label">Create New Group <span className="tooltip-btn" onClick={() => alert('TODO')}>?</span></div>
       <input
         id='group-name-input'
         className='category-input'

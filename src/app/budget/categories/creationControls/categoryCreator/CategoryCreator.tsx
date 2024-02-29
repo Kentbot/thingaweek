@@ -46,7 +46,7 @@ export function CategoryCreator() {
 
   return (
     <div className="category-creator creation-group">
-      <div className="label">Create New Category <span className="tooltip-btn">?</span></div>
+      <div className="label">Create New Category <span className="tooltip-btn" onClick={() => alert('TODO')}>?</span></div>
       {/* TODO: Add form validation logic so that empty group/category names are impossible */}
       <input
         id='category-name-input'

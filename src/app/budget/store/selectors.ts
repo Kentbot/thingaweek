@@ -7,7 +7,6 @@ import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import { Transaction } from '@budget/models/transaction.model'
 
 import { RootState } from './store'
-import { ISODateString } from './types'
 
 export const useBudgetMonthTransactions = (): Transaction[] => {
   const selectTransactions = createSelector(
