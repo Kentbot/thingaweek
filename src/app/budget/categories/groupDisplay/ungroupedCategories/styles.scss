@@ -1,6 +1,6 @@
 @use './variables' as vars;
 
-$transition-time: 1s;
+$transition-time: .5s;
 
 .ungrouped-categories {
   display: grid;

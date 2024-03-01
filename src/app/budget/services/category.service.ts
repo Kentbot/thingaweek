@@ -28,12 +28,12 @@ export function filterToBudgetMonth<T extends WithBudgetMonth>(modelWithBudgetMo
 
 export const createIncomeCategory = (budgetMonth: DateTime): CategoryMonth => ({
   id: nanoid(),
-  additionalIncome: '0.00',
-  balanceForward: '0.00',
-  budgetedAmount: '0.00',
+  additionalIncome: currency(0).toString(),
+  balanceForward: currency(0).toString(),
+  budgetedAmount: currency(0).toString(),
   budgetMonth: budgetMonth.toISODate()!,
-  endOfMonthAdjust: '0.00',
-  endOfMonthBalance: '0.00',
+  endOfMonthAdjust: currency(0).toString(),
+  endOfMonthBalance: currency(0).toString(),
   name: `${budgetMonth.monthShort} Income`,
   transactionIds: [],
 })

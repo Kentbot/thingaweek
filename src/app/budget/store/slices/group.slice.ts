@@ -7,6 +7,7 @@ import { CategoryMonth } from '@budget/models/categoryMonth.model'
 
 import { ISODateString } from '../types'
 import { resetStateAction } from '../actions'
+import { MonthLink } from '../models/monthLink.model'
 
 export const initialState: CategoryGroup[] = []
 
@@ -30,29 +31,38 @@ const groupSlice = createSlice({
     deleteGroup(state, action: PayloadAction<CategoryMonth>) {
       return state.filter(cat => cat.id !== action.payload.id)
     },
-    carryoverGroups(state, action: PayloadAction<{ newMonth: ISODateString, newCategories: CategoryMonth[] }>) {
+    carryoverGroups(state, action: PayloadAction<{ newMonth: ISODateString, categoryLinks: MonthLink[] }>) {
       const newMonthDateTime = DateTime.fromISO(action.payload.newMonth)
       const prevMonth = newMonthDateTime.plus({ months: -1 })
 
-      const newGroups: CategoryGroup[] = state
-        .filter(g => 
+      const newGroups: CategoryGroup[] = []
+      const previousGroupsToCarry = state
+        .filter(g =>
           DateTime.fromISO(g.budgetMonth).month === prevMonth.month &&
-          DateTime.fromISO(g.budgetMonth).year === prevMonth.year)
-        .map(g => ({
-          ...g,
-          // id: nanoid(), // Don't create a new id yet, we can use this to grab the old group's categories
+          DateTime.fromISO(g.budgetMonth).year === prevMonth.year
+          // && TODO: Use links like categories
+          )
+
+      previousGroupsToCarry.forEach(prev => {
+        const newGroupId = nanoid()
+        const newGroup: CategoryGroup = {
+          ...prev,
+          id: newGroupId,
           budgetMonth: action.payload.newMonth,
           categoryIds: [],
-        }))
+        }
 
-      newGroups.forEach(newGroup => {
-        const prevGroup = state.find(stateGroup => stateGroup.id === newGroup.id)
-        newGroup.categoryIds = action.payload.newCategories
-          .filter(newCategory => prevGroup?.categoryIds.includes(newCategory.prevMonthId ?? ''))
-          .map(newCategory => newCategory.id)
-        
-        // Now that we've used the previous group to get the categories, we can give this new category an id
-        newGroup.id = nanoid()
+        prev.categoryIds.forEach(prevCatId => {
+          const newCategory = action.payload.categoryLinks.find(link => link.prevId === prevCatId)?.nextId
+          if (newCategory) {
+            newGroup.categoryIds.push(newCategory)
+          } else {
+            console.warn('Expected to find a linked category, but none existed.' +
+              'Did something happen while carrying over categories from the previous month?')
+          }
+        })
+
+        newGroups.push(newGroup)
       })
 
       state.push(...newGroups)

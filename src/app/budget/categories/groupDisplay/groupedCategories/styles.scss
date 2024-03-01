@@ -14,7 +14,7 @@
     position: sticky;
     top: vars.$nav-height;
 
-    transition: opacity .3s, visibility .3s;
+    transition: opacity .5s, visibility .5s;
 
     &.hidden {
       visibility: hidden;

@@ -78,7 +78,7 @@ function CategoryRow({ category, highlight }: { category: CategoryMonth, highlig
         {category.name}
       </div>
       <div>
-        {category.balanceForward ?? '0.00'}
+        {category.balanceForward ?? currency(0).toString()}
       </div>
       <div>
         {category.budgetedAmount}
