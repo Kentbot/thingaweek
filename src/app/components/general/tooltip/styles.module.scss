@@ -1,0 +1,23 @@
+@use './variables' as vars;
+
+.tooltip-btn {
+  display: inline-block;
+  color: white;
+  background-color: vars.$primary;
+  border: 1px solid vars.$primary;
+  border-radius: 60px;
+  padding: 0.65rem 0.3rem 0.45rem 0.3rem;
+  font-size: 1rem;
+  line-height: 0;
+
+  transition:
+    background-color .3s,
+    color .3s;
+
+  &:hover {
+    background-color: vars.$background-light;
+    border: 1px solid vars.$primary;
+    color: vars.$primary;
+    cursor: pointer;
+  }
+}

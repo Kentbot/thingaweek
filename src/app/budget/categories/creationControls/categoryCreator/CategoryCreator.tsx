@@ -12,6 +12,7 @@ import { createCategory } from '@budget/store/slices/category.slice'
 import './styles.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion } from '@fortawesome/free-solid-svg-icons'
+import { Tooltip } from '@components/general/tooltip/Tooltip'
 
 export function CategoryCreator() {
   const dispatch = useDispatch<AppDispatch>()
@@ -46,7 +47,7 @@ export function CategoryCreator() {
 
   return (
     <div className="category-creator creation-group">
-      <div className="label">Create New Category <span className="tooltip-btn" onClick={() => alert('TODO')}>?</span></div>
+      <div className="label">Create New Category <Tooltip onClick={() => alert('TODO Category')}/></div>
       {/* TODO: Add form validation logic so that empty group/category names are impossible */}
       <input
         id='category-name-input'

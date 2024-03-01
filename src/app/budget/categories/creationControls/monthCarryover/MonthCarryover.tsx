@@ -6,6 +6,7 @@ import { carryoverMonthThunk } from '@budget/store/thunks'
 import { AppDispatch, RootState } from '@budget/store/store'
 
 import './styles.scss'
+import { Tooltip } from '@components/general/tooltip/Tooltip'
 
 export function MonthCarryover() {
   const dispatch = useDispatch<AppDispatch>()
@@ -16,7 +17,7 @@ export function MonthCarryover() {
       <button className="btn" onClick={() => dispatch(carryoverMonthThunk(currentMonth))}>
         Carry Over Categories
       </button>
-      <span className="tooltip-btn" onClick={() => alert('TODO')}>?</span>
+      <Tooltip onClick={() => alert('TODO Month')} />
     </div>
   )
 }

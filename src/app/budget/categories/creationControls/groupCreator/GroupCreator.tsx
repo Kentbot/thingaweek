@@ -7,6 +7,7 @@ import { createGroup } from '@budget/store/slices/group.slice'
 import { RootState } from '@budget/store/store'
 
 import './styles.scss'
+import { Tooltip } from '@components/general/tooltip/Tooltip'
 
 export function GroupCreator() {
   const dispatch = useDispatch()
@@ -26,7 +27,7 @@ export function GroupCreator() {
 
   return (
     <div className="creation-group">
-      <div className="label">Create New Group <span className="tooltip-btn" onClick={() => alert('TODO')}>?</span></div>
+      <div className="label">Create New Group <Tooltip onClick={() => alert('TODO Group')}/></div>
       <input
         id='group-name-input'
         className='category-input'
