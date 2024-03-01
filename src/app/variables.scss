@@ -54,4 +54,20 @@ $outline-highlight: $dark-yellow;
   border-radius: $border-radius;
 }
 
+@mixin border-label(
+  $position: absolute,
+  $margin: -1rem 1rem,
+  $font-size: 1.3rem,
+  $padding: 0 .5rem,
+) {
+  position: $position;
+  margin: $margin;
+  font-size: $font-size;
+  padding: $padding;
+
+  background: $background-light;
+  color: $primary-dark;
+  border-radius: $border-radius;
+}
+
 $color: white;

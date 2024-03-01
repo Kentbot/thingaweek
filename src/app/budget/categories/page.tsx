@@ -21,9 +21,11 @@ export default function CategoriesPage() {
   return (
     <>
       <CreationControls />
-      <IncomeView />
       <UngroupedCategories />
-      <GroupedCategories />
+      <div className="all-categories">
+        <IncomeView />
+        <GroupedCategories />
+      </div>
     </>
   )
 }

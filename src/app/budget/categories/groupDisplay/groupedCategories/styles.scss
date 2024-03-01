@@ -2,7 +2,7 @@
 
 .grouped-categories-grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr) vars.$category-context-width;
+  grid-template-columns: repeat(11, 1fr) vars.$category-context-width;
   margin: 0px 10px 10px 10px;
   padding-bottom: 100px;
 
@@ -32,7 +32,7 @@
     }
 
     &.category {
-      grid-column: 3 / 6;
+      grid-column: 3 / 5;
     }
   }
 
@@ -55,21 +55,15 @@
       align-self: start;
       justify-self: center;
 
-      position: sticky;
       top: vars.$nav-height;
 
       max-width: 90%;
-      padding: 4px 8px;
-      margin: -1.5rem;
       
       text-align: center;
-      font-size: 1.5rem;
       text-overflow: ellipsis;
       overflow: hidden;
-
-      background: vars.$background-light;
-      color: vars.$primary-dark;
-      border-radius: vars.$border-radius;
+      
+      @include vars.border-label($margin: -1.5rem, $font-size: 1.5rem, $padding: 4px 8px, $position: sticky);
     }
 
     .group-categories {
@@ -108,12 +102,11 @@
         }
 
         .category-name {
-          grid-column: 1 / 4;
+          grid-column: 1 / 3;
         }
 
         .category-edit-button {
           grid-column: -1;
-          // justify-self: right;
         }
       }
     }

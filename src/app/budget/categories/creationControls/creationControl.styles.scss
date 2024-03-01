@@ -21,13 +21,6 @@
   @include vars.styled-border;
 
   .label {
-    position: absolute;
-    margin: -1.7rem .5rem;
-    padding: 0 4px 0 6px;
-
-    font-size: 1.2rem;
-
-    background-color: vars.$background-light;
-    color: vars.$primary-dark;
+    @include vars.border-label($margin: -1.7rem .5rem, $font-size: 1.2rem);
   }
 }

@@ -19,6 +19,10 @@ export function IncomeView() {
   
   return (
     <div className="income-grid">
+      <div className="label">Income</div>
+      <div className="income-header">
+        <div></div>
+      </div>
       {'TODO: Income'} {totalIncome.toString()} Total Spend: {totalSpend.toString()} Net Balance: {netBalance.toString()}
     </div>
   )

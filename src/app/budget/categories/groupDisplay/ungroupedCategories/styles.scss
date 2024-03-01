@@ -7,10 +7,9 @@ $transition-time: .5s;
   grid-template-columns: repeat(9, 1fr) vars.$category-context-width;
 
   padding: 15px;
-  margin: 1rem 10px 10px 10px;
+  margin: 1.5rem 10px 10px 10px;
 
-  border: 1px solid vars.$outline;
-  border-radius: vars.$border-radius;
+  @include vars.styled-border;
   
   opacity: 100;
   min-height: 100px;
@@ -38,13 +37,6 @@ $transition-time: .5s;
   }
 
   .label {
-    position: absolute;
-    margin: -1.9rem 0;
-    background: vars.$background-light;
-    padding: 4px;
-    line-height: 1.5rem;
-    font-size: 1.3rem;
-
-    color: vars.$primary-dark;
+    @include vars.border-label($margin: -2rem 0, $font-size: 1.3rem);
   }
 }
