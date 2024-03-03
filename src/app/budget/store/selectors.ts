@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { filterToBudgetMonth } from '@budget/services/category.service'
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import { Transaction } from '@budget/models/transaction.model'
+import { IncomeMonth } from '@budget/models/incomeMonth.model'
 
 import { RootState } from './store'
 
@@ -50,4 +51,12 @@ export const useCategoryTransactions = (category: CategoryMonth) => {
     (state: RootState) => state.transactions,
     (transactions) => transactions.filter(t => category.transactionIds.includes(t.id)))
   return useSelector(selectCategoryTransactions)
+}
+
+export const useBudgetMonthIncome = (): IncomeMonth[] => {
+  const selectGroups = createSelector(
+    (state: RootState) => state,
+    (state) => filterToBudgetMonth(state.income, DateTime.fromISO(state.budgetMonth))
+  )
+  return useSelector(selectGroups)
 }

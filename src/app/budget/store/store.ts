@@ -4,9 +4,11 @@ import categorySlice, { initialState as initialCategoryState } from './slices/ca
 import groupSlice, { initialState as initialGroupState } from './slices/group.slice'
 import transactionSlice, { initialState as initialTransactionState } from './slices/transaction.slice'
 import budgetMonthSlice, { initialState as initialBudgetMonthState } from './slices/budgetMonth.slice'
+import incomeSlice, { initialState as initialIncomeState } from './slices/income.slice'
 
 export const defaultState = {
   categories: initialCategoryState,
+  income: initialIncomeState,
   transactions: initialTransactionState,
   budgetMonth: initialBudgetMonthState,
   groups: initialGroupState
@@ -15,6 +17,7 @@ export const defaultState = {
 const store = configureStore({
   reducer: {
     categories: categorySlice,
+    income: incomeSlice,
     groups: groupSlice,
     transactions: transactionSlice,
     budgetMonth: budgetMonthSlice

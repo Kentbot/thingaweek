@@ -1,0 +1,28 @@
+@use './variables' as vars;
+
+.modal {
+  margin: auto;
+  padding: 1.5rem 1.5rem 1rem;
+  background-color: vars.$background-light;
+  overflow: visible;
+
+  @include vars.styled-border;
+
+  .close-btn {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.2rem;
+
+    height: fit-content;
+
+    border-radius: 50%;
+    height: 2rem;
+    width: 2rem;
+  }
+
+  .title {
+    top: 0;
+    @include vars.styled-border;
+    @include vars.border-label;
+  }
+}

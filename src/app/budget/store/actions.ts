@@ -10,3 +10,5 @@ export const hydrateStateAction = createAction('hydrate-state')
 export const persistStateAction = createAction('persist-state')
 
 export const resetStateAction = createAction('reset-state')
+
+export const assignIncomeTransaction = createAction<{ incomeId: string, transactionId: string }>('assign-income-transaction')

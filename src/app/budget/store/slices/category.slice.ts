@@ -1,15 +1,15 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import { DateTime } from "luxon"
-import { nanoid } from "nanoid"
-import currency from "currency.js"
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { DateTime } from 'luxon'
+import { nanoid } from 'nanoid'
+import currency from 'currency.js'
 
-import { CategoryMonth } from "@budget/models/categoryMonth.model"
-import { calculateEomBalance } from "@budget/services/category.service"
-import { Transaction } from "@budget/models/transaction.model"
+import { CategoryMonth } from '@budget/models/categoryMonth.model'
+import { calculateEomBalance } from '@budget/services/category.service'
+import { Transaction } from '@budget/models/transaction.model'
 
-import { ISODateString } from "../types"
-import { resetStateAction } from "../actions"
-import { MonthLink } from "../models/monthLink.model"
+import { ISODateString } from '../types'
+import { assignIncomeTransaction, resetStateAction } from '../actions'
+import { MonthLink } from '../models/monthLink.model'
 
 type CategoryState = {
   categories: CategoryMonth[]
@@ -46,7 +46,7 @@ const categorySlice = createSlice({
         }
       })
     },
-    assignTransaction(state, action: PayloadAction<{ categoryId: string, transactionId: string, allTransactions: Transaction[] }>) {
+    assignCategoryTransaction(state, action: PayloadAction<{ categoryId: string, transactionId: string, allTransactions: Transaction[] }>) {
       state.categories.forEach(category => {
         const shouldRemoveTransFromCategory =
           category.transactionIds.includes(action.payload.transactionId) &&
@@ -104,6 +104,11 @@ const categorySlice = createSlice({
   extraReducers: (builder) =>
     builder
       .addCase(resetStateAction, () => initialState)
+      .addCase(assignIncomeTransaction, (state, action) => {
+        state.categories.forEach(cat => {
+          cat.transactionIds = cat.transactionIds.filter(tid => tid !== action.payload.transactionId)
+        })
+      })
 })
 
 const recalculateLinkedCategories = (state: CategoryState, updatingCategory: CategoryMonth, allTransactions: Transaction[], prevCategory?: CategoryMonth) => {
@@ -127,7 +132,7 @@ export const {
   createCategories,
   updateCategory,
   deleteCategory,
-  assignTransaction,
+  assignCategoryTransaction,
   deleteTransactionFromCategory,
   carryoverCategories,
 } = categorySlice.actions

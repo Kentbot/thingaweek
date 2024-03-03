@@ -3,7 +3,6 @@
 .grouped-categories-grid {
   display: grid;
   grid-template-columns: repeat(11, 1fr) vars.$category-context-width;
-  margin: 0px 10px 10px 10px;
   padding-bottom: 100px;
 
   .header-row {
@@ -77,6 +76,8 @@
       border-left: 2px solid vars.$outline;
 
       .group-category {
+        // TODO: If there is only one child, this fix (for ensuring borders aren't snipped off
+        // at the corners) only works for the bottom corner. Need to come up with a better strategy.
         &:first-child {
           border-radius: 0 vars.$border-radius 0 0;
         }

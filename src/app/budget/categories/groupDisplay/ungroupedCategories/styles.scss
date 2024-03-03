@@ -7,7 +7,7 @@ $transition-time: .5s;
   grid-template-columns: repeat(9, 1fr) vars.$category-context-width;
 
   padding: 15px;
-  margin: 1.5rem 10px 10px 10px;
+  margin: 1.5rem .8rem .8rem .8rem;
 
   @include vars.styled-border;
   

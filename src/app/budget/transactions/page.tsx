@@ -9,7 +9,7 @@ import { faUpload } from '@fortawesome/free-solid-svg-icons'
 import { AppDispatch, RootState } from '@budget/store/store'
 import { deleteTransactionThunk } from '@budget/store/thunks'
 import { createTransactions } from '@budget/store/slices/transaction.slice'
-import { assignTransaction } from '@budget/store/slices/category.slice'
+import { assignCategoryTransaction } from '@budget/store/slices/category.slice'
 import { useBudgetMonthCategories, useBudgetMonthTransactions } from '@budget/store/selectors'
 
 import { parseCsv } from '@budget/services/csvParser.service'
@@ -40,7 +40,7 @@ export default function Transactions() {
   }
 
   const handleAssignTransactionToCategory = (transId: string, catId: string) => {
-    dispatch(assignTransaction({ categoryId: catId, transactionId: transId, allTransactions: transactions }))
+    dispatch(assignCategoryTransaction({ categoryId: catId, transactionId: transId, allTransactions: transactions }))
   }
 
   return (

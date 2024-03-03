@@ -5,14 +5,12 @@ import currency from 'currency.js'
 import { nanoid } from 'nanoid'
 
 import { NumericInput } from '@components/general/NumericInput'
+import { Tooltip } from '@components/general/tooltip/Tooltip'
 
 import { AppDispatch, RootState } from '@budget/store/store'
 import { createCategory } from '@budget/store/slices/category.slice'
 
 import './styles.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestion } from '@fortawesome/free-solid-svg-icons'
-import { Tooltip } from '@components/general/tooltip/Tooltip'
 
 export function CategoryCreator() {
   const dispatch = useDispatch<AppDispatch>()

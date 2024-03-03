@@ -8,11 +8,15 @@
   padding: 20px;
 
   display: grid;
-  grid-template-columns: repeat(1fr, 4);
+  grid-template-columns: repeat(4, 1fr);
 
   @include vars.styled-border;
 
   .label {
     @include vars.border-label;
+  }
+
+  .income-header {
+    display: contents
   }
 }
