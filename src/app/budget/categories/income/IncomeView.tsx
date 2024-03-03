@@ -2,9 +2,10 @@ import React from 'react'
 
 import currency from 'currency.js'
 
-import { useBudgetMonthIncome, useBudgetMonthTransactions } from '@budget/store/selectors'
+import { useBudgetMonthIncome, useBudgetMonthTransactions, useCategoryTransactions } from '@budget/store/selectors'
 
 import './styles.scss'
+import { IncomeMonth } from '@budget/models/incomeMonth.model'
 
 export function IncomeView() {
   const allTransactions = useBudgetMonthTransactions()
@@ -23,20 +24,30 @@ export function IncomeView() {
     <div className="income-grid">
       <div className="label">Income</div>
       <div className="income-header">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div>Name</div>
+        <div>Expected</div>
+        <div>Actual</div>
+        <div>Net</div>
       </div>
       {income.map(inc => (
         <React.Fragment key={inc.id}>
-          <div>{inc.name}</div>
-          <div>Transactions and such</div>
-          <div>*Remove</div>
-          <div>*Remove</div>
+          <IncomeRow incomeCategory={inc} />
         </React.Fragment>
       ))}
-      {'TODO: Income'} {totalIncome.toString()} Total Spend: {totalSpend.toString()} Net Balance: {netBalance.toString()}
     </div>
+  )
+}
+
+function IncomeRow({ incomeCategory }: { incomeCategory: IncomeMonth }) {
+  const incomeTransactions = useCategoryTransactions(incomeCategory.transactionIds)
+  const actualIncome = incomeTransactions.reduce((prev, curr) => currency(curr.amount).add(prev), currency(0)).toString()
+  
+  return (
+    <>
+      <div>{incomeCategory.name}</div>
+      <div>{incomeCategory.expectedIncome}</div>
+      <div>{actualIncome}</div>
+      <div>{currency(incomeCategory.expectedIncome).add(actualIncome).toString()}</div>
+    </>
   )
 }

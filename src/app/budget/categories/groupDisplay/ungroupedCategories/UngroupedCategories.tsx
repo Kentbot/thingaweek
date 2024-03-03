@@ -53,7 +53,7 @@ function HeaderRow() {
 
 function CategoryRow({ category, highlight }: { category: CategoryMonth, highlight?: boolean }) {
   const dispatch = useDispatch<AppDispatch>()
-  const categoryTransactions = useCategoryTransactions(category)
+  const categoryTransactions = useCategoryTransactions(category.transactionIds)
   const groups = useBudgetMonthGroups()
 
  const spend = categoryTransactions.reduce(

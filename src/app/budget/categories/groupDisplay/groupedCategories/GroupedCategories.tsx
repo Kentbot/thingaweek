@@ -54,7 +54,7 @@ export function GroupedCategories() {
 
 function CategoryRow({ category, highlight }: { category: CategoryMonth, highlight?: boolean }) {
   const dispatch = useDispatch<AppDispatch>()
-  const categoryTransactions = useCategoryTransactions(category)
+  const categoryTransactions = useCategoryTransactions(category.transactionIds)
 
  const spend = categoryTransactions.reduce(
     (prev, curr) => currency(curr.amount).add(prev), currency(0)

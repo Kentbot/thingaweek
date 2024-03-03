@@ -46,10 +46,10 @@ export const useBudgetMonthGroups = () => {
   return useSelector(selectGroups)
 }
 
-export const useCategoryTransactions = (category: CategoryMonth) => {
+export const useCategoryTransactions = (transactionIds: string[]) => {
   const selectCategoryTransactions = createSelector(
     (state: RootState) => state.transactions,
-    (transactions) => transactions.filter(t => category.transactionIds.includes(t.id)))
+    (transactions) => transactions.filter(t => transactionIds.includes(t.id)))
   return useSelector(selectCategoryTransactions)
 }
 
