@@ -10,7 +10,7 @@ import { AppDispatch, RootState } from '@budget/store/store'
 import { deleteTransactionThunk } from '@budget/store/thunks'
 import { createTransactions } from '@budget/store/slices/transaction.slice'
 import { assignCategoryTransaction } from '@budget/store/slices/category.slice'
-import { useBudgetMonthCategories, useBudgetMonthTransactions } from '@budget/store/selectors'
+import { useBudgetMonthCategories, useBudgetMonthIncome, useBudgetMonthTransactions } from '@budget/store/selectors'
 
 import { parseCsv } from '@budget/services/csvParser.service'
 import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer.service'
@@ -18,12 +18,16 @@ import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer
 import { Transaction } from '@budget/models/transaction.model'
 
 import './styles.scss'
+import { assignIncomeTransaction } from '@budget/store/actions'
 
 export default function Transactions() {
   const dispatch = useDispatch<AppDispatch>()
   const budgetMonth = useSelector((state: RootState) => state.budgetMonth)
   const transactions = useBudgetMonthTransactions()
-  const categories = useBudgetMonthCategories()
+  const categoryOptions = useBudgetMonthCategories()
+    .map(c => ({ value: `cat-${c.id}`, name: c.name, transactions: c.transactionIds }))
+  const incomeCategoryOptions = useBudgetMonthIncome()
+    .map(c => ({ value: `inc-${c.id}`, name: c.name, transactions: c.transactionIds }))
 
   const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -39,8 +43,12 @@ export default function Transactions() {
     dispatch(deleteTransactionThunk(transId))
   }
 
-  const handleAssignTransactionToCategory = (transId: string, catId: string) => {
-    dispatch(assignCategoryTransaction({ categoryId: catId, transactionId: transId, allTransactions: transactions }))
+  const handleAssignTransaction = (transId: string, value: string) => {
+    if (value.startsWith('cat-')) {
+      dispatch(assignCategoryTransaction({ categoryId: value.replace('cat-', ''), transactionId: transId, allTransactions: transactions }))
+    } else {
+      dispatch(assignIncomeTransaction({ incomeId: value.replace('inc-', ''), transactionId: transId, allTransatcions: transactions }))
+    }
   }
 
   return (
@@ -65,13 +73,25 @@ export default function Transactions() {
             <div>
               <select
                 className="category-select"
-                onChange={(v) => handleAssignTransactionToCategory(trans.id, v.target.value)}
-                value={categories.find(c => c.transactionIds.includes(trans.id))?.id}
+                onChange={(event) => handleAssignTransaction(trans.id, event.target.value)}
+                value={
+                  (
+                    categoryOptions.find(c => c.transactions.includes(trans.id))?.value ||
+                    incomeCategoryOptions.find(i => i.transactions.includes(trans.id))?.value
+                  )
+                }
               >
                 <option value={undefined}>-</option>
-                {categories.map((c) => (
-                  <option key={c.id} value={c.id}>{c.name}</option>
-                ))}
+                <optgroup label="Categories">
+                  {categoryOptions.map((c) => (
+                    <option key={c.value} value={c.value}>{c.name}</option>
+                  ))}
+                </optgroup>
+                <optgroup label="Income">
+                  {incomeCategoryOptions.map((c) => (
+                    <option key={c.value} value={c.value}>{c.name}</option>
+                  ))}
+                </optgroup>
               </select>
             </div>
             <button className="btn delete-trans-button" onClick={() => removeTransaction(trans.id)}>

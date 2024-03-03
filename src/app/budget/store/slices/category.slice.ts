@@ -105,8 +105,14 @@ const categorySlice = createSlice({
     builder
       .addCase(resetStateAction, () => initialState)
       .addCase(assignIncomeTransaction, (state, action) => {
-        state.categories.forEach(cat => {
-          cat.transactionIds = cat.transactionIds.filter(tid => tid !== action.payload.transactionId)
+        state.categories.forEach(category => {
+          const shouldRemoveTransFromCategory =
+            category.transactionIds.includes(action.payload.transactionId)
+        
+          if (shouldRemoveTransFromCategory) {
+            category.transactionIds = category.transactionIds.filter(tid => tid !== action.payload.transactionId)
+            recalculateLinkedCategories(state, category, action.payload.allTransatcions)
+          }
         })
       })
 })
