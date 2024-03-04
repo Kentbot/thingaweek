@@ -1,5 +1,9 @@
 @use './variables' as vars;
 
+.nav-spacer {
+  height: vars.$nav-height;
+}
+
 .nav {
   border-bottom: 2px solid vars.$secondary-dark;
   background-color: vars.$grey;
