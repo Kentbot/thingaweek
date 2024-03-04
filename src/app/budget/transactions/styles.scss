@@ -1,6 +1,13 @@
+@use './variables' as vars;
+
 .transaction-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr 30px;
+
+  margin: 1rem;
+  padding: 1rem;
+
+  @include vars.styled-border;
 
   .header {
     display: contents;
@@ -16,11 +23,12 @@
     overflow: hidden;
   }
 
-  .category-select {
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .label {
+    @include vars.border-label($margin: -2rem 1rem);
+    
+    align-self: start;
+    justify-self: start;
+    width: fit-content;
   }
 
   .delete-trans-button {
@@ -29,6 +37,19 @@
     font-size: 1rem;
     padding: 0px;
     margin: 2px 10px;
+  }
+
+  .transaction-row {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+
+    border-radius: vars.$border-radius;
+    padding: 0 1rem;
+
+    &.highlight {
+      background-color: vars.$primary-light;
+    }
   }
 }
 

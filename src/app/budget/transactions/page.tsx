@@ -58,6 +58,7 @@ export default function Transactions() {
       </label>
       <input id="transactions-upload" accept=".csv" type="file" onChange={handleFileUpload} />
       <div className='transaction-grid'>
+        <div className="label">Transactions</div>
         <div className="header">
           <div>Description</div>
           <div>Amount</div>
@@ -65,8 +66,8 @@ export default function Transactions() {
           <div>Category</div>
           <div></div>
         </div>
-        { transactions?.map((trans: Transaction) => (
-          <React.Fragment key={trans.id}>
+        { transactions?.map((trans: Transaction, i) => (
+          <div className={`transaction-row ${i % 2 === 1 ? 'highlight' : ''}`} key={trans.id}>
             <div>{trans.description}</div>
             <div>{trans.amount}</div>
             <div>{trans.date}</div>
@@ -97,7 +98,7 @@ export default function Transactions() {
             <button className="btn delete-trans-button" onClick={() => removeTransaction(trans.id)}>
               x
             </button>
-          </React.Fragment>
+          </div>
         ))}
       </div>
     </>
