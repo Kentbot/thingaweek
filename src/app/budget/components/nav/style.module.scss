@@ -8,7 +8,7 @@ $nav-highlight: vars.$primary;
 
   width: vars.$nav-width;
   position: fixed;
-  height: 100%;
+  height: calc(100% - vars.$nav-height);
   background-color: vars.$secondary-light;
   font-size: 1rem;
 

@@ -71,7 +71,7 @@ function CategoryRow({ category, highlight }: { category: CategoryMonth, highlig
         <Dropdown
           onSelect={(value) => handleGroupSelect(value, category.id)}
           options={groups.map(g => ({ value: g.id, display: g.name }))}
-          defaultOption='Select group'
+          initialOption='Select group'
         />
       </div>
       <div className="category-name">

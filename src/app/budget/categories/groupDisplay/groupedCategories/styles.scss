@@ -3,7 +3,6 @@
 .grouped-categories-grid {
   display: grid;
   grid-template-columns: repeat(11, 1fr) vars.$category-context-width;
-  padding-bottom: 100px;
 
   flex: 3 1;
 

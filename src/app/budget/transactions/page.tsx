@@ -16,9 +16,9 @@ import { parseCsv } from '@budget/services/csvParser.service'
 import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer.service'
 
 import { Transaction } from '@budget/models/transaction.model'
+import { assignIncomeTransaction } from '@budget/store/actions'
 
 import './styles.scss'
-import { assignIncomeTransaction } from '@budget/store/actions'
 
 export default function Transactions() {
   const dispatch = useDispatch<AppDispatch>()
