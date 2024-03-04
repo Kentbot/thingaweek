@@ -3,12 +3,19 @@
 $nav-highlight: vars.$primary;
 
 .budgetNav {
+  display: flex;
+  flex-direction: column;
+
   width: vars.$nav-width;
   position: fixed;
   height: 100%;
   background-color: vars.$secondary-light;
   font-size: 1rem;
   padding-top: vars.$nav-height;
+
+  nav {
+    flex: 1;
+  }
 
   .link {
     padding: 18px 8px 8px 18px;

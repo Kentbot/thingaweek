@@ -12,14 +12,13 @@ import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { IncomeCreator } from './incomeCreator/IncomeCreator'
 
 export function CreationControls() {
-  const [open, setOpen] = useState(false)
 
   return (
     <div className="creation-controls">
-      <button className="btn" onClick={() => setOpen(!open)}>
-        <FontAwesomeIcon icon={faPencil} /> Category Management
-      </button>
-      <Dialog isOpen={open} onClose={() => setOpen(false)} title={'Category Management'}>
+      <Dialog 
+        toggleButtonIcon={<FontAwesomeIcon icon={faPencil} />}
+        toggleButtonText="Category Management"
+        title={'Category Management'}>
         <MonthCarryover />
         <CategoryCreator />
         <IncomeCreator />
