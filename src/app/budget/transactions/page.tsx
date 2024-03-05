@@ -18,16 +18,25 @@ import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer
 import { Transaction } from '@budget/models/transaction.model'
 import { assignIncomeTransaction } from '@budget/store/actions'
 
+import { Dropdown, DropdownOption } from '@components/general/dropdown/Dropdown'
+
 import './styles.scss'
+
+const categoryGroup = 'Categories'
+const incomeGroup = 'Income Categories'
+
+type Group = typeof categoryGroup | typeof incomeGroup
 
 export default function Transactions() {
   const dispatch = useDispatch<AppDispatch>()
   const budgetMonth = useSelector((state: RootState) => state.budgetMonth)
   const transactions = useBudgetMonthTransactions()
-  const categoryOptions = useBudgetMonthCategories()
-    .map(c => ({ value: `cat-${c.id}`, name: c.name, transactions: c.transactionIds }))
-  const incomeCategoryOptions = useBudgetMonthIncome()
-    .map(c => ({ value: `inc-${c.id}`, name: c.name, transactions: c.transactionIds }))
+
+  const categoryOptions: (DropdownOption & { transactionIds: string[] })[] = useBudgetMonthCategories()
+    .map(cat => ({ display: cat.name, value: cat.id, group: categoryGroup, transactionIds: cat.transactionIds }))
+
+  const incomeCategoryOptions: (DropdownOption & { transactionIds: string[] })[] = useBudgetMonthIncome()
+    .map(inc => ({ display: inc.name, value: inc.id, group: incomeGroup, transactionIds: inc.transactionIds }))
 
   const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -43,11 +52,15 @@ export default function Transactions() {
     dispatch(deleteTransactionThunk(transId))
   }
 
-  const handleAssignTransaction = (transId: string, value: string) => {
-    if (value.startsWith('cat-')) {
-      dispatch(assignCategoryTransaction({ categoryId: value.replace('cat-', ''), transactionId: transId, allTransactions: transactions }))
+  const handleAssignTransaction = (transId: string, group: Group, value?: string) => {
+    if (value) {
+      if (group === categoryGroup) {
+        dispatch(assignCategoryTransaction({ categoryId: value, transactionId: transId, allTransactions: transactions }))
+      } else {
+        dispatch(assignIncomeTransaction({ incomeId: value, transactionId: transId, allTransatcions: transactions }))
+      }
     } else {
-      dispatch(assignIncomeTransaction({ incomeId: value.replace('inc-', ''), transactionId: transId, allTransatcions: transactions }))
+      console.error('TODO: Unassign transaction from category/income')
     }
   }
 
@@ -71,29 +84,15 @@ export default function Transactions() {
             <div>{trans.description}</div>
             <div>{trans.amount}</div>
             <div>{trans.date}</div>
-            <div>
-              <select
-                className="category-select"
-                onChange={(event) => handleAssignTransaction(trans.id, event.target.value)}
-                value={
-                  (
-                    categoryOptions.find(c => c.transactions.includes(trans.id))?.value ||
-                    incomeCategoryOptions.find(i => i.transactions.includes(trans.id))?.value
-                  )
+            <div className="category-select">
+              <Dropdown
+                initialOption={
+                  categoryOptions.find(c => c.transactionIds.includes(trans.id)) ??
+                  incomeCategoryOptions.find(c => c.transactionIds.includes(trans.id))
                 }
-              >
-                <option value={undefined}>-</option>
-                <optgroup label="Categories">
-                  {categoryOptions.map((c) => (
-                    <option key={c.value} value={c.value}>{c.name}</option>
-                  ))}
-                </optgroup>
-                <optgroup label="Income">
-                  {incomeCategoryOptions.map((c) => (
-                    <option key={c.value} value={c.value}>{c.name}</option>
-                  ))}
-                </optgroup>
-              </select>
+                onSelect={(option) => handleAssignTransaction(trans.id, option.group as Group, option.value)}
+                options={[...categoryOptions, ...incomeCategoryOptions]}
+              />
             </div>
             <button className="btn delete-trans-button" onClick={() => removeTransaction(trans.id)}>
               x

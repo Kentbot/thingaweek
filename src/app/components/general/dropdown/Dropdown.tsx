@@ -2,23 +2,32 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react'
 
 import './styles.scss'
 
-type Option = {
+export type DropdownOption = {
   value: string
   display: string
   group?: string
 }
 
+type ReturnedOption = Omit<DropdownOption, 'value'> & {
+  value?: string
+}
+
 type GroupedOptions = {
-  [key: string]: Option[]
+  [key: string]: DropdownOption[]
 }
 
 type Props = {
-  initialOption?: Option
-  options: Option[]
-  onSelect: (value: Option) => void
+  initialOption?: DropdownOption
+  options: DropdownOption[]
+  onSelect: (option: Partial<DropdownOption>) => void
 }
 
-// TODO: Add option groups, work on selection/focus
+const defaultOption: ReturnedOption = {
+  display: '-',
+  value: undefined,
+}
+
+// TODO: Work on selection/focus
 export function Dropdown({
   initialOption,
   options,
@@ -26,18 +35,19 @@ export function Dropdown({
 }: Props) {
   const [active, setActive] = useState(false)
   // The currently selected option, but can be reverted by the user if they hit escape
-  const [selectedOption, setSelectedOption] = useState(initialOption)
+  const [selectedOption, setSelectedOption] = useState(initialOption ?? defaultOption)
   // The option the user has actually confirmed by clicking/hitting 'enter'
-  const [confirmedOption, setConfirmedOption] = useState(initialOption)
+  const [confirmedOption, setConfirmedOption] = useState(initialOption ?? defaultOption)
   
   const [groupedOptions, setGroupedOptions] = useState<GroupedOptions>({})
-  const [ungroupedOptions, setUngroupedOptions] = useState<Option[]>([])
+  const [ungroupedOptions, setUngroupedOptions] = useState<DropdownOption[]>([])
 
   const optionRefs = useRef<(HTMLInputElement | null)[]>([])
+  const dropdownRef = useRef<HTMLUListElement>(null)
   
   useEffect(() => {
     const newGroupedOptions: GroupedOptions = {}
-    const newUngroupedOptions: Option[] = []
+    const newUngroupedOptions: DropdownOption[] = []
 
     options.forEach(opt => {
       if (opt.group) {
@@ -70,12 +80,27 @@ export function Dropdown({
     }
   }, [active, confirmedOption])
 
+  useEffect(() => {
+    if (dropdownRef.current) {
+      const rectResult = dropdownRef.current.getBoundingClientRect()
+
+      const rightOverrun = rectResult.width + rectResult.x > window.innerWidth
+      const leftOverrun = rectResult.x < 0
+      const bottomOverrun = rectResult.height + rectResult.y > window.innerHeight
+      const topOverrun = rectResult.y < 0
+
+      if (rightOverrun) { dropdownRef.current.className += ' pin-right' }
+      if (leftOverrun) { dropdownRef.current.className += ' pin-left' }
+      if (bottomOverrun) { dropdownRef.current.className += ' pin-bottom' }
+      if (topOverrun) { dropdownRef.current.className += ' pin-top' }
+    }
+  }, [dropdownRef])
+
   const handleDropdownClick = () => {
     setActive(!active)
   }
 
-  const handleOptionClick = (event: React.MouseEvent<HTMLInputElement>, option: Option) => {
-    console.log('click')
+  const handleOptionClick = (event: React.MouseEvent<HTMLInputElement>, option: ReturnedOption) => {
     const wasMouseClick = event.clientX !== 0 && event.clientY !== 0
     if (wasMouseClick) {
       // This needs the option directly because it fires before the onChange event, which means
@@ -97,12 +122,12 @@ export function Dropdown({
     }
   }
 
-  const handleConfirmOption = (option: Option) => {
+  const handleConfirmOption = (option: ReturnedOption) => {
     setConfirmedOption(option)
     onSelect(option)
   }
 
-  const handleChange = (option: Option) => {
+  const handleChange = (option: ReturnedOption) => {
     setSelectedOption(option)
   }
 
@@ -119,7 +144,13 @@ export function Dropdown({
         <span className="selected-value">{confirmedOption?.display ?? '-'}</span>
         <span className="arrow"></span>
       </button>
-      <ul className="select-dropdown" >
+      <ul className="select-dropdown" ref={dropdownRef}>
+        <DefaultOption
+          option={defaultOption}
+          onKeydown={handleKeydown}
+          onOptionClick={handleOptionClick}
+          onChange={() => handleChange(defaultOption)}
+        />
         {
           ungroupedOptions.map((opt, i) => (
             <React.Fragment key={opt.value}>
@@ -166,10 +197,10 @@ export function Dropdown({
 }
 
 type OptionProps = {
-  option: Option
+  option: DropdownOption
   onKeydown: (event: React.KeyboardEvent<HTMLInputElement>) => void
-  onOptionClick: (event: React.MouseEvent<HTMLInputElement>, option: Option) => void
-  onChange: (option: Option) => void
+  onOptionClick: (event: React.MouseEvent<HTMLInputElement>, option: ReturnedOption) => void
+  onChange: (option: ReturnedOption) => void
 }
 
 const DropdownOption = forwardRef<HTMLInputElement, OptionProps>(
@@ -189,3 +220,23 @@ const DropdownOption = forwardRef<HTMLInputElement, OptionProps>(
     </li>
   )
 })
+
+type DefaultOptionProps = Omit<OptionProps, 'option'> & {
+  option: ReturnedOption
+}
+
+function DefaultOption({ option, onKeydown, onOptionClick, onChange }: DefaultOptionProps) {
+  return (
+    <li>
+      <input
+        type="radio"
+        id="default"
+        name="dropdown-values"
+        value={undefined}
+        onKeyDown={onKeydown}
+        onClick={(event) => onOptionClick(event, option)}
+        onChange={() => onChange(option)}/>
+      <label htmlFor={"default"}>{option.display}</label>
+    </li>
+  )
+}

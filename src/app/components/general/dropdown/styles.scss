@@ -1,5 +1,6 @@
 @use './variables' as vars;
 
+$min-width: 100px;
 $dropdown-width: 500px;
 
 .custom-select {
@@ -27,7 +28,7 @@ $dropdown-width: 500px;
     
     @include vars.styled-border;
 
-    width: $dropdown-width;
+    min-width: $min-width;
     max-width: 100%;
     
     padding: 0.5rem 1rem;
@@ -39,6 +40,8 @@ $dropdown-width: 500px;
       border-right: 5px solid transparent;
       border-top: 6px solid vars.$primary-dark;
       transition: transform ease-in-out 0.3s;
+
+      width: fit-content;
     }
   }
 
@@ -48,8 +51,8 @@ $dropdown-width: 500px;
 
     visibility: hidden;
 
-    width: $dropdown-width;
-    max-width: 100%;
+    min-width: $min-width;
+    max-width: $dropdown-width;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
     background-color: vars.$background-light;
     
@@ -58,8 +61,8 @@ $dropdown-width: 500px;
     padding: 10px;
     margin-top: 5px;
     max-height: 200px;
-    overflow-y: auto;
-    // transition: 0.5s ease;
+    overflow-y: auto !important;
+    z-index: 1;
 
     &:focus-within {
       box-shadow: 0 10px 25px rgba(94, 108, 233, 0.6);
@@ -96,23 +99,7 @@ $dropdown-width: 500px;
       }
     }
 
-    &::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: vars.$background-light;
-      border-radius: 25px;
-    }
     
-    &::-webkit-scrollbar-thumb {
-      background: vars.$primary-light;
-      border-radius: 25px;
-
-      &:active {
-        background: vars.$primary;
-      }
-    }
 
     .group-divider {
       margin: .7rem 0;
