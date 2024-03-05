@@ -1,5 +1,7 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react'
 
+import { nanoid } from 'nanoid'
+
 import './styles.scss'
 
 export type DropdownOption = {
@@ -100,7 +102,8 @@ export function Dropdown({
     setActive(!active)
   }
 
-  const handleOptionClick = (event: React.MouseEvent<HTMLInputElement>, option: ReturnedOption) => {
+  const handleOptionClick = (event: React.MouseEvent<HTMLElement>, option: ReturnedOption) => {
+    event.preventDefault()
     const wasMouseClick = event.clientX !== 0 && event.clientY !== 0
     if (wasMouseClick) {
       // This needs the option directly because it fires before the onChange event, which means
@@ -199,26 +202,27 @@ export function Dropdown({
 type OptionProps = {
   option: DropdownOption
   onKeydown: (event: React.KeyboardEvent<HTMLInputElement>) => void
-  onOptionClick: (event: React.MouseEvent<HTMLInputElement>, option: ReturnedOption) => void
+  onOptionClick: (event: React.MouseEvent<HTMLElement>, option: ReturnedOption) => void
   onChange: (option: ReturnedOption) => void
 }
 
 const DropdownOption = forwardRef<HTMLInputElement, OptionProps>(
   function DropdownOption({ option, onKeydown, onOptionClick, onChange }, ref) {
-  return (
-    <li>
-      <input
-        ref={ref}
-        type="radio"
-        id={option.value}
-        name="dropdown-values"
-        value={option.value}
-        onKeyDown={onKeydown}
-        onClick={(event) => onOptionClick(event, option)}
-        onChange={() => onChange(option)}/>
-      <label htmlFor={option.value}>{option.display}</label>
-    </li>
-  )
+    const optionId = nanoid()
+    return (
+      <li>
+        <input
+          ref={ref}
+          type="radio"
+          id={optionId}
+          name="dropdown-values"
+          value={option.value}
+          onKeyDown={onKeydown}
+          onClick={(event) => onOptionClick(event, option)}
+          onChange={() => onChange(option)}/>
+        <label htmlFor={optionId}>{option.display}</label>
+      </li>
+    )
 })
 
 type DefaultOptionProps = Omit<OptionProps, 'option'> & {

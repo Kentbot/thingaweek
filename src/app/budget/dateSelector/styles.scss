@@ -11,6 +11,8 @@
   position: fixed;
   bottom: 0;
 
+  z-index: 2;
+
   *:not(.year-select) {
     align-self: center;
     justify-self: center;

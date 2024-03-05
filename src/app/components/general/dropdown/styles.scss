@@ -23,7 +23,7 @@ $dropdown-width: 500px;
     justify-content: space-between;
     align-items: center;
     
-    background: inherit;
+    background-color: vars.$primary-light;
     cursor: pointer;
     
     @include vars.styled-border;
@@ -91,6 +91,7 @@ $dropdown-width: 500px;
         position: absolute;
         left: 0;
         opacity: 0;
+        cursor: pointer;
 
         &:focus ~ label {
           background-color: vars.$primary;
