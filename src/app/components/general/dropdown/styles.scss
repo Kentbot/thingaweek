@@ -4,8 +4,16 @@ $dropdown-width: 500px;
 
 .custom-select {
   &.active {
+    .select-button {
+      background-color: vars.$secondary-light;
+    }
+
     .select-dropdown {
       visibility: visible;
+    }
+
+    .arrow {
+      transform: rotate(180deg);
     }
   }
 
@@ -17,12 +25,21 @@ $dropdown-width: 500px;
     background: inherit;
     cursor: pointer;
     
-    border-radius: vars.$border-radius;
+    @include vars.styled-border;
 
     width: $dropdown-width;
     max-width: 100%;
     
     padding: 0.5rem 1rem;
+
+    transition: background-color .5s;
+
+    .arrow {
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid vars.$primary-dark;
+      transition: transform ease-in-out 0.3s;
+    }
   }
 
   .select-dropdown {
@@ -63,7 +80,8 @@ $dropdown-width: 500px;
 
       &:hover, input:checked ~ label {
         border-radius: vars.$border-radius;
-        background-color: cyan;
+        background-color: vars.$primary-light;
+        color: white;
       }
 
       input[type="radio"] {
@@ -72,7 +90,8 @@ $dropdown-width: 500px;
         opacity: 0;
 
         &:focus ~ label {
-          background-color: purple;
+          background-color: vars.$primary;
+          color: white;
         }
       }
     }
@@ -92,6 +111,14 @@ $dropdown-width: 500px;
 
       &:active {
         background: vars.$primary;
+      }
+    }
+
+    .group-divider {
+      margin: .7rem 0;
+
+      .label {
+        @include vars.border-label($margin: -.7rem 1rem, $font-size: 1rem);
       }
     }
   }
