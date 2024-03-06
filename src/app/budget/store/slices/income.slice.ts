@@ -4,6 +4,7 @@ import { assignIncomeTransaction, resetStateAction } from "../actions"
 
 import { IncomeMonth } from "@budget/models/incomeMonth.model"
 import { assignCategoryTransaction } from "./category.slice"
+import { deleteTransaction } from "./transaction.slice"
 
 type IncomeState = IncomeMonth[]
 
@@ -15,6 +16,9 @@ const incomeSlice = createSlice({
   reducers: {
     createIncomeCategory: (state, action: PayloadAction<IncomeMonth>) => {
       state.push(action.payload)
+    },
+    createIncomeCategories: (state, action: PayloadAction<IncomeMonth[]>) => {
+      state.push(...action.payload)
     },
   },
   extraReducers: (builder) =>
@@ -33,6 +37,9 @@ const incomeSlice = createSlice({
       .addCase(assignCategoryTransaction, (state, action) => {
         filterTransactionFromIncomeCategories(state, action.payload.transactionId)
       })
+      .addCase(deleteTransaction, (state, action) => {
+        filterTransactionFromIncomeCategories(state, action.payload.transactionId)
+      })
 })
 
 const filterTransactionFromIncomeCategories = (state: IncomeState, transactionId: string) => {
@@ -43,5 +50,6 @@ const filterTransactionFromIncomeCategories = (state: IncomeState, transactionId
 
 export const {
   createIncomeCategory,
+  createIncomeCategories,
 } = incomeSlice.actions
 export default incomeSlice.reducer

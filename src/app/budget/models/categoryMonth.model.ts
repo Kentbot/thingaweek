@@ -1,5 +1,5 @@
 import { CurrencyString } from '@budget/store/types'
-import { WithBudgetMonth } from './types'
+import { MonthLink, WithBudgetMonth } from './types'
 
 export interface CategoryMonth extends WithBudgetMonth {
   id: string
@@ -8,6 +8,5 @@ export interface CategoryMonth extends WithBudgetMonth {
   budgetedAmount: CurrencyString
   additionalIncome: CurrencyString
   endOfMonthAdjust: CurrencyString
-  endOfMonthBalance: CurrencyString
-  balanceForward: CurrencyString
+  linkedMonths: MonthLink
 }

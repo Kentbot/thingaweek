@@ -3,11 +3,10 @@ import { DateTime } from 'luxon'
 import { nanoid } from 'nanoid'
 
 import { CategoryGroup } from '@budget/models/categoryGroup.model'
-import { CategoryMonth } from '@budget/models/categoryMonth.model'
 
 import { ISODateString } from '../types'
 import { resetStateAction } from '../actions'
-import { MonthLink } from '../models/monthLink.model'
+import { filterToBudgetMonth } from '@budget/services/category.service'
 
 export const initialState: CategoryGroup[] = []
 
@@ -28,39 +27,28 @@ const groupSlice = createSlice({
         }
       })
     },
-    deleteGroup(state, action: PayloadAction<CategoryMonth>) {
-      return state.filter(cat => cat.id !== action.payload.id)
+    deleteGroup(state, action: PayloadAction<{ groupId: string }>) {
+      return state.filter(group => group.id !== action.payload.groupId)
     },
-    carryoverGroups(state, action: PayloadAction<{ newMonth: ISODateString, categoryLinks: MonthLink[] }>) {
+    carryoverGroups(state, action: PayloadAction<{ newMonth: ISODateString }>) {
       const newMonthDateTime = DateTime.fromISO(action.payload.newMonth)
       const prevMonth = newMonthDateTime.plus({ months: -1 })
 
       const newGroups: CategoryGroup[] = []
-      const previousGroupsToCarry = state
-        .filter(g =>
-          DateTime.fromISO(g.budgetMonth).month === prevMonth.month &&
-          DateTime.fromISO(g.budgetMonth).year === prevMonth.year
-          // && TODO: Use links like categories
-          )
+      const previousGroupsToCarry = filterToBudgetMonth(state, prevMonth)
+        .filter(g => g.linkedGroups.nextId === undefined)
 
-      previousGroupsToCarry.forEach(prev => {
+      previousGroupsToCarry.forEach(prevGroup => {
         const newGroupId = nanoid()
         const newGroup: CategoryGroup = {
-          ...prev,
+          ...prevGroup,
           id: newGroupId,
           budgetMonth: action.payload.newMonth,
           categoryIds: [],
+          linkedGroups: { prevId: prevGroup.id }
         }
 
-        prev.categoryIds.forEach(prevCatId => {
-          const newCategory = action.payload.categoryLinks.find(link => link.prevId === prevCatId)?.nextId
-          if (newCategory) {
-            newGroup.categoryIds.push(newCategory)
-          } else {
-            console.warn('Expected to find a linked category, but none existed.' +
-              'Did something happen while carrying over categories from the previous month?')
-          }
-        })
+        prevGroup.linkedGroups.nextId = newGroupId
 
         newGroups.push(newGroup)
       })

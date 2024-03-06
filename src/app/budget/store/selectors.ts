@@ -20,7 +20,7 @@ export const useBudgetMonthTransactions = (): Transaction[] => {
 export const useBudgetMonthCategories = (): CategoryMonth[] => {
   const selectCategories = createSelector(
     (state: RootState) => state,
-    (state) => filterToBudgetMonth(state.categories.categories, DateTime.fromISO(state.budgetMonth))
+    (state) => filterToBudgetMonth(state.categories, DateTime.fromISO(state.budgetMonth))
   )
   return useSelector(selectCategories)
 }
@@ -30,7 +30,7 @@ export const useUngroupedCategories = (): CategoryMonth[] => {
     (state: RootState) => state,
     (state) => {
       const catIdsInGroups = state.groups.flatMap(g => g.categoryIds)
-      const ungroupedCats = state.categories.categories.filter(cat => !catIdsInGroups.includes(cat.id))
+      const ungroupedCats = state.categories.filter(cat => !catIdsInGroups.includes(cat.id))
 
       return filterToBudgetMonth(ungroupedCats, DateTime.fromISO(state.budgetMonth))
     }

@@ -1,15 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { DateTime } from 'luxon'
 
-import { filterToBudgetMonth } from '@budget/services/category.service'
-
 import { AppDispatch, RootState } from './store'
-import { carryoverMonthAction, deleteTransactionAction, hydrateStateAction, resetStateAction } from './actions'
+import { carryoverMonthAction, hydrateStateAction, resetStateAction } from './actions'
 import { ISODateString } from './types'
-import { carryoverCategories, createCategories, deleteTransactionFromCategory } from './slices/category.slice'
-import { carryoverGroups, createGroups } from './slices/group.slice'
-import { createTransactions, deleteTransaction } from './slices/transaction.slice'
+import { carryoverCategories, createCategories } from './slices/category.slice'
+import { assignCategoryToGroup, carryoverGroups, createGroups } from './slices/group.slice'
+import { createTransactions } from './slices/transaction.slice'
 import { changeMonth } from './slices/budgetMonth.slice'
+import { createIncomeCategories } from './slices/income.slice'
+import { filterToBudgetMonth } from '@budget/services/category.service'
 
 type ThunkReturn<T> = T
 type ThunkArgs<T> = T
@@ -27,20 +27,23 @@ export const carryoverMonthThunk = createAsyncThunk<
         return
       }
       thunk.dispatch(carryoverCategories({ newMonthISO: newMonth }))
+      thunk.dispatch(carryoverGroups({ newMonth: newMonth }))
 
       const currentState = thunk.getState()
-      thunk.dispatch(carryoverGroups({ newMonth: newMonth, categoryLinks: currentState.categories.links }))
-    }
-  )
+      const newGroups = filterToBudgetMonth(currentState.groups, newMonthDateTime)
+      newGroups.forEach(group => {
+        const prevGroupCatIds = currentState.groups.find(g => g.id === group.linkedGroups.prevId)!.categoryIds
+        const prevGroupCats = currentState.categories
+          .filter(cat => prevGroupCatIds.includes(cat.id))
 
-export const deleteTransactionThunk = createAsyncThunk<
-  ThunkReturn<void>,
-  ThunkArgs<string>,
-  ThunkApi> (
-    deleteTransactionAction.type,
-    (transactionId, thunk) => {
-      thunk.dispatch(deleteTransaction({ id: transactionId }))
-      thunk.dispatch(deleteTransactionFromCategory({ id: transactionId, allTransactions: thunk.getState().transactions }))
+        prevGroupCats.forEach(prevCat => {
+          if (!prevCat.linkedMonths.nextId) {
+            console.warn('Carryover Month Thunk: Could not find linked category for group: ', group.name)
+            return
+          }
+          thunk.dispatch(assignCategoryToGroup({ groupId: group.id, categoryId: prevCat.linkedMonths.nextId }))
+        })
+      })
     }
   )
 
@@ -54,7 +57,8 @@ export const hydrateState = createAsyncThunk<
       // Wipe state clean first, then hydrate
       thunk.dispatch(resetStateAction())
 
-      thunk.dispatch(createCategories(hydrationSource.categories.categories))
+      thunk.dispatch(createIncomeCategories(hydrationSource.income))
+      thunk.dispatch(createCategories(hydrationSource.categories))
       thunk.dispatch(createTransactions(hydrationSource.transactions))
       thunk.dispatch(createGroups(hydrationSource.groups))
       thunk.dispatch(changeMonth(hydrationSource.budgetMonth))

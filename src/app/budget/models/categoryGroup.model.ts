@@ -1,4 +1,4 @@
-import { WithBudgetMonth } from './types'
+import { MonthLink, WithBudgetMonth } from './types'
 
 /* Notes:
  * Budget Month:
@@ -21,4 +21,5 @@ export interface CategoryGroup extends WithBudgetMonth {
   id: string
   name: string
   categoryIds: string[]
+  linkedGroups: MonthLink
 }

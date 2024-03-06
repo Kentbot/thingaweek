@@ -7,8 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
 
 import { AppDispatch, RootState } from '@budget/store/store'
-import { deleteTransactionThunk } from '@budget/store/thunks'
-import { createTransactions } from '@budget/store/slices/transaction.slice'
+import { createTransactions, deleteTransaction } from '@budget/store/slices/transaction.slice'
 import { assignCategoryTransaction } from '@budget/store/slices/category.slice'
 import { useBudgetMonthCategories, useBudgetMonthIncome, useBudgetMonthTransactions } from '@budget/store/selectors'
 
@@ -49,15 +48,15 @@ export default function Transactions() {
   }
 
   const removeTransaction = (transId: string) => {
-    dispatch(deleteTransactionThunk(transId))
+    dispatch(deleteTransaction({ transactionId: transId }))
   }
 
   const handleAssignTransaction = (transId: string, group: Group, value?: string) => {
     if (value) {
       if (group === categoryGroup) {
-        dispatch(assignCategoryTransaction({ categoryId: value, transactionId: transId, allTransactions: transactions }))
+        dispatch(assignCategoryTransaction({ categoryId: value, transactionId: transId }))
       } else {
-        dispatch(assignIncomeTransaction({ incomeId: value, transactionId: transId, allTransatcions: transactions }))
+        dispatch(assignIncomeTransaction({ incomeId: value, transactionId: transId }))
       }
     } else {
       console.error('TODO: Unassign transaction from category/income')

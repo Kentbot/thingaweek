@@ -16,8 +16,8 @@ const transactionSlice = createSlice({
     createTransactions(state, action: PayloadAction<Transaction[]>) {
       state.push(...action.payload)
     },
-    deleteTransaction(state, action: PayloadAction<{ id: string }>) {
-      return state.filter(trans => trans.id !== action.payload.id)
+    deleteTransaction(state, action: PayloadAction<{ transactionId: string }>) {
+      return state.filter(trans => trans.id !== action.payload.transactionId)
     },
   },
   extraReducers: (builder) =>
