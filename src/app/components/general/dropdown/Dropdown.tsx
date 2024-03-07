@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react'
+import React, { forwardRef, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 
 import { nanoid } from 'nanoid'
 
@@ -45,7 +45,9 @@ export function Dropdown({
   const [ungroupedOptions, setUngroupedOptions] = useState<DropdownOption[]>([])
 
   const optionRefs = useRef<(HTMLInputElement | null)[]>([])
+  const defaultOptionRef = useRef<HTMLInputElement>(null)
   const dropdownRef = useRef<HTMLUListElement>(null)
+  const dropdownButtonId = useMemo(() => nanoid(), [])
   
   useEffect(() => {
     const newGroupedOptions: GroupedOptions = {}
@@ -64,7 +66,6 @@ export function Dropdown({
 
     setGroupedOptions(newGroupedOptions)
     setUngroupedOptions(newUngroupedOptions)
-
   }, [options])
 
   useEffect(() => {
@@ -78,23 +79,21 @@ export function Dropdown({
 
       if (currentOption) {
         currentOption.focus()
+      } else {
+        defaultOptionRef.current?.focus()
       }
     }
   }, [active, confirmedOption])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (dropdownRef.current) {
       const rectResult = dropdownRef.current.getBoundingClientRect()
 
       const rightOverrun = rectResult.width + rectResult.x > window.innerWidth
       const leftOverrun = rectResult.x < 0
-      const bottomOverrun = rectResult.height + rectResult.y > window.innerHeight
-      const topOverrun = rectResult.y < 0
 
       if (rightOverrun) { dropdownRef.current.className += ' pin-right' }
       if (leftOverrun) { dropdownRef.current.className += ' pin-left' }
-      if (bottomOverrun) { dropdownRef.current.className += ' pin-bottom' }
-      if (topOverrun) { dropdownRef.current.className += ' pin-top' }
     }
   }, [dropdownRef])
 
@@ -103,7 +102,6 @@ export function Dropdown({
   }
 
   const handleOptionClick = (event: React.MouseEvent<HTMLElement>, option: ReturnedOption) => {
-    event.preventDefault()
     const wasMouseClick = event.clientX !== 0 && event.clientY !== 0
     if (wasMouseClick) {
       // This needs the option directly because it fires before the onChange event, which means
@@ -135,20 +133,27 @@ export function Dropdown({
   }
 
   const handleBlur = (event: React.FocusEvent) => {
-    // TODO: Come up with a good way to handle the user clicking outside of the dropdown
-    // if (!event.currentTarget.contains(event.relatedTarget)) {
-    //   setActive(false)
-    // }
+    if (!dropdownRef.current?.contains(event.relatedTarget)) {
+      setActive(false)
+    }
   }
 
   return (
-    <div className={`custom-select ${active ? 'active' : ''}`} onBlur={handleBlur}>
-      <button className="select-button" onClick={handleDropdownClick}>
-        <span className="selected-value">{confirmedOption?.display ?? '-'}</span>
+    <div
+      className={`custom-select ${active ? 'active' : ''}`}
+      onMouseDown={(event) => event.preventDefault()}
+      onBlur={handleBlur}
+    >
+      <button className="select-button" onClick={handleDropdownClick} id={dropdownButtonId}>
+        <span className="selected-value">{confirmedOption?.display ?? defaultOption.display}</span>
         <span className="arrow"></span>
       </button>
-      <ul className="select-dropdown" ref={dropdownRef}>
+      <ul
+        className="select-dropdown"
+        ref={dropdownRef}
+      >
         <DefaultOption
+          ref={defaultOptionRef}
           option={defaultOption}
           onKeydown={handleKeydown}
           onOptionClick={handleOptionClick}
@@ -181,7 +186,7 @@ export function Dropdown({
                     groupOpts.map((opt, i) => (
                       <React.Fragment key={opt.value}>
                         <DropdownOption
-                          ref={el => optionRefs.current[i] = el}
+                          ref={el => optionRefs.current[i + ungroupedOptions.length] = el}
                           option={opt}
                           onKeydown={handleKeydown}
                           onOptionClick={handleOptionClick}
@@ -208,7 +213,7 @@ type OptionProps = {
 
 const DropdownOption = forwardRef<HTMLInputElement, OptionProps>(
   function DropdownOption({ option, onKeydown, onOptionClick, onChange }, ref) {
-    const optionId = nanoid()
+    const optionId = useMemo(() => nanoid(), [])
     return (
       <li>
         <input
@@ -229,18 +234,22 @@ type DefaultOptionProps = Omit<OptionProps, 'option'> & {
   option: ReturnedOption
 }
 
-function DefaultOption({ option, onKeydown, onOptionClick, onChange }: DefaultOptionProps) {
-  return (
-    <li>
-      <input
-        type="radio"
-        id="default"
-        name="dropdown-values"
-        value={undefined}
-        onKeyDown={onKeydown}
-        onClick={(event) => onOptionClick(event, option)}
-        onChange={() => onChange(option)}/>
-      <label htmlFor={"default"}>{option.display}</label>
-    </li>
-  )
-}
+const DefaultOption = forwardRef<HTMLInputElement, DefaultOptionProps>(
+  function DefaultOption({ option, onKeydown, onOptionClick, onChange }, ref) {
+    const optionId = useMemo(() => nanoid(), [])
+    return (
+      <li>
+        <input
+          ref={ref}
+          type="radio"
+          id={optionId}
+          name="dropdown-values"
+          value={undefined}
+          onKeyDown={onKeydown}
+          onClick={(event) => onOptionClick(event, option)}
+          onChange={() => onChange(option)}/>
+        <label htmlFor={optionId}>{option.display}</label>
+      </li>
+    )
+  }
+)

@@ -94,6 +94,7 @@ $dropdown-width: 500px;
         cursor: pointer;
 
         &:focus ~ label {
+          border-radius: vars.$border-radius;
           background-color: vars.$primary;
           color: white;
         }
