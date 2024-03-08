@@ -47,7 +47,6 @@ export function Dropdown({
   const optionRefs = useRef<(HTMLInputElement | null)[]>([])
   const defaultOptionRef = useRef<HTMLInputElement>(null)
   const dropdownRef = useRef<HTMLUListElement>(null)
-  const dropdownButtonId = useMemo(() => nanoid(), [])
   
   useEffect(() => {
     const newGroupedOptions: GroupedOptions = {}
@@ -78,6 +77,7 @@ export function Dropdown({
         optionRefs.current.find(optRef => confirmedOption ? optRef?.value === confirmedOption.value : false)
 
       if (currentOption) {
+        // TODO: This is broken now, fix it
         currentOption.focus()
       } else {
         defaultOptionRef.current?.focus()
@@ -144,7 +144,7 @@ export function Dropdown({
       onMouseDown={(event) => event.preventDefault()}
       onBlur={handleBlur}
     >
-      <button className="select-button" onClick={handleDropdownClick} id={dropdownButtonId}>
+      <button className="select-button" onClick={handleDropdownClick}>
         <span className="selected-value">{confirmedOption?.display ?? defaultOption.display}</span>
         <span className="arrow"></span>
       </button>
@@ -179,7 +179,7 @@ export function Dropdown({
             return (
               <React.Fragment key={group}>
                 <div className="group-divider">
-                  <div className="label">{groupOpts[0].group}</div><hr/>
+                  <div className="label" title={groupOpts[0].group}>{groupOpts[0].group}</div><hr/>
                 </div>
                 <div className="option-group">
                   {
@@ -217,6 +217,7 @@ const DropdownOption = forwardRef<HTMLInputElement, OptionProps>(
     return (
       <li>
         <input
+          suppressHydrationWarning
           ref={ref}
           type="radio"
           id={optionId}
@@ -225,7 +226,12 @@ const DropdownOption = forwardRef<HTMLInputElement, OptionProps>(
           onKeyDown={onKeydown}
           onClick={(event) => onOptionClick(event, option)}
           onChange={() => onChange(option)}/>
-        <label htmlFor={optionId}>{option.display}</label>
+        <label
+          suppressHydrationWarning
+          htmlFor={optionId}
+        >
+          {option.display}
+        </label>
       </li>
     )
 })
@@ -240,6 +246,7 @@ const DefaultOption = forwardRef<HTMLInputElement, DefaultOptionProps>(
     return (
       <li>
         <input
+          suppressHydrationWarning
           ref={ref}
           type="radio"
           id={optionId}
@@ -248,7 +255,12 @@ const DefaultOption = forwardRef<HTMLInputElement, DefaultOptionProps>(
           onKeyDown={onKeydown}
           onClick={(event) => onOptionClick(event, option)}
           onChange={() => onChange(option)}/>
-        <label htmlFor={optionId}>{option.display}</label>
+          <label
+            suppressHydrationWarning
+            htmlFor={optionId}
+          >
+            {option.display}
+          </label>
       </li>
     )
   }

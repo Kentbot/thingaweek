@@ -23,7 +23,7 @@ export default function Budget() {
           { value: 'Val5', display: 'Value 5', group: 'Group A' },
           { value: 'Val6', display: 'Value 6', group: 'Group A' },
           { value: 'Val7', display: 'Value 7', group: 'Group A' },
-          { value: 'Val8', display: 'Value 8', group: 'Group B' },
+          { value: 'Val8', display: 'Value 8', group: 'Group Very very long name that overflows' },
           { value: 'Val9', display: 'Value 9', group: 'Group B' },
           { value: 'Val10', display: 'Value 10', group: 'Group C' },
         ]}
