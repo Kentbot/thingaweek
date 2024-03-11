@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { Nav } from '@components/Nav'
+import { Nav } from '@components/MainNav'
 
 // From: https://stackoverflow.com/questions/56334381
 // The following import prevents a Font Awesome icon server-side rendering bug,

@@ -1,0 +1,43 @@
+@use './variables' as vars;
+
+$nav-highlight: vars.$primary;
+
+.page-nav {
+  display: flex;
+  flex-direction: column;
+
+  width: vars.$nav-width;
+  position: fixed;
+  height: calc(100% - vars.$nav-height);
+  background-color: vars.$secondary-light;
+  font-size: 1rem;
+
+  nav {
+    flex: 1;
+  }
+
+  .link {
+    padding: 18px 8px 8px 18px;
+    color: vars.$primary-dark;
+    text-decoration: none;
+    transition: .3s;
+    display: block;
+
+    &::after {
+      content: '';
+      width: 0px;
+      height: 1px;
+      display: block;
+      background: $nav-highlight;
+      transition: .3s;
+    }
+
+    &:hover {
+      color: $nav-highlight;
+      
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+}

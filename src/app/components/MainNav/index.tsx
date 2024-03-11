@@ -38,6 +38,14 @@ export function Nav() {
               About
             </Link>
           </li>
+          <li>
+            <Link
+              className={`link ${pathname === '/blog' ? 'active' : ''}`}
+              href="/blog"
+            >
+              Blog
+            </Link>
+          </li>
         </ul>
       </nav>
       <div className="nav-spacer"></div>
