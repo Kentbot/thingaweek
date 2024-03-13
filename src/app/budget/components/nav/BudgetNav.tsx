@@ -15,7 +15,7 @@ const Persister = dynamic(() => import('../persister/Persister'), {
   loading: () => <>Loading persistence buttons...<button disabled className="btn" style={{opacity: 0}}>load</button></>,
 });
 
-import { Dialog } from '@components/general/dialog/Dialog'
+import { Modal } from '@components/general/modal/Modal'
 
 import styles from './style.module.scss'
 
@@ -45,12 +45,12 @@ export function BudgetNav() {
           <FontAwesomeIcon icon={faMoneyBills} /> Transactions
         </Link>
       </nav>
-      <Dialog
+      <Modal
         title="Save/Load Budget"
         toggleButtonIcon={<FontAwesomeIcon icon={faSave} />}
         toggleButtonText="Save/Load Budget">
         <Persister/>
-      </Dialog>
+      </Modal>
     </div>
   )
 }

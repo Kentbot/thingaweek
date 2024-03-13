@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Dialog } from '@components/general/dialog/Dialog'
+import { Modal } from '@components/general/modal/Modal'
 
 import { CategoryCreator } from './categoryCreator/CategoryCreator'
 import { GroupCreator } from './groupCreator/GroupCreator'
@@ -15,7 +15,7 @@ export function CreationControls() {
 
   return (
     <div className="creation-controls">
-      <Dialog 
+      <Modal 
         toggleButtonIcon={<FontAwesomeIcon icon={faPencil} />}
         toggleButtonText="Category Management"
         title={'Category Management'}>
@@ -23,7 +23,7 @@ export function CreationControls() {
         <CategoryCreator />
         <IncomeCreator />
         <GroupCreator />
-      </Dialog>
+      </Modal>
     </div>
   )
 }

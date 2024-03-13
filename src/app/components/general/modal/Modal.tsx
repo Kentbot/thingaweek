@@ -9,7 +9,7 @@ type Props = React.PropsWithChildren<{
   onClose?: () => void
 }>
 
-export function Dialog({ children, title, toggleButtonText, toggleButtonIcon, onClose }: Props) {
+export function Modal({ children, title, toggleButtonText, toggleButtonIcon, onClose }: Props) {
   const dialogRef = useRef<HTMLDialogElement | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 

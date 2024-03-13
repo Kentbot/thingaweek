@@ -6,18 +6,10 @@ import { useBudgetMonthIncome, useBudgetMonthTransactions, useCategoryTransactio
 
 import './styles.scss'
 import { IncomeMonth } from '@budget/models/incomeMonth.model'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPencil } from '@fortawesome/free-solid-svg-icons'
 
 export function IncomeView() {
-  const allTransactions = useBudgetMonthTransactions()
-
-  const totalIncome = allTransactions.reduce(
-    (prev, curr) => currency(curr.amount).value < 0 ? currency(curr.amount).add(prev) : prev, currency(0)
-  )
-  const totalSpend = allTransactions.reduce(
-    (prev, curr) => currency(curr.amount).value > 0 ? currency(curr.amount).add(prev) : prev, currency(0)
-  )
-  const netBalance = totalIncome.add(totalSpend)
-
   const income = useBudgetMonthIncome()
   
   return (
@@ -27,7 +19,8 @@ export function IncomeView() {
         <div>Name</div>
         <div>Expected</div>
         <div>Actual</div>
-        <div>Net</div>
+        <div>Diff</div>
+        <div>{/* Edit control */}</div>
       </div>
       {income.map(inc => (
         <React.Fragment key={inc.id}>
@@ -40,14 +33,20 @@ export function IncomeView() {
 
 function IncomeRow({ incomeCategory }: { incomeCategory: IncomeMonth }) {
   const incomeTransactions = useCategoryTransactions(incomeCategory.transactionIds)
-  const actualIncome = incomeTransactions.reduce((prev, curr) => currency(curr.amount).add(prev), currency(0)).toString()
+  const actualIncome = incomeTransactions
+    .reduce((prev, curr) => currency(curr.amount).add(prev), currency(0))
+    .multiply(-1)
+    .toString()
   
   return (
     <>
       <div>{incomeCategory.name}</div>
       <div>{incomeCategory.expectedIncome}</div>
       <div>{actualIncome}</div>
-      <div>{currency(incomeCategory.expectedIncome).add(actualIncome).toString()}</div>
+      <div>{currency(actualIncome).subtract(incomeCategory.expectedIncome).toString()}</div>
+      <button className="btn">
+        <FontAwesomeIcon icon={faPencil} />
+      </button>
     </>
   )
 }

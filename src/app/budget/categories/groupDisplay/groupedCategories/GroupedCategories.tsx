@@ -29,7 +29,7 @@ export function GroupedCategories() {
         <div className="header">Available Balance</div>
         <div className="header">EOM Adjust</div>
         <div className="header">EOM Balance</div>
-        <div></div>
+        <div>{/* Edit button */}</div>
       </div>
       { groups.map((group) => {
         const groupCategories = categories.filter(c => group.categoryIds.includes(c.id))
@@ -67,7 +67,7 @@ function CategoryRow({ category, highlight }: { category: CategoryMonth, highlig
         {category.name}
       </div>
       <div>
-        {category.balanceForward ?? currency(0).toString()}
+        bal fwd
       </div>
       <div>
         {category.budgetedAmount}
@@ -84,7 +84,9 @@ function CategoryRow({ category, highlight }: { category: CategoryMonth, highlig
       <div>
         {category.endOfMonthAdjust}
       </div>
-      <div>{category.endOfMonthBalance}</div>
+      <div>
+        eom bal
+      </div>
       <button className="btn category-edit-button">
         <FontAwesomeIcon icon={faEllipsisH} />
       </button>

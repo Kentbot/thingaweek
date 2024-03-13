@@ -61,24 +61,25 @@ function CategoryRow({ category, highlight }: { category: CategoryMonth, highlig
   ) 
   const balance = currency(category.budgetedAmount).subtract(spend)
 
-  const handleGroupSelect = (groupId: string, categoryId: string) => {
-    dispatch(assignCategoryToGroup({ groupId, categoryId }))
+  const handleGroupSelect = (groupId: string | undefined, categoryId: string) => {
+    if (groupId) {
+      dispatch(assignCategoryToGroup({ groupId, categoryId }))
+    }
   }
 
   return (
     <div className={`category-row ${highlight ? 'highlight' : ''}`}>
       <div className="group-select">
         <Dropdown
-          onSelect={(value) => handleGroupSelect(value, category.id)}
+          onSelect={(value) => handleGroupSelect(value.value, category.id)}
           options={groups.map(g => ({ value: g.id, display: g.name }))}
-          initialOption='Select group'
         />
       </div>
       <div className="category-name">
         {category.name}
       </div>
       <div>
-        {category.balanceForward ?? currency(0).toString()}
+        bal fwd
       </div>
       <div>
         {category.budgetedAmount}
@@ -95,7 +96,9 @@ function CategoryRow({ category, highlight }: { category: CategoryMonth, highlig
       <div>
         {category.endOfMonthAdjust}
       </div>
-      <div>{category.endOfMonthBalance}</div>
+      <div>
+        eom bal
+      </div>
       <button className="btn category-edit-button">
         <FontAwesomeIcon icon={faEllipsisH} />
       </button>

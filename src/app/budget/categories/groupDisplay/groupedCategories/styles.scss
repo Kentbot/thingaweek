@@ -92,8 +92,6 @@
         grid-column: 1 / -1;
         background-color: vars.$background-light;
 
-        // border-radius: 0px vars.$border-radius 0px 0px;
-
         & > *:not(.delete-cat-button) {
           padding-left: 8px;
         }
