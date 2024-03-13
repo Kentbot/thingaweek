@@ -20,6 +20,13 @@ const incomeSlice = createSlice({
     createIncomeCategories: (state, action: PayloadAction<IncomeMonth[]>) => {
       state.push(...action.payload)
     },
+    updateIncomeCategory: (state, action: PayloadAction<IncomeMonth>) => {
+      const incomeMonthIndex = state.findIndex((incomeMonth) => incomeMonth.id === action.payload.id)
+
+      if (incomeMonthIndex !== -1) {
+        state.splice(incomeMonthIndex, 1, action.payload)
+      }
+    }
   },
   extraReducers: (builder) =>
     builder
@@ -51,5 +58,6 @@ const filterTransactionFromIncomeCategories = (state: IncomeState, transactionId
 export const {
   createIncomeCategory,
   createIncomeCategories,
+  updateIncomeCategory
 } = incomeSlice.actions
 export default incomeSlice.reducer

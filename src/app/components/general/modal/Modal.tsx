@@ -6,21 +6,33 @@ type Props = React.PropsWithChildren<{
   title?: string
   toggleButtonText?: string
   toggleButtonIcon?: React.ReactNode
+  isOpen?: boolean
+  onOpen?: () => void
   onClose?: () => void
 }>
 
-export function Modal({ children, title, toggleButtonText, toggleButtonIcon, onClose }: Props) {
+export function Modal({ children, title, toggleButtonText, toggleButtonIcon, isOpen, onOpen, onClose }: Props) {
   const dialogRef = useRef<HTMLDialogElement | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(isOpen ?? false)
 
   useEffect(() => {
     const dialogElement = dialogRef.current
     if (dialogElement) {
-      isModalOpen ?
-        dialogElement.showModal() :
+      if (isModalOpen) {
+        dialogElement.showModal()
+        onOpen ? onOpen() : null
+      } else {
         dialogElement.close()
+      }
     }
-  }, [isModalOpen])
+  }, [isModalOpen, onOpen])
+
+  useEffect(() => {
+    console.log('is open?', isOpen)
+    if (isOpen !== undefined) {
+      setIsModalOpen(isOpen)
+    }
+  }, [isOpen])
 
   const handleModalClose = () => {
     if (onClose) {
@@ -38,7 +50,7 @@ export function Modal({ children, title, toggleButtonText, toggleButtonIcon, onC
   return (
     <>
       <button className="btn" onClick={() => setIsModalOpen(!isModalOpen)}>
-        {toggleButtonIcon} {toggleButtonText ?? "Toggle modal"}
+        {toggleButtonIcon}{toggleButtonText ? <>&nbsp;{toggleButtonText}</> : null}
       </button>
       <dialog ref={dialogRef} className={styles.modal} onKeyDown={handleKeyDown}>
         { !!title && <div className={styles.title}>{title}</div> }

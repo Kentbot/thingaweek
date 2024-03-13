@@ -4,7 +4,8 @@
   margin: auto;
   padding: 1.5rem 1.5rem 1rem;
   background-color: vars.$background-light;
-  overflow: visible;
+  overflow: visible !important;
+  min-width: 500px;
 
   @include vars.styled-border;
 

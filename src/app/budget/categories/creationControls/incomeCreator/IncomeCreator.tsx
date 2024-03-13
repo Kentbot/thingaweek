@@ -31,6 +31,10 @@ export function IncomeCreator() {
     return name.length > 0
   }
 
+  const handleExpectedIncomeChange = (value: string) => {
+    setExpectedIncome(value)
+  }
+
   const handleIncomeCreate = () => {
     const isValidName = validateName(incomeCategoryName)
     setNameIsValid(isValidName)
@@ -46,21 +50,16 @@ export function IncomeCreator() {
       id: nanoid(),
       budgetMonth: currentMonth,
       name: incomeCategoryName,
-      expectedIncome: currency(0).toString(),
+      expectedIncome: expectedIncome,
       transactionIds: []
     }))
 
     setIncomeCategoryName('')
   }
 
-  const handleExpectedIncomeChange = (value: string) => {
-    setExpectedIncome(value)
-  }
-
   return (
     <div className="income-creator creation-group">
       <div className="label">Create Income Category <Tooltip onClick={() => alert('TODO Income')}/></div>
-      {/* TODO: Add form validation logic so that empty group/category names are impossible */}
       <input
         id='income-name-input'
         className={`category-input ${!nameIsValid ? 'invalid' : ''}`}
