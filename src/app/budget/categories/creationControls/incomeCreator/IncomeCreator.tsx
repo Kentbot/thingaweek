@@ -18,8 +18,27 @@ export function IncomeCreator() {
 
   const [incomeCategoryName, setIncomeCategoryName] = useState('')
   const [expectedIncome, setExpectedIncome] = useState('')
+  const [nameIsValid, setNameIsValid] = useState(true)
+
+  const handleNameChange = (value: string) => {
+    if (!nameIsValid) {
+      setNameIsValid(validateName(value))
+    }
+    setIncomeCategoryName(value)
+  }
+
+  const validateName = (name: string) => {
+    return name.length > 0
+  }
 
   const handleIncomeCreate = () => {
+    const isValidName = validateName(incomeCategoryName)
+    setNameIsValid(isValidName)
+
+    if (!isValidName) {
+      return
+    }
+
     // Note that this only works for creating a new category from scratch.
     // It will not work for copying from a previous month -- the EOM balance
     // and previous month need set.
@@ -44,11 +63,11 @@ export function IncomeCreator() {
       {/* TODO: Add form validation logic so that empty group/category names are impossible */}
       <input
         id='income-name-input'
-        className='category-input'
+        className={`category-input ${!nameIsValid ? 'invalid' : ''}`}
         type='text'
         placeholder='Income category name'
         value={incomeCategoryName}
-        onChange={(v) => setIncomeCategoryName(v.target.value)}
+        onChange={(v) => handleNameChange(v.target.value)}
       />
       <NumericInput
         id='budget-amt-input'

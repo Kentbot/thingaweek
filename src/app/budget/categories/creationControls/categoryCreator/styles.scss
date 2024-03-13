@@ -1,13 +1,1 @@
 @use './variables' as vars;
-
-#category-name-input {
-  &.invalid {
-    outline: 2px solid red;
-    background-color: #f3d1d1;
-    border: none;
-
-    &:active, &:focus {
-      outline: 3px solid red;
-    }
-  }
-}
