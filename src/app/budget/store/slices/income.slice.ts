@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
-import { assignIncomeTransaction, resetStateAction } from "../actions"
+import { assignIncomeTransaction, resetStateAction, unassignTransaction } from "../actions"
 
 import { IncomeMonth } from "@budget/models/incomeMonth.model"
 import { assignCategoryTransaction } from "./category.slice"
@@ -45,6 +45,9 @@ const incomeSlice = createSlice({
         filterTransactionFromIncomeCategories(state, action.payload.transactionId)
       })
       .addCase(deleteTransaction, (state, action) => {
+        filterTransactionFromIncomeCategories(state, action.payload.transactionId)
+      })
+      .addCase(unassignTransaction, (state, action) => {
         filterTransactionFromIncomeCategories(state, action.payload.transactionId)
       })
 })

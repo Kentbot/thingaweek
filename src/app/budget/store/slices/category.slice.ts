@@ -7,7 +7,7 @@ import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import { filterToBudgetMonth } from '@budget/services/category.service'
 
 import { ISODateString } from '../types'
-import { assignIncomeTransaction, resetStateAction } from '../actions'
+import { assignIncomeTransaction, resetStateAction, unassignTransaction } from '../actions'
 import { deleteTransaction } from './transaction.slice'
 
 type CategoryState = CategoryMonth[]
@@ -97,6 +97,11 @@ const categorySlice = createSlice({
         })
       })
       .addCase(deleteTransaction, (state, action) => {
+        state.forEach(category => {
+          category.transactionIds = category.transactionIds.filter(tid => tid !== action.payload.transactionId)
+        })
+      })
+      .addCase(unassignTransaction, (state, action) => {
         state.forEach(category => {
           category.transactionIds = category.transactionIds.filter(tid => tid !== action.payload.transactionId)
         })

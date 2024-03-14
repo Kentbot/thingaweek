@@ -15,7 +15,7 @@ import { parseCsv } from '@budget/services/csvParser.service'
 import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer.service'
 
 import { Transaction } from '@budget/models/transaction.model'
-import { assignIncomeTransaction } from '@budget/store/actions'
+import { assignIncomeTransaction, unassignTransaction } from '@budget/store/actions'
 
 import { Dropdown, DropdownOption } from '@components/general/dropdown/Dropdown'
 
@@ -59,7 +59,7 @@ export default function Transactions() {
         dispatch(assignIncomeTransaction({ incomeId: value, transactionId: transId }))
       }
     } else {
-      console.error('TODO: Unassign transaction from category/income')
+      dispatch(unassignTransaction({ transactionId: transId }))
     }
   }
 
