@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import currency from 'currency.js'
@@ -8,13 +8,17 @@ import { AppDispatch, RootState } from '@budget/store/store'
 import { createIncomeCategory } from '@budget/store/slices/income.slice'
 
 import { Tooltip } from '@components/general/tooltip/Tooltip'
+import { NumericInput } from '@components/general/NumericInput'
 
 import styles from './styles.module.scss'
-import { NumericInput } from '@components/general/NumericInput'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMoneyBillTrendUp } from '@fortawesome/free-solid-svg-icons'
 
 export function IncomeCreator() {
   const dispatch = useDispatch<AppDispatch>()
   const currentMonth = useSelector((state: RootState) => state.budgetMonth)
+
+  const nameRef = useRef<HTMLInputElement>(null)
 
   const [incomeCategoryName, setIncomeCategoryName] = useState('')
   const [expectedIncome, setExpectedIncome] = useState('')
@@ -55,16 +59,21 @@ export function IncomeCreator() {
     }))
 
     setIncomeCategoryName('')
+    nameRef.current?.focus()
   }
 
   return (
     <div className="income-creator creation-group">
-      <div className="label">Create Income Category <Tooltip onClick={() => alert('TODO Income')}/></div>
+      <div className="label">
+        <FontAwesomeIcon icon={faMoneyBillTrendUp}/>&nbsp;
+        Income Category <Tooltip onClick={() => alert('TODO Income')}/>
+      </div>
       <input
+        ref={nameRef}
         id='income-name-input'
         className={`category-input ${!nameIsValid ? 'invalid' : ''}`}
         type='text'
-        placeholder='Income category name'
+        placeholder='Income Category name'
         value={incomeCategoryName}
         onChange={(v) => handleNameChange(v.target.value)}
       />
@@ -77,7 +86,7 @@ export function IncomeCreator() {
         onValueUpdate={(v) => handleExpectedIncomeChange(v)}
       />
       <button className="btn" onClick={handleIncomeCreate}>
-        Create Income Category
+        Create
       </button>
     </div>
   )

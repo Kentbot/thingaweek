@@ -61,8 +61,10 @@ function IncomeRow({ incomeCategory }: { incomeCategory: IncomeMonth }) {
         toggleButtonIcon={<FontAwesomeIcon icon={faPencil} />}
         title={`Edit Income Category - ${incomeCategory.name}`}
         isOpen={editModalOpen}
+        onOpen={() => setEditModalOpen(true)}
       >
         <EditIncome incomeCategory={incomeCategory} onEditConfirm={handleEditConfirm} />
+        {/* <button className="btn" onClick={() => setEditModalOpen(false)}>Cancel</button> */}
       </Modal>
     </>
   )

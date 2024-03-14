@@ -63,7 +63,7 @@
       text-overflow: ellipsis;
       overflow: hidden;
       
-      @include vars.border-label($margin: -1.5rem, $font-size: 1.5rem, $padding: 4px 8px, $position: sticky);
+      @include vars.border-label($margin: -1rem, $font-size: 1.2rem, $padding: 0 8px, $position: sticky);
     }
 
     .group-categories {

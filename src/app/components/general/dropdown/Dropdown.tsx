@@ -29,7 +29,6 @@ const defaultOption: ReturnedOption = {
   value: undefined,
 }
 
-// TODO: Work on selection/focus
 export function Dropdown({
   initialOption,
   options,

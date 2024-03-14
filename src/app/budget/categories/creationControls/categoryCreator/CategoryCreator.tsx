@@ -11,6 +11,8 @@ import { AppDispatch, RootState } from '@budget/store/store'
 import { createCategory } from '@budget/store/slices/category.slice'
 
 import './styles.scss'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCommentDollar } from '@fortawesome/free-solid-svg-icons'
 
 export function CategoryCreator() {
   const dispatch = useDispatch<AppDispatch>()
@@ -61,17 +63,21 @@ export function CategoryCreator() {
 
     setCategoryName('')
     setBudgetAmt('')
+    nameRef.current?.focus()
   }
 
   return (
     <div className="category-creator creation-group">
-      <div className="label">Create New Category <Tooltip onClick={() => alert('TODO Category')}/></div>
+      <div className="label">
+        <FontAwesomeIcon icon={faCommentDollar}/>&nbsp;
+        Expense Category <Tooltip onClick={() => alert('TODO Category')}/>
+      </div>
       <input
         ref={nameRef}
         id='category-name-input'
         className={`category-input ${!nameIsValid ? 'invalid' : ''}`}
         type='text'
-        placeholder='Category name'
+        placeholder='Expense Category name'
         value={categoryName}
         onChange={(v) => handleNameChange(v.target.value)}
       />
@@ -84,7 +90,7 @@ export function CategoryCreator() {
         onValueUpdate={(v) => handleBudgetChange(v)}
       />
       <button className="btn" onClick={handleCategoryCreate}>
-        Add Category
+        Create
       </button>
     </div>
   )

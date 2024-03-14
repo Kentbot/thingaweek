@@ -19,10 +19,10 @@ export function CreationControls() {
         toggleButtonIcon={<FontAwesomeIcon icon={faPencil} />}
         toggleButtonText="Category Management"
         title={'Category Management'}>
-        <MonthCarryover />
         <CategoryCreator />
         <IncomeCreator />
         <GroupCreator />
+        <MonthCarryover />
       </Modal>
     </div>
   )
