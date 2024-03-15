@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import currency from 'currency.js'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 
@@ -9,8 +10,9 @@ import { useBudgetMonthCategories, useBudgetMonthGroups, useCategoryTransactions
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
 import { AppDispatch, RootState } from '@budget/store/store'
 
-import './styles.scss'
 import { calculateBalanceForward } from '@budget/services/category.service'
+
+import './styles.scss'
 
 export function GroupedCategories() {
   const groups = useBudgetMonthGroups()
