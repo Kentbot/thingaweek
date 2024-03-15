@@ -1,15 +1,16 @@
 import React from 'react'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import currency from 'currency.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 
 import { useBudgetMonthCategories, useBudgetMonthGroups, useCategoryTransactions } from '@budget/store/selectors'
 import { CategoryMonth } from '@budget/models/categoryMonth.model'
-import { AppDispatch } from '@budget/store/store'
+import { AppDispatch, RootState } from '@budget/store/store'
 
 import './styles.scss'
+import { calculateBalanceForward } from '@budget/services/category.service'
 
 export function GroupedCategories() {
   const groups = useBudgetMonthGroups()
@@ -55,11 +56,21 @@ export function GroupedCategories() {
 function CategoryRow({ category, highlight }: { category: CategoryMonth, highlight?: boolean }) {
   const dispatch = useDispatch<AppDispatch>()
   const categoryTransactions = useCategoryTransactions(category.transactionIds)
+  const allCategories = useSelector((state: RootState) => state.categories)
+  const allTransactions = useSelector((state: RootState) => state.transactions)
 
- const spend = categoryTransactions.reduce(
+  const spend = categoryTransactions.reduce(
     (prev, curr) => currency(curr.amount).add(prev), currency(0)
   ) 
   const balance = currency(category.budgetedAmount).subtract(spend)
+
+  const balanceForward = calculateBalanceForward(category, allCategories, allTransactions)
+  const endOfMonthBalance = currency(balanceForward)
+    .add(category.budgetedAmount)
+    .add(category.additionalIncome)
+    .subtract(spend)
+    .add(category.endOfMonthAdjust)
+    .toString()
 
   return (
     <div key={category.id} className={`group-category ${(highlight ? " highlight" : "")}`}>
@@ -67,7 +78,7 @@ function CategoryRow({ category, highlight }: { category: CategoryMonth, highlig
         {category.name}
       </div>
       <div>
-        bal fwd
+        {balanceForward}
       </div>
       <div>
         {category.budgetedAmount}
@@ -85,7 +96,7 @@ function CategoryRow({ category, highlight }: { category: CategoryMonth, highlig
         {category.endOfMonthAdjust}
       </div>
       <div>
-        eom bal
+        {endOfMonthBalance}
       </div>
       <button className="btn category-edit-button">
         <FontAwesomeIcon icon={faEllipsisH} />
