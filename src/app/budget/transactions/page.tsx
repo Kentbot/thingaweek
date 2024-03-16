@@ -1,10 +1,10 @@
 'use client'
 
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUpload } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faEyeSlash, faUpload } from '@fortawesome/free-solid-svg-icons'
 
 import { AppDispatch, RootState } from '@budget/store/store'
 import { createTransactions, deleteTransaction } from '@budget/store/slices/transaction.slice'
@@ -28,8 +28,22 @@ type Group = typeof categoryGroup | typeof incomeGroup
 
 export default function Transactions() {
   const dispatch = useDispatch<AppDispatch>()
+  
+  const [viewAssigned, setViewAssigned] = useState(false)
+
   const budgetMonth = useSelector((state: RootState) => state.budgetMonth)
   const transactions = useBudgetMonthTransactions()
+  const categories = useBudgetMonthCategories()
+  const incomeCategories = useBudgetMonthIncome()
+
+  let filteredTransactions = transactions
+  if (!viewAssigned) {
+    filteredTransactions = transactions
+      .filter(t => 
+        !categories.some(c => c.transactionIds.includes(t.id)) &&
+        !incomeCategories.some(c => c.transactionIds.includes(t.id))
+      )
+  }
 
   const categoryOptions: (DropdownOption & { transactionIds: string[] })[] = useBudgetMonthCategories()
     .map(cat => ({ display: cat.name, value: cat.id, group: categoryGroup, transactionIds: cat.transactionIds }))
@@ -68,6 +82,11 @@ export default function Transactions() {
       <label htmlFor="transactions-upload" className="btn">
         Load Transactions from File&nbsp;&nbsp;<FontAwesomeIcon icon={faUpload}/>
       </label>
+      <button className="btn" onClick={() => setViewAssigned(!viewAssigned)}>
+        { viewAssigned ?
+          <><FontAwesomeIcon icon={faEye}/> Hide</> :
+          <><FontAwesomeIcon icon={faEyeSlash}/> Show</> } Assigned transactions
+      </button>
       <input id="transactions-upload" accept=".csv" type="file" onChange={handleFileUpload} />
       <div className='transaction-grid'>
         <div className="label">Transactions</div>
@@ -78,7 +97,7 @@ export default function Transactions() {
           <div>Category</div>
           <div></div>
         </div>
-        { transactions?.map((trans: Transaction, i) => (
+        { filteredTransactions?.map((trans: Transaction, i) => (
           <div className={`transaction-row ${i % 2 === 1 ? 'highlight' : ''}`} key={trans.id}>
             <div>{trans.description}</div>
             <div>{trans.amount}</div>
