@@ -32,9 +32,9 @@ export const carryoverMonthThunk = createAsyncThunk<
       const currentState = thunk.getState()
       const newGroups = filterToBudgetMonth(currentState.groups, newMonthDateTime)
       newGroups.forEach(group => {
-        const prevGroupCatIds = currentState.groups.find(g => g.id === group.linkedGroups.prevId)!.categoryIds
+        const prevGroup = currentState.groups.find(g => g.id === group.linkedGroups.prevId)!
         const prevGroupCats = currentState.categories
-          .filter(cat => prevGroupCatIds.includes(cat.id))
+          .filter(cat => prevGroup.categoryIds.includes(cat.id))
 
         prevGroupCats.forEach(prevCat => {
           if (!prevCat.linkedMonths.nextId) {

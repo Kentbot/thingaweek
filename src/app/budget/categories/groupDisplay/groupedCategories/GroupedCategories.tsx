@@ -56,7 +56,6 @@ export function GroupedCategories() {
 }
 
 function CategoryRow({ category, highlight }: { category: CategoryMonth, highlight?: boolean }) {
-  const dispatch = useDispatch<AppDispatch>()
   const categoryTransactions = useCategoryTransactions(category.transactionIds)
   const allCategories = useSelector((state: RootState) => state.categories)
   const allTransactions = useSelector((state: RootState) => state.transactions)

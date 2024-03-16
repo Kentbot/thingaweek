@@ -32,10 +32,10 @@ export function calculateBalanceForward(category: CategoryMonth, allCategories: 
 /** Gets all categories preceding the current category, in temporal order */
 function getCategoryChain(category: CategoryMonth, allCategories: CategoryMonth[]): CategoryMonth[] {
   let currentCategory = allCategories.find(cat => cat.id === category.linkedMonths.prevId)
-  
+
   const categoryChain: CategoryMonth[] = []
   while (currentCategory) {
-    categoryChain.push(category)
+    categoryChain.push(currentCategory)
     currentCategory = allCategories.find(cat => cat.id === currentCategory?.linkedMonths.prevId)
   }
 
