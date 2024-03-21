@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import currency from 'currency.js'
 
 import { WithBudgetMonth } from '@budget/models/types'
-import { CategoryMonth } from '@budget/models/categoryMonth.model'
+import { CategoryMonth } from '@budget/models/expenseCategory.model'
 import { Transaction } from '@budget/models/transaction.model'
 
 export function filterToBudgetMonth<T extends WithBudgetMonth>(modelWithBudgetMonth: T[], newMonth: DateTime): T[] {

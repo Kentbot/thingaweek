@@ -2,11 +2,11 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
 import { assignIncomeTransaction, resetStateAction, unassignTransaction } from "../actions"
 
-import { IncomeMonth } from "@budget/models/incomeMonth.model"
+import { IncomeCategory } from "@budget/models/incomeCategory.model"
 import { assignCategoryTransaction } from "./category.slice"
 import { deleteTransaction } from "./transaction.slice"
 
-type IncomeState = IncomeMonth[]
+type IncomeState = IncomeCategory[]
 
 export const initialState: IncomeState = []
 
@@ -14,13 +14,13 @@ const incomeSlice = createSlice({
   name: 'income',
   initialState,
   reducers: {
-    createIncomeCategory: (state, action: PayloadAction<IncomeMonth>) => {
+    createIncomeCategory: (state, action: PayloadAction<IncomeCategory>) => {
       state.push(action.payload)
     },
-    createIncomeCategories: (state, action: PayloadAction<IncomeMonth[]>) => {
+    createIncomeCategories: (state, action: PayloadAction<IncomeCategory[]>) => {
       state.push(...action.payload)
     },
-    updateIncomeCategory: (state, action: PayloadAction<IncomeMonth>) => {
+    updateIncomeCategory: (state, action: PayloadAction<IncomeCategory>) => {
       const incomeMonthIndex = state.findIndex((incomeMonth) => incomeMonth.id === action.payload.id)
 
       if (incomeMonthIndex !== -1) {

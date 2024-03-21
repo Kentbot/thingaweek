@@ -7,13 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { updateIncomeCategory } from '@budget/store/slices/income.slice'
 import { AppDispatch } from '@budget/store/store'
 
-import { IncomeMonth } from '@budget/models/incomeMonth.model'
+import { IncomeCategory } from '@budget/models/incomeCategory.model'
 
 import { Modal } from '@components/general/modal/Modal'
 import { NumericInput } from '@components/general/NumericInput'
 
 type Props = {
-  incomeCategory: IncomeMonth
+  incomeCategory: IncomeCategory
   editModalOpen: boolean
   onEditOpen: () => void
   onEditConfirm: () => void

@@ -14,7 +14,7 @@ import { Modal } from '@components/general/modal/Modal'
 import { NumericInput } from '@components/general/NumericInput'
 import { EditIncomeModal } from './EditIncomeModal'
 
-import { IncomeMonth } from '@budget/models/incomeMonth.model'
+import { IncomeCategory } from '@budget/models/incomeCategory.model'
 
 import './styles.scss'
 
@@ -40,7 +40,7 @@ export function IncomeView() {
   )
 }
 
-function IncomeRow({ incomeCategory }: { incomeCategory: IncomeMonth }) {
+function IncomeRow({ incomeCategory }: { incomeCategory: IncomeCategory }) {
   const [editModalOpen, setEditModalOpen] = useState(false)
   const incomeTransactions = useCategoryTransactions(incomeCategory.transactionIds)
   const actualIncome = incomeTransactions

@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 
 import { useBudgetMonthCategories, useBudgetMonthGroups, useCategoryTransactions } from '@budget/store/selectors'
-import { CategoryMonth } from '@budget/models/categoryMonth.model'
+import { CategoryMonth } from '@budget/models/expenseCategory.model'
 import { AppDispatch, RootState } from '@budget/store/store'
 
 import { calculateBalanceForward } from '@budget/services/category.service'

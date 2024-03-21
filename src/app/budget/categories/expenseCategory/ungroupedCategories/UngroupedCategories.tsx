@@ -9,7 +9,7 @@ import './styles.scss'
 import { Dropdown } from '@components/general/dropdown/Dropdown'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
-import { CategoryMonth } from '@budget/models/categoryMonth.model'
+import { CategoryMonth } from '@budget/models/expenseCategory.model'
 import { AppDispatch } from '@budget/store/store'
 import currency from 'currency.js'
 

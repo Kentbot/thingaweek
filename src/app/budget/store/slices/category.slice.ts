@@ -3,7 +3,7 @@ import { DateTime } from 'luxon'
 import { nanoid } from 'nanoid'
 import currency from 'currency.js'
 
-import { CategoryMonth } from '@budget/models/categoryMonth.model'
+import { CategoryMonth } from '@budget/models/expenseCategory.model'
 import { filterToBudgetMonth } from '@budget/services/category.service'
 
 import { ISODateString } from '../types'
