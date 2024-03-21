@@ -12,6 +12,7 @@ import { useBudgetMonthIncome, useCategoryTransactions } from '@budget/store/sel
 
 import { Modal } from '@components/general/modal/Modal'
 import { NumericInput } from '@components/general/NumericInput'
+import { EditIncomeModal } from './EditIncomeModal'
 
 import { IncomeMonth } from '@budget/models/incomeMonth.model'
 
@@ -57,79 +58,12 @@ function IncomeRow({ incomeCategory }: { incomeCategory: IncomeMonth }) {
       <div>{incomeCategory.expectedIncome}</div>
       <div>{actualIncome}</div>
       <div>{currency(actualIncome).subtract(incomeCategory.expectedIncome).toString()}</div>
-      <Modal
-        toggleButtonIcon={<FontAwesomeIcon icon={faPencil} />}
-        title={`Edit Income Category - ${incomeCategory.name}`}
-        isOpen={editModalOpen}
-        onOpen={() => setEditModalOpen(true)}
-      >
-        <EditIncome incomeCategory={incomeCategory} onEditConfirm={handleEditConfirm} />
-        {/* <button className="btn" onClick={() => setEditModalOpen(false)}>Cancel</button> */}
-      </Modal>
-    </>
-  )
-}
-
-function EditIncome({ incomeCategory, onEditConfirm }: { incomeCategory: IncomeMonth, onEditConfirm: () => void }) {
-  const dispatch = useDispatch<AppDispatch>()
-
-  const [incomeCategoryName, setIncomeCategoryName] = useState(incomeCategory.name)
-  const [expectedIncome, setExpectedIncome] = useState(incomeCategory.expectedIncome)
-  const [nameIsValid, setNameIsValid] = useState(true)
-
-  const handleNameChange = (value: string) => {
-    if (!nameIsValid) {
-      setNameIsValid(validateName(value))
-    }
-    setIncomeCategoryName(value)
-  }
-
-  const validateName = (name: string) => {
-    return name.length > 0
-  }
-
-  const handleExpectedIncomeChange = (value: string) => {
-    setExpectedIncome(value)
-  }
-
-  const handleIncomeUpdate = () => {
-    const isValidName = validateName(incomeCategoryName)
-    setNameIsValid(isValidName)
-
-    if (!isValidName) {
-      return
-    }
-
-    dispatch(updateIncomeCategory({
-      ...incomeCategory,
-      name: incomeCategoryName,
-      expectedIncome: expectedIncome,
-    }))
-
-    onEditConfirm()
-  }
-
-  return (
-    <>
-      <input
-        id={`income-name-input-${incomeCategory.id}`}
-        className={`category-input ${!nameIsValid ? 'invalid' : ''}`}
-        type='text'
-        placeholder='Income category name'
-        value={incomeCategoryName}
-        onChange={(v) => handleNameChange(v.target.value)}
+      <EditIncomeModal
+        editModalOpen={editModalOpen}
+        incomeCategory={incomeCategory}
+        onEditConfirm={handleEditConfirm}
+        onEditOpen={() => setEditModalOpen(true)}
       />
-      <NumericInput
-        id={`budget-amt-input-${incomeCategory.id}`}
-        className='category-input'
-        type='text'
-        placeholder='Expected Income'
-        value={expectedIncome}
-        onValueUpdate={(v) => handleExpectedIncomeChange(v)}
-      />
-      <button className="btn" onClick={handleIncomeUpdate}>
-        Confirm Updates
-      </button>
     </>
   )
 }
