@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { assignIncomeTransaction, resetStateAction, unassignTransaction } from "../actions"
 
 import { IncomeCategory } from "@budget/models/incomeCategory.model"
-import { assignCategoryTransaction } from "./category.slice"
+import { assignTransactionToExpense } from "./expenseCategory.slice"
 import { deleteTransaction } from "./transaction.slice"
 
 type IncomeState = IncomeCategory[]
@@ -41,7 +41,7 @@ const incomeSlice = createSlice({
         filterTransactionFromIncomeCategories(state, transactionId)
         state.find(inc => inc.id === action.payload.incomeId)?.transactionIds.push(transactionId)
       })
-      .addCase(assignCategoryTransaction, (state, action) => {
+      .addCase(assignTransactionToExpense, (state, action) => {
         filterTransactionFromIncomeCategories(state, action.payload.transactionId)
       })
       .addCase(deleteTransaction, (state, action) => {

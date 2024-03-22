@@ -4,13 +4,14 @@ import { useDispatch } from 'react-redux'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { updateIncomeCategory } from '@budget/store/slices/income.slice'
+import { updateIncomeCategory } from '@budget/store/slices/incomeCategory.slice'
 import { AppDispatch } from '@budget/store/store'
 
 import { IncomeCategory } from '@budget/models/incomeCategory.model'
 
 import { Modal } from '@components/general/modal/Modal'
 import { NumericInput } from '@components/general/NumericInput'
+import { Validator } from '@budget/services/category.service'
 
 type Props = {
   incomeCategory: IncomeCategory
@@ -33,13 +34,9 @@ export function EditIncomeModal({
 
   const handleNameChange = (value: string) => {
     if (!nameIsValid) {
-      setNameIsValid(validateName(value))
+      setNameIsValid(true)
     }
     setIncomeCategoryName(value)
-  }
-
-  const validateName = (name: string) => {
-    return name.length > 0
   }
 
   const handleExpectedIncomeChange = (value: string) => {
@@ -47,18 +44,21 @@ export function EditIncomeModal({
   }
 
   const handleIncomeUpdate = () => {
-    const isValidName = validateName(incomeCategoryName)
-    setNameIsValid(isValidName)
-
-    if (!isValidName) {
-      return
-    }
-
-    dispatch(updateIncomeCategory({
+    const updatedCategory: IncomeCategory = {
       ...incomeCategory,
       name: incomeCategoryName,
       expectedIncome: expectedIncome,
-    }))
+    }
+
+    const isValid = Validator.category(updatedCategory)
+    // TODO: Create finer grained validation detail
+    setNameIsValid(isValid)
+
+    if (!isValid) {
+      return
+    }
+
+    dispatch(updateIncomeCategory(updatedCategory))
 
     onEditConfirm()
   }

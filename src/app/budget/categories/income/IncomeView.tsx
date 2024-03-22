@@ -6,7 +6,7 @@ import currency from 'currency.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 
-import { updateIncomeCategory } from '@budget/store/slices/income.slice'
+import { updateIncomeCategory } from '@budget/store/slices/incomeCategory.slice'
 import { AppDispatch } from '@budget/store/store'
 import { useBudgetMonthIncome, useCategoryTransactions } from '@budget/store/selectors'
 

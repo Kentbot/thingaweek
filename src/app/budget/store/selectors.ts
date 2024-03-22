@@ -3,7 +3,7 @@ import { DateTime } from 'luxon'
 import { useSelector } from 'react-redux'
 
 import { filterToBudgetMonth } from '@budget/services/category.service'
-import { CategoryMonth } from '@budget/models/expenseCategory.model'
+import { ExpenseCategory } from '@budget/models/expenseCategory.model'
 import { Transaction } from '@budget/models/transaction.model'
 import { IncomeCategory } from '@budget/models/incomeCategory.model'
 
@@ -17,7 +17,7 @@ export const useBudgetMonthTransactions = (): Transaction[] => {
   return useSelector(selectTransactions)
 }
 
-export const useBudgetMonthCategories = (): CategoryMonth[] => {
+export const useBudgetMonthCategories = (): ExpenseCategory[] => {
   const selectCategories = createSelector(
     (state: RootState) => state,
     (state) => filterToBudgetMonth(state.categories, DateTime.fromISO(state.budgetMonth))
@@ -25,7 +25,7 @@ export const useBudgetMonthCategories = (): CategoryMonth[] => {
   return useSelector(selectCategories)
 }
 
-export const useUngroupedCategories = (): CategoryMonth[] => {
+export const useUngroupedCategories = (): ExpenseCategory[] => {
   const selectCategories = createSelector(
     (state: RootState) => state,
     (state) => {

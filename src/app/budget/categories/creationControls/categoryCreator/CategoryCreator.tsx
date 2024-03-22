@@ -4,15 +4,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import currency from 'currency.js'
 import { nanoid } from 'nanoid'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCommentDollar } from '@fortawesome/free-solid-svg-icons'
+
 import { NumericInput } from '@components/general/NumericInput'
 import { Tooltip } from '@components/general/tooltip/Tooltip'
 
 import { AppDispatch, RootState } from '@budget/store/store'
-import { createCategory } from '@budget/store/slices/category.slice'
+import { createExpenseCategory } from '@budget/store/slices/expenseCategory.slice'
+
+import { Validator } from '@budget/services/category.service'
+
+import { ExpenseCategory } from '@budget/models/expenseCategory.model'
 
 import './styles.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCommentDollar } from '@fortawesome/free-solid-svg-icons'
 
 export function CategoryCreator() {
   const dispatch = useDispatch<AppDispatch>()
@@ -26,13 +31,9 @@ export function CategoryCreator() {
 
   const handleNameChange = (value: string) => {
     if (!nameIsValid) {
-      setNameIsValid(validateName(value))
+      setNameIsValid(true)
     }
     setCategoryName(value)
-  }
-
-  const validateName = (name: string) => {
-    return name.length > 0
   }
 
   const handleBudgetChange = (value: string) => {
@@ -40,7 +41,18 @@ export function CategoryCreator() {
   }
 
   const handleCategoryCreate = () => {
-    const isValidName = validateName(categoryName)
+    const createdCategory: ExpenseCategory = {
+      id: nanoid(),
+      name: categoryName,
+      additionalIncome: currency(0).toString(),
+      budgetedAmount: currency(budgetAmt).toString(),
+      endOfMonthAdjust: currency(0).toString(),
+      transactionIds: [],
+      budgetMonth: currentMonth,
+      linkedMonths: {}
+    }
+
+    const isValidName = Validator.category(createdCategory)
     setNameIsValid(isValidName)
 
     if (!isValidName) {
@@ -50,16 +62,7 @@ export function CategoryCreator() {
     // Note that this only works for creating a new category from scratch.
     // It will not work for copying from a previous month -- the EOM balance
     // and previous month need set.
-    dispatch(createCategory({
-      id: nanoid(),
-      name: categoryName,
-      additionalIncome: currency(0).toString(),
-      budgetedAmount: currency(budgetAmt).toString(),
-      endOfMonthAdjust: currency(0).toString(),
-      transactionIds: [],
-      budgetMonth: currentMonth,
-      linkedMonths: {}
-    }))
+    dispatch(createExpenseCategory(createdCategory))
 
     setCategoryName('')
     setBudgetAmt('')

@@ -4,11 +4,11 @@ import { DateTime } from 'luxon'
 import { AppDispatch, RootState } from './store'
 import { carryoverMonthAction, hydrateStateAction, resetStateAction } from './actions'
 import { ISODateString } from './types'
-import { carryoverCategories, createCategories } from './slices/category.slice'
+import { carryoverExpenses, createExpenseCategories } from './slices/expenseCategory.slice'
 import { assignCategoryToGroup, carryoverGroups, createGroups } from './slices/group.slice'
 import { createTransactions } from './slices/transaction.slice'
 import { changeMonth } from './slices/budgetMonth.slice'
-import { createIncomeCategories } from './slices/income.slice'
+import { createIncomeCategories } from './slices/incomeCategory.slice'
 import { filterToBudgetMonth } from '@budget/services/category.service'
 
 type ThunkReturn<T> = T
@@ -26,7 +26,7 @@ export const carryoverMonthThunk = createAsyncThunk<
         console.error(`Failed to carry over month, malformed month: ${newMonth}`)
         return
       }
-      thunk.dispatch(carryoverCategories({ newMonthISO: newMonth }))
+      thunk.dispatch(carryoverExpenses({ newMonthISO: newMonth }))
       thunk.dispatch(carryoverGroups({ newMonth: newMonth }))
 
       const currentState = thunk.getState()
@@ -58,7 +58,7 @@ export const hydrateState = createAsyncThunk<
       thunk.dispatch(resetStateAction())
 
       thunk.dispatch(createIncomeCategories(hydrationSource.income))
-      thunk.dispatch(createCategories(hydrationSource.categories))
+      thunk.dispatch(createExpenseCategories(hydrationSource.categories))
       thunk.dispatch(createTransactions(hydrationSource.transactions))
       thunk.dispatch(createGroups(hydrationSource.groups))
       thunk.dispatch(changeMonth(hydrationSource.budgetMonth))

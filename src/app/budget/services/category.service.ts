@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
 import currency from 'currency.js'
 
-import { WithBudgetMonth } from '@budget/models/types'
-import { CategoryMonth } from '@budget/models/expenseCategory.model'
+import { Category, WithBudgetMonth } from '@budget/models/types'
+import { ExpenseCategory } from '@budget/models/expenseCategory.model'
 import { Transaction } from '@budget/models/transaction.model'
 
 export function filterToBudgetMonth<T extends WithBudgetMonth>(modelWithBudgetMonth: T[], newMonth: DateTime): T[] {
@@ -11,7 +11,7 @@ export function filterToBudgetMonth<T extends WithBudgetMonth>(modelWithBudgetMo
     DateTime.fromISO(m.budgetMonth).year === newMonth.year)
 }
 
-export function calculateBalanceForward(category: CategoryMonth, allCategories: CategoryMonth[], allTransactions: Transaction[]): string {
+export function calculateBalanceForward(category: ExpenseCategory, allCategories: ExpenseCategory[], allTransactions: Transaction[]): string {
   const categoryChain = getCategoryChain(category, allCategories)
 
   let runningBalance = currency(0)
@@ -30,10 +30,10 @@ export function calculateBalanceForward(category: CategoryMonth, allCategories: 
 }
 
 /** Gets all categories preceding the current category, in temporal order */
-function getCategoryChain(category: CategoryMonth, allCategories: CategoryMonth[]): CategoryMonth[] {
+function getCategoryChain(category: ExpenseCategory, allCategories: ExpenseCategory[]): ExpenseCategory[] {
   let currentCategory = allCategories.find(cat => cat.id === category.linkedMonths.prevId)
 
-  const categoryChain: CategoryMonth[] = []
+  const categoryChain: ExpenseCategory[] = []
   while (currentCategory) {
     categoryChain.push(currentCategory)
     currentCategory = allCategories.find(cat => cat.id === currentCategory?.linkedMonths.prevId)
@@ -41,4 +41,10 @@ function getCategoryChain(category: CategoryMonth, allCategories: CategoryMonth[
 
   categoryChain.reverse()
   return categoryChain
+}
+
+export class Validator {
+  static category(category: Category): boolean {
+    return category.name.length > 0
+  }
 }

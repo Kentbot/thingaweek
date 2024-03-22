@@ -8,7 +8,7 @@ import { faEye, faEyeSlash, faUpload } from '@fortawesome/free-solid-svg-icons'
 
 import { AppDispatch, RootState } from '@budget/store/store'
 import { createTransactions, deleteTransaction } from '@budget/store/slices/transaction.slice'
-import { assignCategoryTransaction } from '@budget/store/slices/category.slice'
+import { assignTransactionToExpense } from '@budget/store/slices/expenseCategory.slice'
 import { useBudgetMonthCategories, useBudgetMonthIncome, useBudgetMonthTransactions } from '@budget/store/selectors'
 
 import { parseCsv } from '@budget/services/csvParser.service'
@@ -77,7 +77,7 @@ export default function Transactions() {
   const handleAssignTransaction = (transId: string, group: Group, value?: string) => {
     if (value) {
       if (group === categoryGroup) {
-        dispatch(assignCategoryTransaction({ categoryId: value, transactionId: transId }))
+        dispatch(assignTransactionToExpense({ categoryId: value, transactionId: transId }))
       } else {
         dispatch(assignIncomeTransaction({ incomeId: value, transactionId: transId }))
       }

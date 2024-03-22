@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 
 import { useBudgetMonthCategories, useBudgetMonthGroups, useCategoryTransactions } from '@budget/store/selectors'
-import { CategoryMonth } from '@budget/models/expenseCategory.model'
+import { ExpenseCategory } from '@budget/models/expenseCategory.model'
 import { AppDispatch, RootState } from '@budget/store/store'
 
 import { calculateBalanceForward } from '@budget/services/category.service'
@@ -55,7 +55,7 @@ export function GroupedCategories() {
   )
 }
 
-function CategoryRow({ category, highlight }: { category: CategoryMonth, highlight?: boolean }) {
+function CategoryRow({ category, highlight }: { category: ExpenseCategory, highlight?: boolean }) {
   const categoryTransactions = useCategoryTransactions(category.transactionIds)
   const allCategories = useSelector((state: RootState) => state.categories)
   const allTransactions = useSelector((state: RootState) => state.transactions)

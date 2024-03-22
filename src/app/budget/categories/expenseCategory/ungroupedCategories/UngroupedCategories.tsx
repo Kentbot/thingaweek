@@ -9,7 +9,7 @@ import './styles.scss'
 import { Dropdown } from '@components/general/dropdown/Dropdown'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
-import { CategoryMonth } from '@budget/models/expenseCategory.model'
+import { ExpenseCategory } from '@budget/models/expenseCategory.model'
 import { AppDispatch } from '@budget/store/store'
 import currency from 'currency.js'
 
@@ -51,7 +51,7 @@ function HeaderRow() {
   )
 }
 
-function CategoryRow({ category, highlight }: { category: CategoryMonth, highlight?: boolean }) {
+function CategoryRow({ category, highlight }: { category: ExpenseCategory, highlight?: boolean }) {
   const dispatch = useDispatch<AppDispatch>()
   const categoryTransactions = useCategoryTransactions(category.transactionIds)
   const groups = useBudgetMonthGroups()
