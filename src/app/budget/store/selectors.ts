@@ -20,7 +20,7 @@ export const useBudgetMonthTransactions = (): Transaction[] => {
 export const useBudgetMonthCategories = (): ExpenseCategory[] => {
   const selectCategories = createSelector(
     (state: RootState) => state,
-    (state) => filterToBudgetMonth(state.categories, DateTime.fromISO(state.budgetMonth))
+    (state) => filterToBudgetMonth(state.expenseCategories, DateTime.fromISO(state.budgetMonth))
   )
   return useSelector(selectCategories)
 }
@@ -30,7 +30,7 @@ export const useUngroupedCategories = (): ExpenseCategory[] => {
     (state: RootState) => state,
     (state) => {
       const catIdsInGroups = state.groups.flatMap(g => g.categoryIds)
-      const ungroupedCats = state.categories.filter(cat => !catIdsInGroups.includes(cat.id))
+      const ungroupedCats = state.expenseCategories.filter(cat => !catIdsInGroups.includes(cat.id))
 
       return filterToBudgetMonth(ungroupedCats, DateTime.fromISO(state.budgetMonth))
     }
@@ -56,7 +56,7 @@ export const useCategoryTransactions = (transactionIds: string[]) => {
 export const useBudgetMonthIncome = (): IncomeCategory[] => {
   const selectGroups = createSelector(
     (state: RootState) => state,
-    (state) => filterToBudgetMonth(state.income, DateTime.fromISO(state.budgetMonth))
+    (state) => filterToBudgetMonth(state.incomeCategories, DateTime.fromISO(state.budgetMonth))
   )
   return useSelector(selectGroups)
 }

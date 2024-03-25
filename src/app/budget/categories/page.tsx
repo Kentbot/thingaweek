@@ -2,19 +2,12 @@
 
 import React from 'react'
 
-import currency from 'currency.js'
-
-import { useBudgetMonthTransactions } from '@budget/store/selectors'
-
-import { CategoryCreator } from './creationControls/categoryCreator/CategoryCreator'
-import { GroupCreator } from './creationControls/groupCreator/GroupCreator'
-import { MonthCarryover } from './creationControls/monthCarryover/MonthCarryover'
-import { UngroupedCategories } from './groupDisplay/ungroupedCategories/UngroupedCategories'
-import { GroupedCategories } from './groupDisplay/groupedCategories/GroupedCategories'
-
-import './styles.scss'
+import { UngroupedCategories } from './expenseCategory/ungrouped/UngroupedCategories'
+import { GroupedCategories } from './expenseCategory/grouped/GroupedCategories'
 import { CreationControls } from './creationControls/CreationControls'
 import { IncomeView } from './income/IncomeView'
+
+import './styles.scss'
 
 export default function CategoriesPage() {
 

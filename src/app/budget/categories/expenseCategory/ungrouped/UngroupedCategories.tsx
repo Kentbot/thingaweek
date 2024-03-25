@@ -1,17 +1,20 @@
 import React from 'react'
 
 import { useDispatch } from 'react-redux'
+import currency from 'currency.js'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 
 import { useBudgetMonthGroups, useCategoryTransactions, useUngroupedCategories } from '@budget/store/selectors'
 import { assignCategoryToGroup } from '@budget/store/slices/group.slice'
+import { AppDispatch } from '@budget/store/store'
+
+import { ExpenseCategory } from '@budget/models/expenseCategory.model'
+
+import { Dropdown } from '@components/general/dropdown/Dropdown'
 
 import './styles.scss'
-import { Dropdown } from '@components/general/dropdown/Dropdown'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
-import { ExpenseCategory } from '@budget/models/expenseCategory.model'
-import { AppDispatch } from '@budget/store/store'
-import currency from 'currency.js'
 
 export function UngroupedCategories() {
   const categories = useUngroupedCategories()

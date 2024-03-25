@@ -12,7 +12,7 @@ import { faChartLine, faListUl, faMoneyBills, faSave } from '@fortawesome/free-s
 // after the client has recieved the SSR markup from the server.
 const Persister = dynamic(() => import('../persister/Persister'), {
   ssr: false,
-  loading: () => <>Loading persistence buttons...<button disabled className="btn" style={{opacity: 0}}>load</button></>,
+  loading: () => <>Loading persistence buttons...<button disabled className="btn" style={{opacity: 0}}>loading</button></>,
 });
 
 import { Modal } from '@components/general/modal/Modal'

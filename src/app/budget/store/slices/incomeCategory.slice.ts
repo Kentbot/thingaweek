@@ -1,10 +1,10 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import { assignIncomeTransaction, resetStateAction, unassignTransaction } from "../actions"
+import { assignIncomeTransaction, resetStateAction, unassignTransaction } from '../actions'
 
-import { IncomeCategory } from "@budget/models/incomeCategory.model"
-import { assignTransactionToExpense } from "./expenseCategory.slice"
-import { deleteTransaction } from "./transaction.slice"
+import { IncomeCategory } from '@budget/models/incomeCategory.model'
+import { assignTransactionToExpense } from './expenseCategory.slice'
+import { deleteTransaction } from './transaction.slice'
 
 type IncomeState = IncomeCategory[]
 

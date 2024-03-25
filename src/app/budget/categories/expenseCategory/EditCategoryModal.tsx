@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { updateIncomeCategory } from '@budget/store/slices/incomeCategory.slice'
 import { AppDispatch } from '@budget/store/store'
 
 import { ExpenseCategory } from '@budget/models/expenseCategory.model'

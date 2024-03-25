@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import currency from 'currency.js'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,7 +8,7 @@ import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 
 import { useBudgetMonthCategories, useBudgetMonthGroups, useCategoryTransactions } from '@budget/store/selectors'
 import { ExpenseCategory } from '@budget/models/expenseCategory.model'
-import { AppDispatch, RootState } from '@budget/store/store'
+import { RootState } from '@budget/store/store'
 
 import { calculateBalanceForward } from '@budget/services/category.service'
 
@@ -57,7 +57,7 @@ export function GroupedCategories() {
 
 function CategoryRow({ category, highlight }: { category: ExpenseCategory, highlight?: boolean }) {
   const categoryTransactions = useCategoryTransactions(category.transactionIds)
-  const allCategories = useSelector((state: RootState) => state.categories)
+  const allCategories = useSelector((state: RootState) => state.expenseCategories)
   const allTransactions = useSelector((state: RootState) => state.transactions)
 
   const spend = categoryTransactions.reduce(

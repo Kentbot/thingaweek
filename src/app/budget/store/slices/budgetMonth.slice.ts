@@ -1,8 +1,8 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import { DateTime } from "luxon"
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { DateTime } from 'luxon'
 
-import { ISODateString } from "../types"
-import { resetStateAction } from "../actions"
+import { ISODateString } from '../types'
+import { resetStateAction } from '../actions'
 
 export const initialState: ISODateString = DateTime.now().toISODate()
 
