@@ -1,19 +1,16 @@
 'use client'
 
-import React, { ChangeEvent, useState } from 'react'
+import React, { useState } from 'react'
 
 import { DateTime } from 'luxon'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye, faEyeSlash, faUpload } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
-import { AppDispatch, RootState } from '@budget/store/store'
-import { createTransactions, deleteTransaction } from '@budget/store/slices/transaction.slice'
+import { AppDispatch } from '@budget/store/store'
+import { deleteTransaction } from '@budget/store/slices/transaction.slice'
 import { assignTransactionToExpense } from '@budget/store/slices/expenseCategory.slice'
 import { useBudgetMonthCategories, useBudgetMonthIncome, useBudgetMonthTransactions } from '@budget/store/selectors'
-
-import { parseCsv } from '@budget/services/csvParser.service'
-import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer.service'
 
 import { Transaction } from '@budget/models/transaction.model'
 import { assignIncomeTransaction, unassignTransaction } from '@budget/store/actions'
@@ -21,6 +18,7 @@ import { assignIncomeTransaction, unassignTransaction } from '@budget/store/acti
 import { Dropdown, DropdownOption } from '@components/general/dropdown/Dropdown'
 
 import './styles.scss'
+import { TransactionUploader } from './TransactionUploader'
 
 const categoryGroup = 'Categories'
 const incomeGroup = 'Income Categories'
@@ -32,7 +30,6 @@ export default function Transactions() {
   
   const [viewAssigned, setViewAssigned] = useState(false)
 
-  const budgetMonth = useSelector((state: RootState) => state.budgetMonth)
   const transactions = useBudgetMonthTransactions()
   const categories = useBudgetMonthCategories()
   const incomeCategories = useBudgetMonthIncome()
@@ -60,16 +57,6 @@ export default function Transactions() {
   const incomeCategoryOptions: (DropdownOption & { transactionIds: string[] })[] = useBudgetMonthIncome()
     .map(inc => ({ display: inc.name, value: inc.id, group: incomeGroup, transactionIds: inc.transactionIds }))
 
-  const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      const rawData = await parseCsv(file)
-      const csvRowKeys = getCsvRowKeys(rawData)
-      const data = transformCsvRows(rawData, csvRowKeys, budgetMonth)
-      dispatch(createTransactions(data))
-    }
-  }
-
   const removeTransaction = (transId: string) => {
     dispatch(deleteTransaction({ transactionId: transId }))
   }
@@ -88,15 +75,12 @@ export default function Transactions() {
 
   return (
     <>
-      <label htmlFor="transactions-upload" className="btn">
-        Load Transactions from File&nbsp;&nbsp;<FontAwesomeIcon icon={faUpload}/>
-      </label>
+      <TransactionUploader />
       <button className="btn" onClick={() => setViewAssigned(!viewAssigned)}>
         { viewAssigned ?
           <><FontAwesomeIcon icon={faEye}/> Hide</> :
           <><FontAwesomeIcon icon={faEyeSlash}/> Show</> } Assigned transactions
       </button>
-      <input id="transactions-upload" accept=".csv" type="file" onChange={handleFileUpload} />
       <div className='transaction-grid'>
         <div className="label">Transactions</div>
         <div className="header">
