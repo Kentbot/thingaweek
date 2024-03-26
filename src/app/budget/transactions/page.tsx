@@ -2,6 +2,7 @@
 
 import React, { ChangeEvent, useState } from 'react'
 
+import { DateTime } from 'luxon'
 import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash, faUpload } from '@fortawesome/free-solid-svg-icons'
@@ -20,7 +21,6 @@ import { assignIncomeTransaction, unassignTransaction } from '@budget/store/acti
 import { Dropdown, DropdownOption } from '@components/general/dropdown/Dropdown'
 
 import './styles.scss'
-import { DateTime } from 'luxon'
 
 const categoryGroup = 'Categories'
 const incomeGroup = 'Income Categories'

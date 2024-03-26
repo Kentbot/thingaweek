@@ -3,14 +3,13 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import currency from 'currency.js'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
-
 import { useBudgetMonthCategories, useBudgetMonthGroups, useCategoryTransactions } from '@budget/store/selectors'
 import { ExpenseCategory } from '@budget/models/expenseCategory.model'
 import { RootState } from '@budget/store/store'
 
 import { calculateBalanceForward } from '@budget/services/category.service'
+
+import { EditCategoryModal } from './EditCategoryModal'
 
 import './styles.scss'
 
@@ -63,7 +62,9 @@ function CategoryRow({ category, highlight }: { category: ExpenseCategory, highl
   const spend = categoryTransactions.reduce(
     (prev, curr) => currency(curr.amount).add(prev), currency(0)
   ) 
-  const balance = currency(category.budgetedAmount).subtract(spend)
+  const balance = currency(category.budgetedAmount)
+    .subtract(spend)
+    .add(category.additionalIncome)
 
   const balanceForward = calculateBalanceForward(category, allCategories, allTransactions)
   const endOfMonthBalance = currency(balanceForward)
@@ -99,9 +100,12 @@ function CategoryRow({ category, highlight }: { category: ExpenseCategory, highl
       <div>
         {endOfMonthBalance}
       </div>
-      <button className="btn category-edit-button">
-        <FontAwesomeIcon icon={faEllipsisH} />
-      </button>
+      <EditCategoryModal
+        editModalOpen={false}
+        expenseCategory={category}
+        onEditConfirm={() => {}}
+        onEditOpen={() => {}}
+      />
     </div>
   )
 }
