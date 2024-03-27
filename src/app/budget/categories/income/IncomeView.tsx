@@ -52,11 +52,15 @@ export function IncomeView() {
 
 function IncomeRow({ incomeCategory }: { incomeCategory: IncomeCategory }) {
   const [editModalOpen, setEditModalOpen] = useState(false)
+
   const incomeTransactions = useCategoryTransactions(incomeCategory.transactionIds)
+
   const actualIncome = incomeTransactions
     .reduce((prev, curr) => currency(curr.amount).add(prev), currency(0))
     .multiply(-1)
-    .toString()
+
+  const incomeDiff = currency(actualIncome)
+    .subtract(incomeCategory.expectedIncome)
 
   const handleEditConfirm = () => {
     setEditModalOpen(false)
@@ -65,9 +69,9 @@ function IncomeRow({ incomeCategory }: { incomeCategory: IncomeCategory }) {
   return (
     <>
       <div>{incomeCategory.name}</div>
-      <div>{incomeCategory.expectedIncome}</div>
-      <div>{actualIncome}</div>
-      <div>{currency(actualIncome).subtract(incomeCategory.expectedIncome).toString()}</div>
+      <div>{formatCurrency(incomeCategory.expectedIncome)}</div>
+      <div>{formatCurrency(actualIncome)}</div>
+      <div>{formatCurrency(incomeDiff)}</div>
       <EditIncomeModal
         editModalOpen={editModalOpen}
         incomeCategory={incomeCategory}
