@@ -92,7 +92,7 @@ export function EditCategoryModal({
           onValueUpdate={(v) => setBudgetAmount(v)}
         />
         <NumericInput
-          id={`budget-amt-input-${expenseCategory.id}`}
+          id={`addl-income-input-${expenseCategory.id}`}
           className='category-input'
           type='text'
           placeholder='Additional Income'
@@ -100,7 +100,7 @@ export function EditCategoryModal({
           onValueUpdate={(v) => setAdditionalIncome(v)}
         />
         <NumericInput
-          id={`budget-amt-input-${expenseCategory.id}`}
+          id={`eom-adjust-input-${expenseCategory.id}`}
           className='category-input'
           type='text'
           placeholder='End of Month (EOM) Adjust'

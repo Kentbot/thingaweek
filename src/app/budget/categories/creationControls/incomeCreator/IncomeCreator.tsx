@@ -78,7 +78,7 @@ export function IncomeCreator() {
         onChange={(v) => handleNameChange(v.target.value)}
       />
       <NumericInput
-        id='budget-amt-input'
+        id='expected-income-input'
         className='category-input'
         type='text'
         placeholder='Expected Income'

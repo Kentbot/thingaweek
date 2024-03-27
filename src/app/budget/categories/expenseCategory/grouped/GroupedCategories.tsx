@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useSelector } from 'react-redux'
 import currency from 'currency.js'
@@ -55,6 +55,8 @@ export function GroupedCategories() {
 }
 
 function CategoryRow({ category, highlight }: { category: ExpenseCategory, highlight?: boolean }) {
+  const [editModalOpen, setEditModalOpen] = useState(false)
+
   const categoryTransactions = useCategoryTransactions(category.transactionIds)
   const allCategories = useSelector((state: RootState) => state.expenseCategories)
   const allTransactions = useSelector((state: RootState) => state.transactions)
@@ -73,6 +75,10 @@ function CategoryRow({ category, highlight }: { category: ExpenseCategory, highl
     .subtract(spend)
     .add(category.endOfMonthAdjust)
     .toString()
+
+  const handleEditConfirm = () => {
+    setEditModalOpen(false)
+  }
 
   return (
     <div key={category.id} className={`group-category ${(highlight ? " highlight" : "")}`}>
@@ -101,10 +107,10 @@ function CategoryRow({ category, highlight }: { category: ExpenseCategory, highl
         {endOfMonthBalance}
       </div>
       <EditCategoryModal
-        editModalOpen={false}
+        editModalOpen={editModalOpen}
         expenseCategory={category}
-        onEditConfirm={() => {}}
-        onEditOpen={() => {}}
+        onEditConfirm={handleEditConfirm}
+        onEditOpen={() => setEditModalOpen(true)}
       />
     </div>
   )

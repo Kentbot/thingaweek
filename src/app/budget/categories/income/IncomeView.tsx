@@ -1,20 +1,12 @@
 import React, { useState } from 'react'
 
-import { useDispatch } from 'react-redux'
 import currency from 'currency.js'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPencil } from '@fortawesome/free-solid-svg-icons'
-
-import { updateIncomeCategory } from '@budget/store/slices/incomeCategory.slice'
-import { AppDispatch } from '@budget/store/store'
 import { useBudgetMonthIncome, useCategoryTransactions } from '@budget/store/selectors'
 
-import { Modal } from '@components/general/modal/Modal'
-import { NumericInput } from '@components/general/NumericInput'
-import { EditIncomeModal } from './EditIncomeModal'
-
 import { IncomeCategory } from '@budget/models/incomeCategory.model'
+
+import { EditIncomeModal } from './EditIncomeModal'
 
 import './styles.scss'
 
