@@ -9,9 +9,20 @@ import { IncomeCategory } from '@budget/models/incomeCategory.model'
 import { EditIncomeModal } from './EditIncomeModal'
 
 import './styles.scss'
+import { formatCurrency } from '@budget/services/currency.service'
 
 export function IncomeView() {
   const income = useBudgetMonthIncome()
+
+  const expectedTotal = income.reduce((prev, curr) => prev.add(currency(curr.expectedIncome)), currency(0))
+
+  const allIncomeTransIds = income.reduce((prev, curr) => prev.concat(curr.transactionIds), [] as string[])
+  const allIncomeTrans = useCategoryTransactions(allIncomeTransIds)
+  const actualTotal = allIncomeTrans
+    .reduce((prev, curr) => currency(curr.amount).add(prev), currency(0))
+    .multiply(-1)
+
+  const totalDifference = actualTotal.subtract(expectedTotal)
   
   return (
     <div className="income-grid">
@@ -28,6 +39,13 @@ export function IncomeView() {
           <IncomeRow incomeCategory={inc} />
         </React.Fragment>
       ))}
+      <div className="income-total">
+        <div>Totals:</div>
+        <div>{formatCurrency(expectedTotal)}</div>
+        <div>{formatCurrency(actualTotal)}</div>
+        <div>{formatCurrency(totalDifference)}</div>
+        <div>{/* Empty for edit control */}</div>
+      </div>
     </div>
   )
 }

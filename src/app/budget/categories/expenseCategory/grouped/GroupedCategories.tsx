@@ -12,6 +12,7 @@ import { calculateBalanceForward } from '@budget/services/category.service'
 import { EditCategoryModal } from './EditCategoryModal'
 
 import './styles.scss'
+import { formatCurrency } from '@budget/services/currency.service'
 
 export function GroupedCategories() {
   const groups = useBudgetMonthGroups()
@@ -86,25 +87,25 @@ function CategoryRow({ category, highlight }: { category: ExpenseCategory, highl
         {category.name}
       </div>
       <div>
-        {balanceForward}
+        {formatCurrency(balanceForward)}
       </div>
       <div>
-        {category.budgetedAmount}
+        {formatCurrency(category.budgetedAmount)}
       </div>
       <div>
-        {category.additionalIncome}
+        {formatCurrency(category.additionalIncome)}
       </div>
       <div>
-        {spend.toString()}
+        {formatCurrency(spend)}
       </div>
       <div>
-        {balance.toString()}
+        {formatCurrency(balance)}
       </div>
       <div>
-        {category.endOfMonthAdjust}
+        {formatCurrency(category.endOfMonthAdjust)}
       </div>
       <div>
-        {endOfMonthBalance}
+        {formatCurrency(endOfMonthBalance)}
       </div>
       <EditCategoryModal
         editModalOpen={editModalOpen}
