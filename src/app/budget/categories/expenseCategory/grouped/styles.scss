@@ -71,9 +71,9 @@
       grid-template-columns: subgrid;
       grid-column: 3 / -1;
       align-self: start;
-      gap: 1px;
       // The gap-plus-background-color combo creates the illusion of borders in the grid
-      background-color: vars.$outline;
+      // gap: 1px;
+      // background-color: vars.$outline;
       border-left: 2px solid vars.$outline;
 
       .group-category {
@@ -97,8 +97,8 @@
         }
 
         &.highlight {
-          background-color: vars.$primary-light;
-          color: white;
+          background-color: vars.$secondary-light;
+          // color: white;
         }
 
         .category-name {

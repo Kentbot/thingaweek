@@ -28,7 +28,7 @@ export function TransactionUploader() {
   return (
     <>
       <label htmlFor="transactions-upload" className="btn">
-        Load Transactions from File&nbsp;&nbsp;<FontAwesomeIcon icon={faUpload}/>
+        Upload Transactions&nbsp;&nbsp;<FontAwesomeIcon icon={faUpload}/>
       </label>
       <input id="transactions-upload" accept=".csv" type="file" onChange={handleFileUpload} />
     </>
