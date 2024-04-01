@@ -1,0 +1,15 @@
+@use './variables' as vars;
+
+.summary-grid {
+  display: grid;
+
+  grid-template-columns: 1;
+  
+  @include vars.styled-border;
+  
+  margin-top: 1rem;
+
+  .label {
+    @include vars.border-label;
+  }
+}

@@ -1,11 +1,7 @@
 @use './variables' as vars;
 
 .income-grid {
-  position: sticky;
-  align-self: flex-start;
   top: calc(vars.$nav-height + 1rem);
-
-  flex: 1 1;
 
   padding: 20px;
 
@@ -24,7 +20,7 @@
   }
 
   .label {
-    @include vars.border-label;
+    @include vars.border-label($margin: -2.2rem 0);
   }
 
   .income-header {

@@ -8,6 +8,7 @@ import { CreationControls } from './creationControls/CreationControls'
 import { IncomeView } from './income/IncomeView'
 
 import './styles.scss'
+import { CategorySummary } from './summary/CategorySummary'
 
 export default function CategoriesPage() {
 
@@ -16,7 +17,10 @@ export default function CategoriesPage() {
       <CreationControls />
       <UngroupedCategories />
       <div className="all-categories">
-        <IncomeView />
+        <div className="summary">
+          <IncomeView />
+          <CategorySummary />
+        </div>
         <GroupedCategories />
       </div>
     </>
