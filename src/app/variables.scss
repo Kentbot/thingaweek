@@ -70,4 +70,9 @@ $outline-highlight: $dark-yellow;
   border-radius: $border-radius;
 }
 
+@mixin styled-grid-header() {
+  display: contents;
+  font-style: italic;
+}
+
 $color: white;

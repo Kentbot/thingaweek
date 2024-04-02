@@ -3,13 +3,19 @@
 .summary-grid {
   display: grid;
 
-  grid-template-columns: 1;
+  grid-template-columns: repeat(3, 1fr);
   
   @include vars.styled-border;
   
   margin-top: 1rem;
+  padding: 20px;
+  text-align: center;
+
+  .headers {
+    @include vars.styled-grid-header;
+  }
 
   .label {
-    @include vars.border-label;
+    @include vars.border-label($margin: -2.2rem 0);
   }
 }

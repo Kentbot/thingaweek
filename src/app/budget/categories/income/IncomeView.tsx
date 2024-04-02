@@ -68,7 +68,7 @@ function IncomeRow({ incomeCategory }: { incomeCategory: IncomeCategory }) {
   
   return (
     <>
-      <div>{incomeCategory.name}</div>
+      <div className="category-name">{incomeCategory.name}</div>
       <div>{formatCurrency(incomeCategory.expectedIncome)}</div>
       <div>{formatCurrency(actualIncome)}</div>
       <div>{formatCurrency(incomeDiff)}</div>
