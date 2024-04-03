@@ -4,11 +4,12 @@
   display: grid;
 
   grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
   
   @include vars.styled-border;
   
   margin-top: 1rem;
-  padding: 20px;
+  padding: 20px 10px;
   text-align: center;
 
   .headers {

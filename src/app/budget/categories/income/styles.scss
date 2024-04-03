@@ -24,7 +24,7 @@
   }
 
   .income-header {
-    display: contents
+    @include vars.styled-grid-header;
   }
 
   .income-total {

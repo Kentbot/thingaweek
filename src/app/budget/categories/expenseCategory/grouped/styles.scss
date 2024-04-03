@@ -7,7 +7,7 @@
   flex: 3 1;
 
   .header-row {
-    display: grid;
+    @include vars.styled-grid-header($display: grid);
     grid-template-columns: subgrid;
     grid-column: 1 / -1;
     background-color: vars.$background-light;

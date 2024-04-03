@@ -12,29 +12,49 @@ export function CategorySummary() {
   const allIncomeTransactionIds = monthIncome.flatMap(inc => inc.transactionIds)
   const incomeTransactions = useCategoryTransactions(allIncomeTransactionIds)
 
+  const expectedIncome = monthIncome.reduce((prev, curr) => prev.add(curr.expectedIncome), currency(0))
+  const actualIncome = incomeTransactions.reduce((prev, curr) => prev.add(curr.amount), currency(0)).multiply(-1)
+  
   const monthCategories = useBudgetMonthCategories()
   const allCategoryTransactionIds = monthCategories.flatMap(cat => cat.transactionIds)
   const categoryTransactions = useCategoryTransactions(allCategoryTransactionIds)
-  
-  const expectedIncome = monthIncome.reduce((prev, curr) => prev.add(curr.expectedIncome), currency(0))
-  const actualIncome = incomeTransactions.reduce((prev, curr) => prev.add(curr.amount), currency(0)).multiply(-1)
-  const netIncome = actualIncome.subtract(expectedIncome)
 
   const expectedSpend = monthCategories.reduce((prev, curr) => prev.add(curr.budgetedAmount), currency(0))
   const actualSpend = categoryTransactions.reduce((prev, curr) => prev.add(curr.amount), currency(0))
-  const netSpend = expectedSpend.subtract(actualSpend)
+  const netSpend = actualSpend.subtract(expectedSpend)
+
+  const additionalIncome = monthCategories.reduce((prev, curr) => prev.add(curr.additionalIncome), currency(0))
+
+  const surplusIncome = actualIncome.subtract(expectedIncome).subtract(additionalIncome)
+
+  const expectedIncomeVsSpend = expectedIncome.subtract(expectedSpend)
+
+  const totalEomAdjust = monthCategories.reduce((prev, curr) => prev.add(curr.endOfMonthAdjust), currency(0))
 
   return (
     <div className="summary-grid">
       <div className="label">Summary</div>
       <div className="headers">
-        <div>Net Expected Income</div>
-        <div>Net Actual Income</div>
+        <div>Income vs Spend Expected</div>
+        <div>Surplus Income</div>
         <div>Net Actual Spend</div>
       </div>
-      <div>{formatCurrency(expectedIncome)}</div>
-      <div>{formatCurrency(netIncome)}</div>
+      <div>{formatCurrency(expectedIncomeVsSpend)}</div>
+      <div>{formatCurrency(surplusIncome)}</div>
       <div>{formatCurrency(netSpend)}</div>
+      { /* spacer row */ }
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+      { /* end spacer row */ }
+      <div className="headers">
+        <div>{/* Placeholder */}</div>
+        <div>Total EOM Adjust</div>
+        <div>{/* Placeholder */}</div>
+      </div>
+      <div>{/* Placeholder */}</div>
+      <div>{formatCurrency(totalEomAdjust)}</div>
+      <div>{/* Placeholder */}</div>
     </div>
   )
 }
