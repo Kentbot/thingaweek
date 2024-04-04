@@ -9,7 +9,7 @@ import { RootState } from '@budget/store/store'
 
 import { calculateBalanceForward } from '@budget/services/category.service'
 
-import { EditCategoryModal } from './EditCategoryModal'
+import { ManageCategoryModal } from '../categoryManagement/ManageCategoryModal'
 
 import './styles.scss'
 import { formatCurrency } from '@budget/services/currency.service'
@@ -107,11 +107,12 @@ function CategoryRow({ category, highlight }: { category: ExpenseCategory, highl
       <div>
         {formatCurrency(endOfMonthBalance)}
       </div>
-      <EditCategoryModal
+      <ManageCategoryModal
         editModalOpen={editModalOpen}
         expenseCategory={category}
         onEditConfirm={handleEditConfirm}
-        onEditOpen={() => setEditModalOpen(true)}
+        onOpen={() => setEditModalOpen(true)}
+        onCancel={() => setEditModalOpen(false)}
       />
     </div>
   )

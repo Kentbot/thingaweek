@@ -1,30 +1,36 @@
 import React, { useState } from 'react'
 
 import { useDispatch } from 'react-redux'
-import { faPencil } from '@fortawesome/free-solid-svg-icons'
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import currency from 'currency.js'
 
 import { AppDispatch } from '@budget/store/store'
+import { updateExpenseCategory } from '@budget/store/slices/expenseCategory.slice'
 
 import { ExpenseCategory } from '@budget/models/expenseCategory.model'
 
+import { Validator } from '@budget/services/category.service'
+
 import { Modal } from '@components/general/modal/Modal'
 import { NumericInput } from '@components/general/NumericInput'
-import { Validator } from '@budget/services/category.service'
-import { updateExpenseCategory } from '@budget/store/slices/expenseCategory.slice'
-import currency from 'currency.js'
+import { CategoryTransactionView } from './CategoryTransactionView'
+
+import './styles.scss'
 
 type Props = {
   expenseCategory: ExpenseCategory
   editModalOpen: boolean
-  onEditOpen: () => void
+  onOpen: () => void
+  onCancel: () => void
   onEditConfirm: () => void
 }
 
-export function EditCategoryModal({
+export function ManageCategoryModal({
   expenseCategory,
   editModalOpen,
-  onEditOpen,
+  onOpen,
+  onCancel,
   onEditConfirm
 }: Props) {
   const dispatch = useDispatch<AppDispatch>()
@@ -65,10 +71,10 @@ export function EditCategoryModal({
 
   return (
     <Modal
-      toggleButtonIcon={<FontAwesomeIcon icon={faPencil} />}
-      title={`Edit Expense Category - ${expenseCategory.name}`}
+      toggleButtonIcon={<FontAwesomeIcon icon={faEllipsis} />}
+      title={<div>Manage Expense Category - {expenseCategory.name}</div>}
       isOpen={editModalOpen}
-      onOpen={onEditOpen}
+      onOpen={onOpen}
     >
       <div className="edit-category-grid">
         <div>Category Name</div>
@@ -108,10 +114,11 @@ export function EditCategoryModal({
           onValueUpdate={(v) => setEomAdjust(v)}
         />
       </div>
+      <CategoryTransactionView category={expenseCategory} />
       <button className="btn" onClick={handleIncomeUpdate}>
-        Confirm Updates
+        Save Changes
       </button>
-      {/* <button className="btn" onClick={() => setEditModalOpen(false)}>Cancel</button> */}
+      <button className="btn" onClick={() => onCancel()}>Cancel</button>
     </Modal>
   )
 }

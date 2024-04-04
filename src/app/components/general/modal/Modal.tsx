@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import styles from './styles.module.scss'
 
 type Props = React.PropsWithChildren<{
-  title?: string
+  title?: string | React.ReactNode
   toggleButtonText?: string
   toggleButtonIcon?: React.ReactNode
   displayCloseButton?: boolean

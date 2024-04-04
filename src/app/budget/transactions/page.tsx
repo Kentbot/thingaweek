@@ -19,6 +19,7 @@ import { Dropdown, DropdownOption } from '@components/general/dropdown/Dropdown'
 
 import './styles.scss'
 import { TransactionUploader } from './TransactionUploader'
+import { sortTransactionsByDate } from '@budget/services/transaction.service'
 
 const categoryGroup = 'Categories'
 const incomeGroup = 'Income Categories'
@@ -42,14 +43,7 @@ export default function Transactions() {
         !incomeCategories.some(c => c.transactionIds.includes(t.id))
       )
   }
-  filteredTransactions.sort((a, b) => {
-    // Is negative if a is earlier than b
-    const dateDiff = DateTime.fromISO(a.date).diff(DateTime.fromISO(b.date)).milliseconds
-
-    return dateDiff > 0 ? 1 :
-      dateDiff < 0 ? -1 :
-      0
-  })
+  filteredTransactions = sortTransactionsByDate(filteredTransactions)
 
   const categoryOptions: (DropdownOption & { transactionIds: string[] })[] = useBudgetMonthCategories()
     .map(cat => ({ display: cat.name, value: cat.id, group: categoryGroup, transactionIds: cat.transactionIds }))

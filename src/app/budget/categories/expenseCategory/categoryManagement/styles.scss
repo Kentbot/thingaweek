@@ -1,0 +1,46 @@
+@use './variables' as vars;
+
+.category-transactions {
+  position: relative;
+  margin: 20px 0;
+
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  
+  @include vars.styled-border;
+  
+  padding: 20px;
+  
+  .label {
+    top: 0;
+    @include vars.border-label();
+  }
+  
+  .headers {
+    @include vars.styled-grid-header;
+
+    .date {
+      justify-self: center;
+    }
+  }
+
+  .row, .totals-row {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+
+    .date {
+      justify-self: center;
+    }
+
+    * {
+      padding-left: 5px;
+    }
+    
+    &.highlight {
+      border: 1px solid vars.$secondary-light;
+      border-radius: vars.$border-radius;
+      background-color: vars.$secondary-light;
+    }
+  }
+}

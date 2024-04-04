@@ -49,6 +49,11 @@ $outline: $secondary-dark;
 $outline-light: $secondary-light;
 $outline-highlight: $dark-yellow;
 
+@mixin with-color() {
+  background: $background-light;
+  color: $primary-dark;
+}
+
 @mixin styled-border($width: 1px) {
   border: $width solid $outline;
   border-radius: $border-radius;
@@ -65,8 +70,7 @@ $outline-highlight: $dark-yellow;
   font-size: $font-size;
   padding: $padding;
 
-  background: $background-light;
-  color: $primary-dark;
+  @include with-color;
   border-radius: $border-radius;
 }
 
