@@ -12,7 +12,7 @@ const endYear = DateTime.now().year + 1
 const yearSpan = endYear - beginYear + 1
 const years = Array(yearSpan).fill(beginYear).map((val, index) => val + index)
 
-import './styles.scss'
+import styles from './styles.module.scss'
 
 export function DateSelector() {
   const dispatch = useDispatch<AppDispatch>()
@@ -38,24 +38,24 @@ export function DateSelector() {
 
   return (
     <>
-      <div className="date-selection">
-        <div className="month-select">
-          <button className={"month btn " + (currentMonthNumber === 1 ? "selected" : "")} onClick={() => handleMonthSelect(1)}>Jan</button>
-          <button className={"month btn " + (currentMonthNumber === 2 ? "selected" : "")} onClick={() => handleMonthSelect(2)}>Feb</button>
-          <button className={"month btn " + (currentMonthNumber === 3 ? "selected" : "")} onClick={() => handleMonthSelect(3)}>Mar</button>
-          <button className={"month btn " + (currentMonthNumber === 4 ? "selected" : "")} onClick={() => handleMonthSelect(4)}>Apr</button>
-          <button className={"month btn " + (currentMonthNumber === 5 ? "selected" : "")} onClick={() => handleMonthSelect(5)}>May</button>
-          <button className={"month btn " + (currentMonthNumber === 6 ? "selected" : "")} onClick={() => handleMonthSelect(6)}>Jun</button>
-          <button className={"month btn " + (currentMonthNumber === 7 ? "selected" : "")} onClick={() => handleMonthSelect(7)}>Jul</button>
-          <button className={"month btn " + (currentMonthNumber === 8 ? "selected" : "")} onClick={() => handleMonthSelect(8)}>Aug</button>
-          <button className={"month btn " + (currentMonthNumber === 9 ? "selected" : "")} onClick={() => handleMonthSelect(9)}>Sep</button>
-          <button className={"month btn " + (currentMonthNumber === 10 ? "selected" : "")} onClick={() => handleMonthSelect(10)}>Oct</button>
-          <button className={"month btn " + (currentMonthNumber === 11 ? "selected" : "")} onClick={() => handleMonthSelect(11)}>Nov</button>
-          <button className={"month btn " + (currentMonthNumber === 12 ? "selected" : "")} onClick={() => handleMonthSelect(12)}>Dec</button>
+      <div className={styles["date-selection"]}>
+        <div className={styles["month-select"]}>
+          <button className={`${styles["month"]} btn ${(currentMonthNumber === 1 ? styles["selected"] : "")}`} onClick={() => handleMonthSelect(1)}>Jan</button>
+          <button className={`${styles["month"]} btn ${(currentMonthNumber === 2 ? styles["selected"] : "")}`} onClick={() => handleMonthSelect(2)}>Feb</button>
+          <button className={`${styles["month"]} btn ${(currentMonthNumber === 3 ? styles["selected"] : "")}`} onClick={() => handleMonthSelect(3)}>Mar</button>
+          <button className={`${styles["month"]} btn ${(currentMonthNumber === 4 ? styles["selected"] : "")}`} onClick={() => handleMonthSelect(4)}>Apr</button>
+          <button className={`${styles["month"]} btn ${(currentMonthNumber === 5 ? styles["selected"] : "")}`} onClick={() => handleMonthSelect(5)}>May</button>
+          <button className={`${styles["month"]} btn ${(currentMonthNumber === 6 ? styles["selected"] : "")}`} onClick={() => handleMonthSelect(6)}>Jun</button>
+          <button className={`${styles["month"]} btn ${(currentMonthNumber === 7 ? styles["selected"] : "")}`} onClick={() => handleMonthSelect(7)}>Jul</button>
+          <button className={`${styles["month"]} btn ${(currentMonthNumber === 8 ? styles["selected"] : "")}`} onClick={() => handleMonthSelect(8)}>Aug</button>
+          <button className={`${styles["month"]} btn ${(currentMonthNumber === 9 ? styles["selected"] : "")}`} onClick={() => handleMonthSelect(9)}>Sep</button>
+          <button className={`${styles["month"]} btn ${(currentMonthNumber === 10 ? styles["selected"] : "")}`} onClick={() => handleMonthSelect(10)}>Oct</button>
+          <button className={`${styles["month"]} btn ${(currentMonthNumber === 11 ? styles["selected"] : "")}`} onClick={() => handleMonthSelect(11)}>Nov</button>
+          <button className={`${styles["month"]} btn ${(currentMonthNumber === 12 ? styles["selected"] : "")}`} onClick={() => handleMonthSelect(12)}>Dec</button>
         </div>
-        <div className="year">
+        <div className={styles["year"]}>
           <select
-            className="year-select btn"
+            className={`${styles["year-select"]} btn`}
             onChange={(event) => handleYearSelect(event.target.value)}
             defaultValue={DateTime.now().year.toString()}
           >
@@ -64,7 +64,7 @@ export function DateSelector() {
             ))}
           </select>
         </div>
-        <div className="current-budget-month">
+        <div className={styles["current-budget-month"]}>
           Currently Viewing: <br/> <span className="date">{currentMonth.monthLong} {currentMonth.year}</span>
         </div>
       </div>
