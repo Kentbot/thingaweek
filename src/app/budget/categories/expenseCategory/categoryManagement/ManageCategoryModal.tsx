@@ -75,6 +75,7 @@ export function ManageCategoryModal({
       title={<div>Manage Expense Category - {expenseCategory.name}</div>}
       isOpen={editModalOpen}
       onOpen={onOpen}
+      buttonStyle={{ width: '24px', padding: '0', justifySelf: 'center' }}
     >
       <div className="edit-category-grid">
         <div>Category Name</div>

@@ -4,6 +4,7 @@ import styles from './styles.module.scss'
 
 type Props = React.PropsWithChildren<{
   title?: string | React.ReactNode
+  buttonStyle?: React.CSSProperties
   toggleButtonText?: string
   toggleButtonIcon?: React.ReactNode
   displayCloseButton?: boolean
@@ -15,6 +16,7 @@ type Props = React.PropsWithChildren<{
 export function Modal({
   children,
   title,
+  buttonStyle,
   toggleButtonText,
   toggleButtonIcon,
   displayCloseButton,
@@ -64,7 +66,7 @@ export function Modal({
 
   return (
     <>
-      <button className="btn" onClick={handleModalOpen}>
+      <button className="btn" onClick={handleModalOpen} style={buttonStyle}>
         {toggleButtonIcon}{toggleButtonText ? <>&nbsp;{toggleButtonText}</> : null}
       </button>
       <dialog ref={dialogRef} className={styles.modal} onKeyDown={handleKeyDown}>
