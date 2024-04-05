@@ -1,10 +1,24 @@
 @use './variables' as vars;
+@use 'sass:string';
+
+$grid-areas: 
+  "income-v-spend eom-adjust"
+  "net-spend surplus-income";
 
 .summary-grid {
   display: grid;
+  grid-template-areas: $grid-areas;
+  grid-template-columns: repeat(2, minmax(auto, 1fr));
+  row-gap: 10px;
 
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3px;
+  // Assigns each grid area id to its grid area
+  @each $grid-row in $grid-areas {
+    @each $area in string.split($grid-row, " ") {
+      ##{$area} {
+        grid-area: string.unquote($area);
+      }
+    }
+  }
   
   @include vars.styled-border;
   
@@ -12,11 +26,11 @@
   padding: 20px 10px;
   text-align: center;
 
-  .headers {
-    @include vars.styled-grid-header;
+  .header {
+    @include vars.styled-grid-header($display: inherit);
   }
 
   .label {
-    @include vars.border-label($margin: -2.2rem 0);
+    @include vars.border-label($margin: -2.2rem 10px);
   }
 }

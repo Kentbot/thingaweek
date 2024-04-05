@@ -34,27 +34,22 @@ export function CategorySummary() {
   return (
     <div className="summary-grid">
       <div className="label">Summary</div>
-      <div className="headers">
-        <div>Income vs Spend Expected</div>
-        <div>Surplus Income</div>
-        <div>Net Actual Spend</div>
+      <div id="income-v-spend">
+        <div className="header">Income vs Spend Expected</div>
+        <div>{formatCurrency(expectedIncomeVsSpend)}</div>
       </div>
-      <div>{formatCurrency(expectedIncomeVsSpend)}</div>
-      <div>{formatCurrency(surplusIncome)}</div>
-      <div>{formatCurrency(netSpend)}</div>
-      { /* spacer row */ }
-      <div>&nbsp;</div>
-      <div>&nbsp;</div>
-      <div>&nbsp;</div>
-      { /* end spacer row */ }
-      <div className="headers">
-        <div>{/* Placeholder */}</div>
-        <div>Total EOM Adjust</div>
-        <div>{/* Placeholder */}</div>
+      <div id="surplus-income">
+        <div className="header">Surplus Income</div>
+        <div>{formatCurrency(surplusIncome)}</div>
       </div>
-      <div>{/* Placeholder */}</div>
-      <div>{formatCurrency(totalEomAdjust)}</div>
-      <div>{/* Placeholder */}</div>
+      <div id="net-spend">
+        <div className="header">Net Spend (vs. Expected)</div>
+        <div>{formatCurrency(netSpend)}</div>
+      </div>
+      <div id="eom-adjust">
+        <div className="header">Total EOM Adjust</div>
+        <div>{formatCurrency(totalEomAdjust)}</div>
+      </div>
     </div>
   )
 }
