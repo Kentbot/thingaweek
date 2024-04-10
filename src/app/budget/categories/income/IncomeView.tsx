@@ -2,14 +2,15 @@ import React, { useState } from 'react'
 
 import currency from 'currency.js'
 
-import { useBudgetMonthIncome, useCategoryTransactions } from '@budget/store/selectors'
+import { useBudgetMonthIncome, useCategoryTransactions } from '@/budget/store/selectors'
 
-import { IncomeCategory } from '@budget/models/incomeCategory.model'
+import { IncomeCategory } from '@/budget/models/incomeCategory.model'
+
+import { formatCurrency } from '@/budget/services/currency.service'
 
 import { EditIncomeModal } from './EditIncomeModal'
 
 import './styles.scss'
-import { formatCurrency } from '@budget/services/currency.service'
 
 export function IncomeView() {
   const income = useBudgetMonthIncome()

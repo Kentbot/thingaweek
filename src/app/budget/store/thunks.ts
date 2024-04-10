@@ -8,8 +8,8 @@ import { carryoverExpenses, createExpenseCategories } from './slices/expenseCate
 import { assignCategoryToGroup, carryoverGroups, createGroups } from './slices/group.slice'
 import { createTransactions } from './slices/transaction.slice'
 import { changeMonth } from './slices/budgetMonth.slice'
-import { createIncomeCategories } from './slices/incomeCategory.slice'
-import { filterToBudgetMonth } from '@budget/services/category.service'
+import { carryoverIncome, createIncomeCategories } from './slices/incomeCategory.slice'
+import { filterToBudgetMonth } from '@/budget/services/category.service'
 
 type ThunkReturn<T> = T
 type ThunkArgs<T> = T
@@ -28,6 +28,7 @@ export const carryoverMonthThunk = createAsyncThunk<
       }
       thunk.dispatch(carryoverExpenses({ newMonthISO: newMonth }))
       thunk.dispatch(carryoverGroups({ newMonth: newMonth }))
+      thunk.dispatch(carryoverIncome({ newMonth: newMonth }))
 
       const currentState = thunk.getState()
       const newGroups = filterToBudgetMonth(currentState.groups, newMonthDateTime)

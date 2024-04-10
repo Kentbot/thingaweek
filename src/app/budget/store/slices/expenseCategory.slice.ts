@@ -3,8 +3,8 @@ import { DateTime } from 'luxon'
 import { nanoid } from 'nanoid'
 import currency from 'currency.js'
 
-import { ExpenseCategory } from '@budget/models/expenseCategory.model'
-import { filterToBudgetMonth } from '@budget/services/category.service'
+import { ExpenseCategory } from '@/budget/models/expenseCategory.model'
+import { filterToBudgetMonth } from '@/budget/services/category.service'
 
 import { ISODateString } from '../types'
 import { assignIncomeTransaction, resetStateAction, unassignTransaction } from '../actions'

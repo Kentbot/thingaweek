@@ -2,7 +2,7 @@ import React from 'react'
 
 import { usePathname } from 'next/navigation'
 
-import { PageNav } from '@components/PageNav/PageNav'
+import { PageNav } from '@/components/PageNav/PageNav'
 
 export function BlogNav() {
   const pathname = usePathname()

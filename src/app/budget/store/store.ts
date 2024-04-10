@@ -14,16 +14,27 @@ export const defaultState = {
   groups: initialGroupState
 }
 
+export type AppState = typeof defaultState
+
+const reducer = {
+  expenseCategories: expenseCategorySlice,
+  incomeCategories: incomeSlice,
+  groups: groupSlice,
+  transactions: transactionSlice,
+  budgetMonth: budgetMonthSlice
+}
+
 const store = configureStore({
-  reducer: {
-    expenseCategories: expenseCategorySlice,
-    incomeCategories: incomeSlice,
-    groups: groupSlice,
-    transactions: transactionSlice,
-    budgetMonth: budgetMonthSlice
-  },
+  reducer,
   preloadedState: defaultState
 })
+
+export const customStore = (state: RootState) => {
+  return configureStore({
+    reducer,
+    preloadedState: state
+  })
+}
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

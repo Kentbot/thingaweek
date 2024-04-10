@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 
-import { Transaction } from '@budget/models/transaction.model'
+import { Transaction } from '@/budget/models/transaction.model'
 
 export function sortTransactionsByDate(transaction: Transaction[]): Transaction[] {
   return transaction.toSorted((a, b) => {

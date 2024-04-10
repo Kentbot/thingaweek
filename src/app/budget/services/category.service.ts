@@ -1,9 +1,10 @@
 import { DateTime } from 'luxon'
 import currency from 'currency.js'
 
-import { Category, WithBudgetMonth } from '@budget/models/types'
-import { ExpenseCategory } from '@budget/models/expenseCategory.model'
-import { Transaction } from '@budget/models/transaction.model'
+import { Category, WithBudgetMonth } from '@/budget/models/types'
+import { ExpenseCategory } from '@/budget/models/expenseCategory.model'
+import { Transaction } from '@/budget/models/transaction.model'
+import { validateCurrency } from './currency.service'
 
 export function filterToBudgetMonth<T extends WithBudgetMonth>(modelWithBudgetMonth: T[], newMonth: DateTime): T[] {
   return modelWithBudgetMonth.filter((m: T) => 
@@ -43,7 +44,19 @@ function getCategoryChain(category: ExpenseCategory, allCategories: ExpenseCateg
   return categoryChain
 }
 
+export function calculateAvailableBalance(
+  category: ExpenseCategory,
+  balanceForward: string | currency,
+  spend: string | currency
+): currency {
+  return currency(validateCurrency(balanceForward))
+    .add(validateCurrency(category.budgetedAmount))
+    .add(validateCurrency(category.additionalIncome))
+    .subtract(validateCurrency(spend))
+}
+
 export class Validator {
+  /** TODO: Return more than just a simple boolean. Should really return a list of errors */
   static category(category: Category): boolean {
     return category.name.length > 0
   }

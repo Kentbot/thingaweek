@@ -92,7 +92,7 @@
         grid-column: 1 / -1;
         background-color: vars.$background-light;
 
-        & > *:not(.delete-cat-button) {
+        .grid-cell {
           padding-left: 8px;
         }
 
@@ -112,14 +112,5 @@
         }
       }
     }
-  }
-}
-
-.edit-category-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  
-  * {
-    justify-self: center;
   }
 }

@@ -2,10 +2,10 @@ import { createSelector } from '@reduxjs/toolkit'
 import { DateTime } from 'luxon'
 import { useSelector } from 'react-redux'
 
-import { filterToBudgetMonth } from '@budget/services/category.service'
-import { ExpenseCategory } from '@budget/models/expenseCategory.model'
-import { Transaction } from '@budget/models/transaction.model'
-import { IncomeCategory } from '@budget/models/incomeCategory.model'
+import { filterToBudgetMonth } from '@/budget/services/category.service'
+import { ExpenseCategory } from '@/budget/models/expenseCategory.model'
+import { Transaction } from '@/budget/models/transaction.model'
+import { IncomeCategory } from '@/budget/models/incomeCategory.model'
 
 import { RootState } from './store'
 

@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { faUpload } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { RootState } from '@budget/store/store'
-import { createTransactions } from '@budget/store/slices/transaction.slice'
+import { RootState } from '@/budget/store/store'
+import { createTransactions } from '@/budget/store/slices/transaction.slice'
 
-import { parseCsv } from '@budget/services/csvParser.service'
-import { getCsvRowKeys, transformCsvRows } from '@budget/services/csvTransformer.service'
+import { parseCsv } from '@/budget/services/csvParser.service'
+import { getCsvRowKeys, transformCsvRows } from '@/budget/services/csvTransformer.service'
 
 export function TransactionUploader() {
   const dispatch = useDispatch()

@@ -2,13 +2,15 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { DateTime } from 'luxon'
 import { nanoid } from 'nanoid'
 
-import { CategoryGroup } from '@budget/models/categoryGroup.model'
+import { CategoryGroup } from '@/budget/models/categoryGroup.model'
 
 import { ISODateString } from '../types'
 import { resetStateAction } from '../actions'
-import { filterToBudgetMonth } from '@budget/services/category.service'
+import { filterToBudgetMonth } from '@/budget/services/category.service'
 
-export const initialState: CategoryGroup[] = []
+type CategoryState = CategoryGroup[]
+
+export const initialState: CategoryState = []
 
 const groupSlice = createSlice({
   name: 'groups',

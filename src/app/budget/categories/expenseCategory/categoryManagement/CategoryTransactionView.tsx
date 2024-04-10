@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { useCategoryTransactions } from '@budget/store/selectors'
+import { useCategoryTransactions } from '@/budget/store/selectors'
 
-import { formatCurrency } from '@budget/services/currency.service'
-import { sortTransactionsByDate } from '@budget/services/transaction.service'
+import { formatCurrency } from '@/budget/services/currency.service'
+import { sortTransactionsByDate } from '@/budget/services/transaction.service'
 
-import { ExpenseCategory } from '@budget/models/expenseCategory.model'
+import { ExpenseCategory } from '@/budget/models/expenseCategory.model'
 import currency from 'currency.js'
 
 type Props = {

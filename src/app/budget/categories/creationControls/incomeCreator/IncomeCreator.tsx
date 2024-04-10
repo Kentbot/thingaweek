@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import currency from 'currency.js'
 import { nanoid } from 'nanoid'
 
-import { AppDispatch, RootState } from '@budget/store/store'
-import { createIncomeCategory } from '@budget/store/slices/incomeCategory.slice'
+import { AppDispatch, RootState } from '@/budget/store/store'
+import { createIncomeCategory } from '@/budget/store/slices/incomeCategory.slice'
 
-import { Tooltip } from '@components/general/tooltip/Tooltip'
-import { NumericInput } from '@components/general/NumericInput'
+import { Tooltip } from '@/components/general/tooltip/Tooltip'
+import { NumericInput } from '@/components/general/NumericInput'
 
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 
-import { Modal } from '@components/general/modal/Modal'
+import { Modal } from '@/components/general/modal/Modal'
 
 import { CategoryCreator } from './categoryCreator/CategoryCreator'
 import { GroupCreator } from './groupCreator/GroupCreator'

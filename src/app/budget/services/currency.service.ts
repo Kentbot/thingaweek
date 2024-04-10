@@ -29,9 +29,21 @@ function format(curr: currency | undefined, options: currency.Options | undefine
   return format
 }
 
-export function formatCurrency(curr: currency | string): string {
-  const currencyWithSettings = currency(curr, {
-    negativePattern: `(#)`,
+export function validateCurrency(rawCurrency: currency | string): currency {
+  let parsedCurrency = currency(rawCurrency)
+  
+  if (Number.isNaN(parsedCurrency.value)) {
+    parsedCurrency = currency(0)
+  }
+
+  return parsedCurrency
+}
+
+export function formatCurrency(curr: currency | string, negativeBrackets: boolean = true): string {
+  const validCurrency = validateCurrency(curr)
+
+  const currencyWithSettings = currency(validCurrency, {
+    negativePattern: negativeBrackets ? '(#)' : '-#',
     symbol: ''
   })
 

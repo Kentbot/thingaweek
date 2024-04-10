@@ -1,10 +1,12 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import { Transaction } from '@budget/models/transaction.model'
+import { Transaction } from '@/budget/models/transaction.model'
 
 import { resetStateAction } from '../actions'
 
-export const initialState: Transaction[] = []
+type TransactionState = Transaction[]
+
+export const initialState: TransactionState = []
 
 const transactionSlice = createSlice({
   name: 'transactions',

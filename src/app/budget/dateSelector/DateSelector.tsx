@@ -4,8 +4,8 @@ import { DateTime } from 'luxon'
 import { useDispatch, useSelector } from 'react-redux'
 import { createSelector } from '@reduxjs/toolkit'
 
-import { AppDispatch, RootState } from '@budget/store/store'
-import { changeMonth as changeBudgetMonth } from '@budget/store/slices/budgetMonth.slice'
+import { AppDispatch, RootState } from '@/budget/store/store'
+import { changeMonth as changeBudgetMonth } from '@/budget/store/slices/budgetMonth.slice'
 
 const beginYear = 2023
 const endYear = DateTime.now().year + 1

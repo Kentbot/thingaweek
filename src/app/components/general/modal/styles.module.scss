@@ -1,10 +1,8 @@
 @use './variables' as vars;
 
-$padding-top: 1.5rem;
-
 .modal {
   margin: auto;
-  padding: $padding-top 1.5rem 1rem;
+  padding: 1.5rem 1.5rem 1rem;
   background-color: vars.$background-light;
   min-width: 500px;
 
@@ -26,8 +24,8 @@ $padding-top: 1.5rem;
   .title {
     @include vars.with-color;
     font-size: 1.3rem;
-    margin: -$padding-top 0;
-    padding-bottom: calc($padding-top * 1.5);
+    margin: -1rem -.5rem;
+    padding-bottom: 1.5rem;
   }
 }
 

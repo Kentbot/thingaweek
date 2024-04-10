@@ -7,15 +7,15 @@ import { nanoid } from 'nanoid'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentDollar } from '@fortawesome/free-solid-svg-icons'
 
-import { NumericInput } from '@components/general/NumericInput'
-import { Tooltip } from '@components/general/tooltip/Tooltip'
+import { NumericInput } from '@/components/general/NumericInput'
+import { Tooltip } from '@/components/general/tooltip/Tooltip'
 
-import { AppDispatch, RootState } from '@budget/store/store'
-import { createExpenseCategory } from '@budget/store/slices/expenseCategory.slice'
+import { AppDispatch, RootState } from '@/budget/store/store'
+import { createExpenseCategory } from '@/budget/store/slices/expenseCategory.slice'
 
-import { Validator } from '@budget/services/category.service'
+import { Validator } from '@/budget/services/category.service'
 
-import { ExpenseCategory } from '@budget/models/expenseCategory.model'
+import { ExpenseCategory } from '@/budget/models/expenseCategory.model'
 
 import './styles.scss'
 

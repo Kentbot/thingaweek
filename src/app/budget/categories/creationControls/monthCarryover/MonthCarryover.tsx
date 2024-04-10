@@ -2,11 +2,11 @@ import React from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import { carryoverMonthThunk } from '@budget/store/thunks'
-import { AppDispatch, RootState } from '@budget/store/store'
+import { carryoverMonthThunk } from '@/budget/store/thunks'
+import { AppDispatch, RootState } from '@/budget/store/store'
 
 import './styles.scss'
-import { Tooltip } from '@components/general/tooltip/Tooltip'
+import { Tooltip } from '@/components/general/tooltip/Tooltip'
 
 export function MonthCarryover() {
   const dispatch = useDispatch<AppDispatch>()

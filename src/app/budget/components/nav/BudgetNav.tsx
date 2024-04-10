@@ -15,7 +15,7 @@ const Persister = dynamic(() => import('../persister/Persister'), {
   loading: () => <>Loading persistence buttons...<button disabled className="btn" style={{opacity: 0}}>loading</button></>,
 });
 
-import { Modal } from '@components/general/modal/Modal'
+import { Modal } from '@/components/general/modal/Modal'
 
 import styles from './style.module.scss'
 

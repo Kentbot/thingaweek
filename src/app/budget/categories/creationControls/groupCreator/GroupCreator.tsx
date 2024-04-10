@@ -3,11 +3,11 @@ import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { nanoid } from 'nanoid'
 
-import { createGroup } from '@budget/store/slices/group.slice'
-import { RootState } from '@budget/store/store'
+import { createGroup } from '@/budget/store/slices/group.slice'
+import { RootState } from '@/budget/store/store'
 
 import './styles.scss'
-import { Tooltip } from '@components/general/tooltip/Tooltip'
+import { Tooltip } from '@/components/general/tooltip/Tooltip'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 

@@ -4,14 +4,15 @@ import { useDispatch } from 'react-redux'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { updateIncomeCategory } from '@budget/store/slices/incomeCategory.slice'
-import { AppDispatch } from '@budget/store/store'
+import { Modal } from '@/components/general/modal/Modal'
+import { NumericInput } from '@/components/general/NumericInput'
 
-import { IncomeCategory } from '@budget/models/incomeCategory.model'
+import { updateIncomeCategory } from '@/budget/store/slices/incomeCategory.slice'
+import { AppDispatch } from '@/budget/store/store'
 
-import { Modal } from '@components/general/modal/Modal'
-import { NumericInput } from '@components/general/NumericInput'
-import { Validator } from '@budget/services/category.service'
+import { IncomeCategory } from '@/budget/models/incomeCategory.model'
+
+import { Validator } from '@/budget/services/category.service'
 
 type Props = {
   incomeCategory: IncomeCategory

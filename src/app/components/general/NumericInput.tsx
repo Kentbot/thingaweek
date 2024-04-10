@@ -11,6 +11,8 @@ export const NumericInput = forwardRef<HTMLInputElement, Props>(({ onValueUpdate
     const negative = value.startsWith('-')
     const sanitizedValue = value.replace(/[^\d.]+/g, '')
 
+    // TODO: Handle edge case where the value is just '-'. Needs to be set back to 0
+    // before going to state, but can't be set to 0 while still editing.
     onValueUpdate(negative ? `-${sanitizedValue}` : sanitizedValue)
   }
 

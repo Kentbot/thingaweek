@@ -2,9 +2,13 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 import { assignIncomeTransaction, resetStateAction, unassignTransaction } from '../actions'
 
-import { IncomeCategory } from '@budget/models/incomeCategory.model'
+import { IncomeCategory } from '@/budget/models/incomeCategory.model'
 import { assignTransactionToExpense } from './expenseCategory.slice'
 import { deleteTransaction } from './transaction.slice'
+import { ISODateString } from '../types'
+import { DateTime } from 'luxon'
+import { filterToBudgetMonth } from '@/budget/services/category.service'
+import { nanoid } from 'nanoid'
 
 type IncomeState = IncomeCategory[]
 
@@ -26,6 +30,25 @@ const incomeSlice = createSlice({
       if (incomeMonthIndex !== -1) {
         state.splice(incomeMonthIndex, 1, action.payload)
       }
+    },
+    carryoverIncome: (state, action: PayloadAction<{ newMonth: ISODateString }>) => {
+      const targetMonth = DateTime.fromISO(action.payload.newMonth)
+      const prevMonth = targetMonth.plus({ months: -1 })
+      const prevCategories: IncomeCategory[] = filterToBudgetMonth(state, prevMonth)
+          
+      const newCategories: IncomeCategory[] = []
+      prevCategories.forEach(prev => {
+        const newCat: IncomeCategory = {
+          ...prev,
+          id: nanoid(),
+          transactionIds: [],
+          budgetMonth: targetMonth.toISODate()!,
+        }
+        
+        newCategories.push(newCat)
+      })
+
+      state.push(...newCategories)
     }
   },
   extraReducers: (builder) =>
@@ -61,6 +84,7 @@ const filterTransactionFromIncomeCategories = (state: IncomeState, transactionId
 export const {
   createIncomeCategory,
   createIncomeCategories,
-  updateIncomeCategory
+  updateIncomeCategory,
+  carryoverIncome
 } = incomeSlice.actions
 export default incomeSlice.reducer

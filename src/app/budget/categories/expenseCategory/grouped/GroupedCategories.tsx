@@ -3,16 +3,16 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import currency from 'currency.js'
 
-import { useBudgetMonthCategories, useBudgetMonthGroups, useCategoryTransactions } from '@budget/store/selectors'
-import { ExpenseCategory } from '@budget/models/expenseCategory.model'
-import { RootState } from '@budget/store/store'
+import { useBudgetMonthCategories, useBudgetMonthGroups, useCategoryTransactions } from '@/budget/store/selectors'
+import { ExpenseCategory } from '@/budget/models/expenseCategory.model'
+import { RootState } from '@/budget/store/store'
 
-import { calculateBalanceForward } from '@budget/services/category.service'
+import { calculateBalanceForward } from '@/budget/services/category.service'
 
 import { ManageCategoryModal } from '../categoryManagement/ManageCategoryModal'
 
 import './styles.scss'
-import { formatCurrency } from '@budget/services/currency.service'
+import { formatCurrency } from '@/budget/services/currency.service'
 
 export function GroupedCategories() {
   const groups = useBudgetMonthGroups()
@@ -83,32 +83,33 @@ function CategoryRow({ category, highlight }: { category: ExpenseCategory, highl
 
   return (
     <div key={category.id} className={`group-category ${(highlight ? " highlight" : "")}`}>
-      <div className="category-name">
+      <div className="grid-cell category-name">
         {category.name}
       </div>
-      <div>
+      <div className="grid-cell">
         {formatCurrency(balanceForward)}
       </div>
-      <div>
+      <div className="grid-cell">
         {formatCurrency(category.budgetedAmount)}
       </div>
-      <div>
+      <div className="grid-cell">
         {formatCurrency(category.additionalIncome)}
       </div>
-      <div>
+      <div className="grid-cell">
         {formatCurrency(spend)}
       </div>
-      <div>
+      <div className="grid-cell">
         {formatCurrency(balance)}
       </div>
-      <div>
+      <div className="grid-cell">
         {formatCurrency(category.endOfMonthAdjust)}
       </div>
-      <div>
+      <div className="grid-cell">
         {formatCurrency(endOfMonthBalance)}
       </div>
       <ManageCategoryModal
         editModalOpen={editModalOpen}
+        balanceForward={balanceForward}
         expenseCategory={category}
         onEditConfirm={handleEditConfirm}
         onOpen={() => setEditModalOpen(true)}

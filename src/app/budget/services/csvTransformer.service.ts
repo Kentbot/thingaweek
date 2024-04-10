@@ -1,8 +1,8 @@
 import { nanoid } from 'nanoid'
 import currency from 'currency.js'
 
-import { Transaction } from '@budget/models/transaction.model'
-import { ISODateString } from '@budget/store/types'
+import { Transaction } from '@/budget/models/transaction.model'
+import { ISODateString } from '@/budget/store/types'
 import { rawDateToDateTime } from './date.service'
 
 interface CsvKeysDefinition {

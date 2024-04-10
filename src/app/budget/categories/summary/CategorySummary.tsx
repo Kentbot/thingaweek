@@ -2,8 +2,8 @@ import React from 'react'
 
 import currency from 'currency.js'
 
-import { useBudgetMonthCategories, useBudgetMonthIncome, useCategoryTransactions } from '@budget/store/selectors'
-import { formatCurrency } from '@budget/services/currency.service'
+import { useBudgetMonthCategories, useBudgetMonthIncome, useCategoryTransactions } from '@/budget/store/selectors'
+import { formatCurrency } from '@/budget/services/currency.service'
 
 import './styles.scss'
 

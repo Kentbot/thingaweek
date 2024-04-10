@@ -7,19 +7,19 @@ import { useDispatch } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
-import { AppDispatch } from '@budget/store/store'
-import { deleteTransaction } from '@budget/store/slices/transaction.slice'
-import { assignTransactionToExpense } from '@budget/store/slices/expenseCategory.slice'
-import { useBudgetMonthCategories, useBudgetMonthIncome, useBudgetMonthTransactions } from '@budget/store/selectors'
+import { AppDispatch } from '@/budget/store/store'
+import { deleteTransaction } from '@/budget/store/slices/transaction.slice'
+import { assignTransactionToExpense } from '@/budget/store/slices/expenseCategory.slice'
+import { useBudgetMonthCategories, useBudgetMonthIncome, useBudgetMonthTransactions } from '@/budget/store/selectors'
 
-import { Transaction } from '@budget/models/transaction.model'
-import { assignIncomeTransaction, unassignTransaction } from '@budget/store/actions'
+import { Transaction } from '@/budget/models/transaction.model'
+import { assignIncomeTransaction, unassignTransaction } from '@/budget/store/actions'
 
-import { Dropdown, DropdownOption } from '@components/general/dropdown/Dropdown'
+import { Dropdown, DropdownOption } from '@/components/general/dropdown/Dropdown'
 
 import './styles.scss'
 import { TransactionUploader } from './TransactionUploader'
-import { sortTransactionsByDate } from '@budget/services/transaction.service'
+import { sortTransactionsByDate } from '@/budget/services/transaction.service'
 
 const categoryGroup = 'Categories'
 const incomeGroup = 'Income Categories'
