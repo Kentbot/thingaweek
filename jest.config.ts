@@ -191,7 +191,7 @@ const config: Config = {
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
   //   "\\\\node_modules\\\\",
-  //   "\\.pnp\\.[^\\\\]+$"
+  //   "\\.pnp\\.[^\\\\]+$",
   // ],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
@@ -207,4 +207,11 @@ const config: Config = {
   // watchman: true,
 }
 
-export default createJestConfig(config)
+// export default createJestConfig(config)
+module.exports = async () => ({
+  ...(await createJestConfig(config)()),
+  transformIgnorePatterns: [
+    // Don't transform the following packages in node_modules from ESM
+    'node_modules/(?!(nanoid)/)',
+  ]
+})
