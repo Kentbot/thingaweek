@@ -55,7 +55,8 @@ export function IncomeCreator() {
       budgetMonth: currentMonth,
       name: incomeCategoryName,
       expectedIncome: expectedIncome,
-      transactionIds: []
+      transactionIds: [],
+      linkedMonths: {}
     }))
 
     setIncomeCategoryName('')

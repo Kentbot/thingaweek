@@ -6,7 +6,11 @@ export interface WithBudgetMonth {
 
 export type MonthLink = { prevId?: string, nextId?: string }
 
-export interface Category extends WithBudgetMonth {
+type WithLinks = {
+  linkedMonths: MonthLink
+}
+
+export interface Category extends WithBudgetMonth, WithLinks {
   id: string
   name: string
   transactionIds: string[]

@@ -35,16 +35,20 @@ const incomeSlice = createSlice({
       const targetMonth = DateTime.fromISO(action.payload.newMonth)
       const prevMonth = targetMonth.plus({ months: -1 })
       const prevCategories: IncomeCategory[] = filterToBudgetMonth(state, prevMonth)
-          
+        .filter(prevMonthCat => prevMonthCat.linkedMonths?.nextId === undefined)
+
       const newCategories: IncomeCategory[] = []
       prevCategories.forEach(prev => {
+        const newCatId = nanoid()
         const newCat: IncomeCategory = {
           ...prev,
-          id: nanoid(),
+          id: newCatId,
           transactionIds: [],
           budgetMonth: targetMonth.toISODate()!,
+          linkedMonths: { prevId: prev.id }
         }
         
+        prev.linkedMonths.nextId = newCatId
         newCategories.push(newCat)
       })
 

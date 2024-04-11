@@ -188,6 +188,7 @@ const config: Config = {
   // A map from regular expressions to paths to transformers
   // transform: undefined,
 
+  //   !! DON'T USE THIS, IT IS OVERRIDDEN BELOW IN module.exports!!
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
   //   "\\\\node_modules\\\\",
@@ -207,7 +208,6 @@ const config: Config = {
   // watchman: true,
 }
 
-// export default createJestConfig(config)
 module.exports = async () => ({
   ...(await createJestConfig(config)()),
   transformIgnorePatterns: [
