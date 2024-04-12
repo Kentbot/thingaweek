@@ -6,12 +6,11 @@ import { UngroupedCategories } from './expenseCategory/ungrouped/UngroupedCatego
 import { GroupedCategories } from './expenseCategory/grouped/GroupedCategories'
 import { CreationControls } from './creationControls/CreationControls'
 import { IncomeView } from './income/IncomeView'
-
-import './styles.scss'
 import { CategorySummary } from './summary/CategorySummary'
 
-export default function CategoriesPage() {
+import './styles.scss'
 
+export default function CategoriesPage() {
   return (
     <>
       <CreationControls />

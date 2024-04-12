@@ -32,7 +32,6 @@ export function BudgetNav() {
           <FontAwesomeIcon icon={faChartLine} /> Overview
         </Link>
         <Link
-          
           className={`${styles.link} ${pathname.endsWith('/categories') ? `${styles.active}` : ''}`}
           href="/budget/categories"
         >
