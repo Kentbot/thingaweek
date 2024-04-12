@@ -8,9 +8,9 @@ import { ISODateString } from '../types'
 import { resetStateAction } from '../actions'
 import { filterToBudgetMonth } from '@/budget/services/category.service'
 
-type CategoryState = CategoryGroup[]
+type GroupState = CategoryGroup[]
 
-export const initialState: CategoryState = []
+export const initialState: GroupState = []
 
 const groupSlice = createSlice({
   name: 'groups',

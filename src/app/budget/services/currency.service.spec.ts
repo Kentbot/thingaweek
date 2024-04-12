@@ -1,6 +1,6 @@
 import currency from 'currency.js'
 
-import { formatCurrency } from './currency.service'
+import { formatCurrency, formatInputCurrency } from './currency.service'
 
 describe('formatCurrency', () => {
   it.each([
@@ -19,5 +19,12 @@ describe('formatCurrency', () => {
   ])('formats negatives in parens (curr: %s, expected: %s)', (curr, expected) => {
     const result = formatCurrency(curr)
     expect(result).toBe(expected)
+  })
+})
+
+describe('formatInputCurrency', () => {
+  it('does not include separators', () => {
+    const result = formatInputCurrency(currency(1000))
+    expect(result).toBe('1000')
   })
 })

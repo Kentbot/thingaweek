@@ -1,8 +1,10 @@
 import React, { useRef, useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
-import currency from 'currency.js'
 import { nanoid } from 'nanoid'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMoneyBillTrendUp } from '@fortawesome/free-solid-svg-icons'
 
 import { AppDispatch, RootState } from '@/budget/store/store'
 import { createIncomeCategory } from '@/budget/store/slices/incomeCategory.slice'
@@ -11,8 +13,6 @@ import { Tooltip } from '@/components/general/tooltip/Tooltip'
 import { NumericInput } from '@/components/general/NumericInput'
 
 import styles from './styles.module.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMoneyBillTrendUp } from '@fortawesome/free-solid-svg-icons'
 
 export function IncomeCreator() {
   const dispatch = useDispatch<AppDispatch>()
@@ -47,9 +47,6 @@ export function IncomeCreator() {
       return
     }
 
-    // Note that this only works for creating a new category from scratch.
-    // It will not work for copying from a previous month -- the EOM balance
-    // and previous month need set.
     dispatch(createIncomeCategory({
       id: nanoid(),
       budgetMonth: currentMonth,

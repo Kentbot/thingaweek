@@ -11,7 +11,7 @@ import { AppDispatch } from '@/budget/store/store'
 import { ExpenseCategory } from '@/budget/models/expenseCategory.model'
 
 import { Validator, calculateAvailableBalance } from '@/budget/services/category.service'
-import { formatCurrency, validateCurrency } from '@/budget/services/currency.service'
+import { formatCurrency, formatInputCurrency, validateCurrency } from '@/budget/services/currency.service'
 import { useCategoryTransactions } from '@/budget/store/selectors'
 
 type Props = {
@@ -30,9 +30,9 @@ export function CategoryEditor({
   const dispatch = useDispatch<AppDispatch>()
 
   const [expenseCategoryName, setExpenseCategoryName] = useState(expenseCategory.name)
-  const [budgetAmount, setBudgetAmount] = useState(formatCurrency(expenseCategory.budgetedAmount, false))
-  const [additionalIncome, setAdditionalIncome] = useState(formatCurrency(expenseCategory.additionalIncome, false))
-  const [eomAdjust, setEomAdjust] = useState(formatCurrency(expenseCategory.endOfMonthAdjust, false))
+  const [budgetAmount, setBudgetAmount] = useState(formatInputCurrency(expenseCategory.budgetedAmount))
+  const [additionalIncome, setAdditionalIncome] = useState(formatInputCurrency(expenseCategory.additionalIncome))
+  const [eomAdjust, setEomAdjust] = useState(formatInputCurrency(expenseCategory.endOfMonthAdjust))
   const [nameIsValid, setNameIsValid] = useState(true)
 
   const transactions = useCategoryTransactions(expenseCategory.transactionIds)

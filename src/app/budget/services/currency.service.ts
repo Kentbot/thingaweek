@@ -8,7 +8,7 @@ import currency from 'currency.js'
  * cents are zero. It should leave any postfixed currency symbol alone, e.g.
  * "1000.00 AUD" -> "1000 AUD".
  */
-function format(curr: currency | undefined, options: currency.Options | undefined): string {
+function customFormat(curr: currency | undefined, options: currency.Options | undefined): string {
   if (curr === undefined) {
     return '0'
   }
@@ -47,5 +47,16 @@ export function formatCurrency(curr: currency | string, negativeBrackets: boolea
     symbol: ''
   })
 
-  return currencyWithSettings.format(format)
+  return currencyWithSettings.format(customFormat)
+}
+
+export function formatInputCurrency(curr: currency | string): string {
+  const validCurrency = validateCurrency(curr)
+
+  const currencyWithSettings = currency(validCurrency, {
+    symbol: '',
+    separator: ''
+  })
+
+  return currencyWithSettings.format(customFormat)
 }
