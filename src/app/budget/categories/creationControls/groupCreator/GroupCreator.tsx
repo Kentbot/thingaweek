@@ -66,7 +66,7 @@ export function GroupCreator() {
         onChange={(v) => handleNameChange(v.target.value)}
       />
       <button className="btn" onClick={handleGroupCreate}>
-        Create
+        Create Group
       </button>
     </div>
   )

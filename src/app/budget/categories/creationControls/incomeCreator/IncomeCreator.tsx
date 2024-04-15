@@ -84,7 +84,7 @@ export function IncomeCreator() {
         onValueUpdate={(v) => handleExpectedIncomeChange(v)}
       />
       <button className="btn" onClick={handleIncomeCreate}>
-        Create
+        Create Income
       </button>
     </div>
   )

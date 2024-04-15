@@ -1,7 +1,9 @@
 import React, { ReactElement } from 'react'
+
 import { Provider } from 'react-redux'
 
-import {render, RenderOptions} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { render, RenderOptions } from '@testing-library/react'
 
 import { customStore, defaultState, RootState } from '@/budget/store/store'
 
@@ -18,10 +20,13 @@ const AllTheProviders = (state: RootState) => {
 }
 
 const customRender = (
-  ui: ReactElement,
+  ui: React.ReactElement,
   state: RootState = defaultState,
   options?: Omit<RenderOptions, 'wrapper'>,
-) => render(ui, {wrapper: AllTheProviders(state), ...options})
+) => ({
+  user: userEvent.setup(),
+  ...render(ui, {wrapper: AllTheProviders(state), ...options})
+})
 
 export * from '@testing-library/react'
 export {customRender as render}

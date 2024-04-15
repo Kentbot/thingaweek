@@ -93,7 +93,7 @@ export function CategoryCreator() {
         onValueUpdate={(v) => handleBudgetChange(v)}
       />
       <button className="btn" onClick={handleCategoryCreate}>
-        Create
+        Create Expense
       </button>
     </div>
   )

@@ -81,27 +81,30 @@ const config: Config = {
 
   // An array of directory names to be searched recursively up from the requiring module's location
   moduleDirectories: [
+    __dirname,
+    '<rootDir>',
+    'src',
+    'src/test-utils',
     "node_modules",
-    "test-utils",
-    __dirname
   ],
 
   // An array of file extensions your modules use
-  // moduleFileExtensions: [
-  //   "js",
-  //   "mjs",
-  //   "cjs",
-  //   "jsx",
-  //   "ts",
-  //   "tsx",
-  //   "json",
-  //   "node"
-  // ],
+  moduleFileExtensions: [
+    "js",
+    "mjs",
+    "cjs",
+    "jsx",
+    "ts",
+    "tsx",
+    "json",
+    "node"
+  ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  // moduleNameMapper: {
-  //   '^@(.*)$': '<rootDir>/src/app/$1',
-  // },
+  moduleNameMapper: {
+    // '^@(.*)$': '<rootDir>/src/app/$1',
+    '^test-utils/.*': '<rootDir>/src/test-utils/*'
+  },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],

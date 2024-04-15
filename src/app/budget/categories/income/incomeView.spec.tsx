@@ -3,8 +3,8 @@ import { testStates } from 'test-utils/data/store'
 import { IncomeView } from './IncomeView'
 
 describe('Income View', () => {
-  describe('', () => {
-    it('', () => {
+  describe('todo', () => {
+    it('todo', () => {
       render(<IncomeView />, testStates.default)
 
       // TODO: Add test
