@@ -65,17 +65,14 @@ function CategoryRow({ category, highlight }: { category: ExpenseCategory, highl
   const spend = categoryTransactions.reduce(
     (prev, curr) => currency(curr.amount).add(prev), currency(0)
   ) 
-  const balance = currency(category.budgetedAmount)
-    .subtract(spend)
-    .add(category.additionalIncome)
-
+  
   const balanceForward = calculateBalanceForward(category, allCategories, allTransactions)
-  const endOfMonthBalance = currency(balanceForward)
+  const balance = currency(balanceForward)
     .add(category.budgetedAmount)
     .add(category.additionalIncome)
     .subtract(spend)
+  const endOfMonthBalance = balance
     .add(category.endOfMonthAdjust)
-    .toString()
 
   const handleEditConfirm = () => {
     setEditModalOpen(false)
