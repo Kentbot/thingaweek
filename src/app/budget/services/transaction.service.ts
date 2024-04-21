@@ -1,3 +1,7 @@
+// Temporary fix until toSorted is natively supported by nextjs
+// See https://github.com/vercel/next.js/issues/58242
+import 'core-js/features/array/to-sorted'
+
 import { DateTime } from 'luxon'
 
 import { Transaction } from '@/budget/models/transaction.model'
