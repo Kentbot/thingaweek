@@ -21,7 +21,7 @@ import './styles.scss'
 
 type Props = {
   expenseCategory: ExpenseCategory
-  balanceForward: string
+  balanceForward: currency
   editModalOpen: boolean
   onOpen: () => void
   onCancel: () => void

@@ -12,7 +12,7 @@ export function filterToBudgetMonth<T extends WithBudgetMonth>(modelWithBudgetMo
     DateTime.fromISO(m.budgetMonth).year === newMonth.year)
 }
 
-export function calculateBalanceForward(category: ExpenseCategory, allCategories: ExpenseCategory[], allTransactions: Transaction[]): string {
+export function calculateBalanceForward(category: ExpenseCategory, allCategories: ExpenseCategory[], allTransactions: Transaction[]): currency {
   const categoryChain = getCategoryChain(category, allCategories)
 
   let runningBalance = currency(0)
@@ -27,17 +27,21 @@ export function calculateBalanceForward(category: ExpenseCategory, allCategories
       .add(cat.endOfMonthAdjust)
   })
 
-  return runningBalance.toString()
+  return runningBalance
 }
 
-/** Gets all categories preceding the current category, in temporal order */
+/**
+ * Gets all categories preceding the current category, in temporal order from earliest to most recent.
+ * The temporal order is not strictly necessary since we are only adding/subtracting all values from
+ * all categories, but it could be a useful feature in future, and it gives a nice mental visualization.
+ */
 function getCategoryChain(category: ExpenseCategory, allCategories: ExpenseCategory[]): ExpenseCategory[] {
-  let currentCategory = allCategories.find(cat => cat.id === category.linkedMonths.prevId)
+  let previousCategory = allCategories.find(cat => cat.id === category.linkedMonths.prevId)
 
   const categoryChain: ExpenseCategory[] = []
-  while (currentCategory) {
-    categoryChain.push(currentCategory)
-    currentCategory = allCategories.find(cat => cat.id === currentCategory?.linkedMonths.prevId)
+  while (previousCategory) {
+    categoryChain.push(previousCategory)
+    previousCategory = allCategories.find(cat => cat.id === previousCategory?.linkedMonths.prevId)
   }
 
   categoryChain.reverse()

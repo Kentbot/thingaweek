@@ -15,7 +15,7 @@ import { formatCurrency, formatInputCurrency, validateCurrency } from '@/budget/
 import { useCategoryTransactions } from '@/budget/store/selectors'
 
 type Props = {
-  balanceForward: string
+  balanceForward: currency
   expenseCategory: ExpenseCategory
   onEditConfirm: () => void
   onCancel: () => void
