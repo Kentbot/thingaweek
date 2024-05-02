@@ -1,4 +1,4 @@
-@use './variables' as vars;
+@use './mixins' as mxn;
 
 .transaction-grid {
   display: grid;
@@ -8,7 +8,7 @@
   margin-bottom: 90px;
   padding: 1rem;
 
-  @include vars.styled-border;
+  @include mxn.styled-border;
 
   .header {
     display: contents;
@@ -25,7 +25,7 @@
   }
 
   .label {
-    @include vars.border-label($margin: -2rem 1rem);
+    @include mxn.border-label($margin: -2rem 1rem);
     
     align-self: start;
     justify-self: start;
