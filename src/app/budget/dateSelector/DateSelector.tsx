@@ -12,7 +12,7 @@ const endYear = DateTime.now().year + 1
 const yearSpan = endYear - beginYear + 1
 const years = Array(yearSpan).fill(beginYear).map((val, index) => val + index)
 
-import styles from './styles.module.scss'
+import styles from './styles.module.css'
 
 export function DateSelector() {
   const dispatch = useDispatch<AppDispatch>()
@@ -60,7 +60,7 @@ export function DateSelector() {
             defaultValue={DateTime.now().year.toString()}
           >
             {years.map((year) => (
-              <option key={year} value={year}>{year}</option>
+              <option key={year} value={year} className={`${styles["year-select-option"]}`}>{year}</option>
             ))}
           </select>
         </div>

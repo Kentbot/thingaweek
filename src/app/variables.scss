@@ -1,82 +1,51 @@
-/****************
- * Measurements *
- ****************/
+:root {
+  /****************
+  * Measurements *
+  ****************/
+  --border-radius: 5px;
+  
+  --nav-width: 200px;
+  --nav-height: 35px;
+  
+  --category-context-width: 45px;
 
-$border-radius: 5px;
+  /****************
+  *    Colors    *
+  ****************/
+  --light-grey-0: #cacaca;
+  --light-grey-1: #a0a0a0;
+  --light-grey-2: #686868;
+  --grey: #4b4b4b;
+  --dark-grey: #292929;
 
-$nav-width: 200px;
-$nav-height: 35px;
+  --primary-dark:    #069142;
+  --primary:         #04bf55;
+  --primary-light:   #51d680;
+  --secondary-dark:  #76a68b;
+  --secondary:       #bfbfbf;
+  --secondary-light: #e0e0e0;
 
-$category-context-width: 45px;
+  --light-blue-0: #9e9eff;
+  --light-blue-1: #7171ff;
+  --light-blue-2: #5151ff;
+  --blue: #1D1DFF;
+  --dark-blue: #0000ad;
 
-/****************
- *    Colors    *
- ****************/
+  --light-purple: #8E5FC7;
+  --purple: #5F1FAD;
 
-$light-grey-0: #cacaca;
-$light-grey-1: #a0a0a0;
-$light-grey-2: #686868;
-$grey: #4b4b4b;
-$dark-grey: #292929;
+  --yellow: #fff170;
+  --dark-yellow: #f1b900;
 
-$primary-dark:    #069142;
-$primary:         #04bf55;
-$primary-light:   #51d680;
-$secondary-dark:  #76a68b;
-$secondary:       #bfbfbf;
-$secondary-light: #e0e0e0;
+  /*****************
+  *  Definitions  *
+  *****************/
+  --background-dark: var(--dark-grey);
+  --background-light: #e7f0eb;
 
-$light-blue-0: #9e9eff;
-$light-blue-1: #7171ff;
-$light-blue-2: #5151ff;
-$blue: #1D1DFF;
-$dark-blue: #0000ad;
+  --outline: var(--secondary-dark);
+  --outline-light: var(--secondary-light);
+  --outline-highlight: var(--dark-yellow);
 
-$light-purple: #8E5FC7;
-$purple: #5F1FAD;
-
-$yellow: #fff170;
-$dark-yellow: #f1b900;
-
-/*****************
- *  Definitions  *
- *****************/
-
-$background-dark: $dark-grey;
-$background-light: #e7f0eb;
-
-$outline: $secondary-dark;
-$outline-light: $secondary-light;
-$outline-highlight: $dark-yellow;
-
-@mixin with-color() {
-  background: $background-light;
-  color: $primary-dark;
+  --color: white;
 }
-
-@mixin styled-border($width: 1px) {
-  border: $width solid $outline;
-  border-radius: $border-radius;
-}
-
-@mixin border-label(
-  $position: absolute,
-  $margin: -1rem 1rem,
-  $font-size: 1.3rem,
-  $padding: 0 .5rem,
-) {
-  position: $position;
-  margin: $margin;
-  font-size: $font-size;
-  padding: $padding;
-
-  @include with-color;
-  border-radius: $border-radius;
-}
-
-@mixin styled-grid-header($display: contents) {
-  display: $display;
-  font-style: italic;
-}
-
-$color: white;

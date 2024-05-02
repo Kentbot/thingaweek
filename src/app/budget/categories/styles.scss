@@ -8,7 +8,7 @@
   .summary {
     position: sticky;
     align-self: flex-start;
-    top: calc(vars.$nav-height + 1rem);
+    top: calc(var(--nav-height) + 1rem);
   
     flex: 1.2;
   }

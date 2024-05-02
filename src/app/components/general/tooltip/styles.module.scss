@@ -1,10 +1,8 @@
-@use './variables' as vars;
-
 .tooltip-btn {
   display: inline-block;
   color: white;
-  background-color: vars.$primary;
-  border: 1px solid vars.$primary;
+  background-color: var(--primary);
+  border: 1px solid var(--primary);
   border-radius: 60px;
   padding: 0.65rem 0.3rem 0.45rem 0.3rem;
   font-size: 1rem;
@@ -15,9 +13,9 @@
     color .3s;
 
   &:hover {
-    background-color: vars.$background-light;
-    border: 1px solid vars.$primary;
-    color: vars.$primary;
+    background-color: var(--background-light);
+    border: 1px solid var(--primary);
+    color: var(--primary);
     cursor: pointer;
   }
 }

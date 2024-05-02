@@ -1,4 +1,4 @@
-@use './variables' as vars;
+@use './mixins' as mxn;
 
 .category-transactions {
   position: relative;
@@ -7,17 +7,17 @@
   display: grid;
   grid-template-columns: 3fr 1fr 1fr;
   
-  @include vars.styled-border;
+  @include mxn.styled-border;
   
   padding: 20px;
   
   .label {
     top: 0;
-    @include vars.border-label();
+    @include mxn.border-label;
   }
   
   .headers {
-    @include vars.styled-grid-header;
+    @include mxn.styled-grid-header;
 
     .date {
       justify-self: center;
@@ -38,9 +38,9 @@
     }
     
     &.highlight {
-      border: 1px solid vars.$secondary-light;
-      border-radius: vars.$border-radius;
-      background-color: vars.$secondary-light;
+      border: 1px solid var(--secondary-light);
+      border-radius: var(--border-radius);
+      background-color: var(--secondary-light);
     }
   }
 }

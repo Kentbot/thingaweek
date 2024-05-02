@@ -1,4 +1,4 @@
-@use './variables' as vars;
+@use './mixins' as mxn;
 @use 'sass:string';
 
 $grid-areas: 
@@ -20,17 +20,17 @@ $grid-areas:
     }
   }
   
-  @include vars.styled-border;
+  @include mxn.styled-border;
   
   margin-top: 1rem;
   padding: 20px 10px;
   text-align: center;
 
   .header {
-    @include vars.styled-grid-header($display: inherit);
+    @include mxn.styled-grid-header($display: inherit);
   }
 
   .label {
-    @include vars.border-label($margin: -2.2rem 10px);
+    @include mxn.border-label($margin: -2.2rem 10px);
   }
 }

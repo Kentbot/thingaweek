@@ -1,15 +1,15 @@
-@use './variables' as vars;
+@use './mixins' as mxn;
 
 $transition-time: .5s;
 
 .ungrouped-categories {
   display: grid;
-  grid-template-columns: repeat(9, 1fr) vars.$category-context-width;
+  grid-template-columns: repeat(9, 1fr) var(--category-context-width);
 
   padding: 15px;
   margin: 1.5rem .8rem .8rem .8rem;
 
-  @include vars.styled-border;
+  @include mxn.styled-border;
   
   opacity: 100;
   min-height: 100px;
@@ -37,6 +37,6 @@ $transition-time: .5s;
   }
 
   .label {
-    @include vars.border-label($margin: -2rem 0, $font-size: 1.3rem);
+    @include mxn.border-label($margin: -2rem 0, $font-size: 1.3rem);
   }
 }

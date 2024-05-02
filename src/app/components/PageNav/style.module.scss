@@ -1,15 +1,15 @@
 @use './variables' as vars;
 
-$nav-highlight: vars.$primary;
+$nav-highlight: var(--primary);
 
 .page-nav {
   display: flex;
   flex-direction: column;
 
-  width: vars.$nav-width;
+  width: var(--nav-width);
   position: fixed;
-  height: calc(100% - vars.$nav-height);
-  background-color: vars.$secondary-light;
+  height: calc(100% - var(--nav-height));
+  background-color: var(--secondary-light);
   font-size: 1rem;
 
   nav {
@@ -18,7 +18,7 @@ $nav-highlight: vars.$primary;
 
   .link {
     padding: 18px 8px 8px 18px;
-    color: vars.$primary-dark;
+    color: var(--primary-dark);
     text-decoration: none;
     transition: .3s;
     display: block;

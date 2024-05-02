@@ -1,14 +1,14 @@
-@use './variables' as vars;
+@use './mixins' as mxn;
 
 .income-grid {
-  top: calc(vars.$nav-height + 1rem);
+  top: calc(var(--nav-height) + 1rem);
 
   padding: 20px;
 
   display: grid;
   grid-template-columns: repeat(4, 1fr) 40px;
 
-  @include vars.styled-border;
+  @include mxn.styled-border;
 
   *:not(.label) {
     align-self: center;
@@ -19,11 +19,11 @@
   }
 
   .label {
-    @include vars.border-label($margin: -2.2rem 0);
+    @include mxn.border-label($margin: -2.2rem 0);
   }
 
   .income-header {
-    @include vars.styled-grid-header;
+    @include mxn.styled-grid-header;
   }
 
   .income-total {
@@ -31,10 +31,10 @@
     grid-template-columns: subgrid;
     grid-column: 1 / -1;
 
-    background-color: vars.$secondary-light;
+    background-color: var(--secondary-light);
 
     height: 3rem;
-    border-radius: vars.$border-radius;
+    border-radius: var(--border-radius);
   }
 
   .category-name {

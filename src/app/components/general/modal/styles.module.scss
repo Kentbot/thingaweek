@@ -1,12 +1,12 @@
-@use './variables' as vars;
+@use './mixins' as mxn;
 
 .modal {
   margin: auto;
   padding: 1.5rem 1.5rem 1rem;
-  background-color: vars.$background-light;
+  background-color: var(--background-light);
   min-width: 500px;
 
-  @include vars.styled-border;
+  @include mxn.styled-border;
 
   .close-btn {
     position: absolute;
@@ -22,7 +22,7 @@
   }
 
   .title {
-    @include vars.with-color;
+    @include mxn.with-color;
     font-size: 1.3rem;
     margin: -1rem -.5rem;
     padding-bottom: 1.5rem;

@@ -1,19 +1,19 @@
 @use './variables' as vars;
 
 .nav-spacer {
-  height: vars.$nav-height;
+  height: var(--nav-height);
 }
 
 .nav {
-  border-bottom: 2px solid vars.$secondary-dark;
-  background-color: vars.$primary-dark;
+  border-bottom: 2px solid var(--secondary-dark);
+  background-color: var(--primary-dark);
   padding: 4px 0px;
 
   position: fixed;
   width: 100%;
   z-index: 2;
 
-  height: vars.$nav-height;
+  height: var(--nav-height);
   
   ul {
     list-style-type: none;

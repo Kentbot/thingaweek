@@ -1,4 +1,4 @@
-@use './variables' as vars;
+@use './mixins' as mxn;
 
 $min-width: 150px;
 $dropdown-width: 500px;
@@ -6,7 +6,7 @@ $dropdown-width: 500px;
 .custom-select {
   &.active {
     .select-button {
-      background-color: vars.$secondary-light;
+      background-color: var(--secondary-light);
     }
 
     .select-dropdown {
@@ -23,10 +23,10 @@ $dropdown-width: 500px;
     justify-content: space-between;
     align-items: center;
     
-    background-color: vars.$primary-light;
+    background-color: var(--primary-light);
     cursor: pointer;
     
-    @include vars.styled-border;
+    @include mxn.styled-border;
 
     min-width: $min-width;
     max-width: 100%;
@@ -38,7 +38,7 @@ $dropdown-width: 500px;
     .arrow {
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
-      border-top: 6px solid vars.$primary-dark;
+      border-top: 6px solid var(--primary-dark);
       transition: transform ease-in-out 0.3s;
 
       width: fit-content;
@@ -54,9 +54,9 @@ $dropdown-width: 500px;
     min-width: $min-width;
     max-width: $dropdown-width;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-    background-color: vars.$background-light;
+    background-color: var(--background-light);
     
-    @include vars.styled-border;
+    @include mxn.styled-border;
 
     padding: 10px;
     margin-top: 5px;
@@ -83,8 +83,8 @@ $dropdown-width: 500px;
       }
 
       &:hover, input:checked ~ label {
-        border-radius: vars.$border-radius;
-        background-color: vars.$primary-light;
+        border-radius: var(--border-radius);
+        background-color: var(--primary-light);
         color: white;
       }
 
@@ -95,8 +95,8 @@ $dropdown-width: 500px;
         cursor: pointer;
 
         &:focus ~ label {
-          border-radius: vars.$border-radius;
-          background-color: vars.$primary;
+          border-radius: var(--border-radius);
+          background-color: var(--primary);
           color: white;
         }
       }
@@ -106,7 +106,7 @@ $dropdown-width: 500px;
       margin: .7rem 0;
 
       .label {
-        @include vars.border-label($margin: -.7rem 1rem, $font-size: 1rem);
+        @include mxn.border-label($margin: -.7rem 1rem, $font-size: 1rem);
         width: fit-content;
         max-width: 90%;
 

@@ -1,5 +1,5 @@
 @use './variables' as vars;
 
 .page-contents {
-  margin-left: vars.$nav-width;
+  margin-left: var(--nav-width);
 }

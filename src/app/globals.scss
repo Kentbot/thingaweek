@@ -2,7 +2,7 @@
 @use './variables' as vars;
 
 body {
-  background-color: vars.$background-light;
+  background-color: var(--background-light);
 }
 
 .btn {
@@ -12,11 +12,11 @@ body {
   vertical-align: middle;
   user-select: none;
 
-  background-color: vars.$primary;
+  background-color: var(--primary);
   color: white;
 
   border: none;
-  border-radius: vars.$border-radius;
+  border-radius: var(--border-radius);
   
   padding: .375rem .5rem;
   margin: 5px;
@@ -29,11 +29,11 @@ body {
   transition: background-color .3s;
 
   &:hover {
-    background-color: vars.$primary-dark;
+    background-color: var(--primary-dark);
   }
 
   &:active {
-    background-color: vars.$primary-light;
+    background-color: var(--primary-light);
   }
 }
 
@@ -58,15 +58,15 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: vars.$background-light;
+  background: var(--background-light);
   border-radius: 25px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: vars.$primary-light;
+  background: var(--primary-light);
   border-radius: 25px;
 
   &:active {
-    background: vars.$primary;
+    background: var(--primary);
   }
 }

@@ -1,0 +1,29 @@
+@mixin with-color() {
+  background: var(--background-light);
+  color: var(--primary-dark);
+}
+
+@mixin styled-border($width: 1px) {
+  border: $width solid var(--outline);
+  border-radius: var(--border-radius);
+}
+
+@mixin border-label(
+  $position: absolute,
+  $margin: -1rem 1rem,
+  $font-size: 1.3rem,
+  $padding: 0 .5rem,
+) {
+  position: $position;
+  margin: $margin;
+  font-size: $font-size;
+  padding: $padding;
+
+  @include with-color;
+  border-radius: var(--border-radius);
+}
+
+@mixin styled-grid-header($display: contents) {
+  display: $display;
+  font-style: italic;
+}

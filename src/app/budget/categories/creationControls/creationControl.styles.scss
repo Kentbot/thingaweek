@@ -1,4 +1,4 @@
-@use './variables' as vars;
+@use './mixins' as mxn;
 
 .creation-controls {
   display: grid;
@@ -6,7 +6,7 @@
 }
 
 .category-input {
-  border-radius: vars.$border-radius;
+  border-radius: var(--border-radius);
   margin: 5px 5px;
   font-size: 1rem;
   
@@ -28,9 +28,9 @@
 
   margin: 1rem 0 0 0;
 
-  @include vars.styled-border;
+  @include mxn.styled-border;
 
   .label {
-    @include vars.border-label($margin: -1.7rem .5rem, $font-size: 1.2rem);
+    @include mxn.border-label($margin: -1.7rem .5rem, $font-size: 1.2rem);
   }
 }
