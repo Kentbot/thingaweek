@@ -1,3 +1,4 @@
+import { describe, it } from 'vitest'
 import { render } from 'test-utils/budget'
 import { testStates } from 'test-utils/data/store'
 import CategoriesPage from './page'
