@@ -1,4 +1,5 @@
-import { render, screen } from 'test-utils/budget'
+import { describe, it } from 'vitest'
+import { render } from 'test-utils/budget'
 import { testStates } from 'test-utils/data/store'
 import { IncomeView } from './IncomeView'
 

@@ -1,11 +1,13 @@
-import { describe, it } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { render } from 'test-utils/budget'
 import { testStates } from 'test-utils/data/store'
 import CategoriesPage from './page'
 
 describe('Budget Category Page', () => {
   it('renders', () => {
-    render(<CategoriesPage />)
+    const { unmount } = render(<CategoriesPage />)
+    // Prevents component from leaking between tests
+    unmount()
   })
 
   describe('category carryover', () => {
@@ -17,6 +19,7 @@ describe('Budget Category Page', () => {
           findByPlaceholderText,
           findByText,
           findAllByText,
+          unmount
         } = render(<CategoriesPage />, testStates.default)
 
         await user.click(await findByRole('button', { name: /category management/i }))
@@ -35,6 +38,7 @@ describe('Budget Category Page', () => {
         expect(incomeTitle.parentElement?.className).toBe('income-grid')
         const expectedIncome = await findAllByText('150.15')
         expect(expectedIncome.some(el => el.parentElement?.className === 'income-grid')).toBeTruthy()
+        unmount()
       })
     })
   })

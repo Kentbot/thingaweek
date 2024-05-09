@@ -1,7 +1,8 @@
-import currency from "currency.js"
-import { ExpenseCategory } from "../models/expenseCategory.model"
-import { calculateBalanceForward } from "./category.service"
-import { nanoid } from "nanoid"
+import { describe, it, expect } from 'vitest'
+import currency from 'currency.js'
+import { ExpenseCategory } from '../models/expenseCategory.model'
+import { calculateBalanceForward } from './category.service'
+import { nanoid } from 'nanoid'
 
 describe('calculateBalanceForward', () => {
   describe('no categories', () => {
