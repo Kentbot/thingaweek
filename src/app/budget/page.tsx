@@ -1,35 +1,65 @@
 'use client'
 import React from 'react'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
+import styles from './styles.module.css'
 
-import { Dropdown } from '@/components/general/dropdown/Dropdown';
-
-import './styles.scss'
+const currencyJsImgSrc = 'https://user-images.githubusercontent.com/1062039/31397824-9dfa15f0-adac-11e7-9869-fb20746e90c1.png'
+const luxonImgSrc = 'https://moment.github.io/luxon/docs/_media/Luxon_icon_64x64.png'
+const papaparseImgSrc = 'https://www.papaparse.com/favicon.ico'
+const nanoidImgSrc = 'https://camo.githubusercontent.com/1217981e015858c201536e6f7822e1fc30ab66c4060462da9e80f65e701893bd/68747470733a2f2f61692e6769746875622e696f2f6e616e6f69642f6c6f676f2e737667'
 
 export default function Budget() {
   return (
     <div className="budget">
+      <h2>
+        Budget Application
+      </h2>
       <div>
-        <FontAwesomeIcon icon={faScrewdriverWrench} size={'3x'} />
-        This page requires some love and attention
+        This application was developed for me to track my family&apos;s monthly budget. It uses react
+        (since this site is a Next.js app) and redux as the state store. Virtually all components
+        are written from scratch, as I used this experience to hone my CSS/SASS and react skills
+        rather than relying on third-party applications.
       </div>
-      <Dropdown
-        onSelect={(value) => {  }}
-        options={[
-          { value: 'Val1', display: 'Value 1' },
-          { value: 'Val2', display: 'Value 2' },
-          { value: 'Val3', display: 'Value 3' },
-          { value: 'Val4', display: 'Value 4', group: 'Group A' },
-          { value: 'Val5', display: 'Value 5', group: 'Group A' },
-          { value: 'Val6', display: 'Value 6', group: 'Group A' },
-          { value: 'Val7', display: 'Value 7', group: 'Group A' },
-          { value: 'Val8', display: 'Value 8', group: 'Group Very very long name that overflows' },
-          { value: 'Val9', display: 'Value 9', group: 'Group B' },
-          { value: 'Val10', display: 'Value 10', group: 'Group C' },
-        ]}
-      />
+      <div>
+        I did however use a few third-party applications to make getting to functionality simpler.
+        They are:
+        <ul className={styles['lib-list']}>
+          <li className={styles['list-item']}>
+            <LibraryIcon src={luxonImgSrc} lib='luxon'/>
+            <span className={styles['description']}>
+              Luxon - For its ability to convert and keep track of times. Once the Temporal API is
+              finalized and adopted by browsers I will probably drop this dependency.
+            </span>
+          </li>
+          <li className={styles['list-item']}>
+            <LibraryIcon src={currencyJsImgSrc} lib='currency.js'/>
+            <span className={styles['description']}>
+              currency.js - I didn&apos;t want to get bogged down handling floating point nastiness with
+              a budgeting application, and currency.js allows me to just add two currencies together
+              and know that the math will work. (Of course I still have tests for the actual math 
+              being done, e.g. tests for the calculation of a current month&apos;s balance)
+            </span>
+          </li>
+          <li className={styles['list-item']}>
+            <LibraryIcon src={papaparseImgSrc} lib='papaparse'/>
+            <span className={styles['description']}>
+              papaparse - For parsing CSV transaction data. Again something I didn&apos;t want to have to reinvent.
+            </span>
+          </li>
+          <li className={styles['list-item']}>
+            <LibraryIcon src={nanoidImgSrc} lib='nanoid' size={{ height: '24px', width: '32px' }}/>
+            <span className={styles['description']}>
+              nanoid - For generating uuids for all of my models in the redux store.
+            </span>
+          </li>
+        </ul>
+      </div>
     </div>
+  )
+}
+
+const LibraryIcon = ({src, lib, size={width: '32px', height: '32px'}}: {src: string, lib: string, size?: { width?: string, height?: string }}) => {
+  return (
+    <img src={src} alt={`${lib} Icon`} style={size} className={styles['icon']} />
   )
 }
