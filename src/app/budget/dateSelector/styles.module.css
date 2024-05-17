@@ -1,25 +1,26 @@
 .date-selection {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr) 2fr 2fr;
+  display: flex;
+
   gap: 8px;
-  border-top: 1px solid var(--secondary-dark);
-  padding: 10px 0px 0px 8px;
-  background-color: var(--background-light);
+  width: 100%;
+  max-width: calc(100% - var(--nav-width));
+  padding: 10px 8px;
+  
   position: fixed;
   bottom: 0;
-
   z-index: 2;
 
-  *:not(.year-select) {
-    align-self: center;
-    justify-self: center;
-  }
+  border-top: 1px solid var(--secondary-dark);
+  background-color: var(--background-light);
 
   .month-select {
-    display: grid;
-    grid-template-columns: subgrid;
-    grid-column: 1 / 13;
+    display: flex;
+
+    flex: 8;
+
+    @media (max-width: 1200px) {
+      overflow: scroll;
+    }
 
     .selected {
       background-color: white;
@@ -42,19 +43,27 @@
     }
   }
 
-  .year {
-    display: grid;
-    grid-template-columns: subgrid;
-    grid-column: 13;
-    
-    .year-select {
-      padding-left: 5px;
-  
-      .year-select-option {
-        background-color: grey;
-      }
+  .year-select {
+    flex: 1;
+    padding-left: 5px;
+
+    .year-select-option {
+      background-color: grey;
     }
   }
+}
+
+.current-budget-month {
+  flex: 1;
+  border: 1px solid var(--primary);
+  border-radius: var(--border-radius);
+  padding: 0 1rem;
+  
+  line-height: 1.15rem;
+  align-self: center;
+
+  /* Ensures that months changing doesn't resize the date selector, which is annoying */
+  min-width: 180px;
 }
 
 .date {

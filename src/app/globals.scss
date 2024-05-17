@@ -54,11 +54,16 @@ body {
 }
 
 ::-webkit-scrollbar {
+  background: var(--background-light);
   width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--background-light);
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background-light);
   border-radius: 25px;
 }
 

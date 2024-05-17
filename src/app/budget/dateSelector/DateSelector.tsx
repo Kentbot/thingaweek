@@ -39,6 +39,9 @@ export function DateSelector() {
   return (
     <>
       <div className={styles["date-selection"]}>
+        <div className={styles["current-budget-month"]}>
+          Current: <br/> <span className="date">{currentMonth.monthLong} {currentMonth.year}</span>
+        </div>
         <div className={styles["month-select"]}>
           <button className={`${styles["month"]} btn ${(currentMonthNumber === 1 ? styles["selected"] : "")}`} onClick={() => handleMonthSelect(1)}>Jan</button>
           <button className={`${styles["month"]} btn ${(currentMonthNumber === 2 ? styles["selected"] : "")}`} onClick={() => handleMonthSelect(2)}>Feb</button>
@@ -53,20 +56,15 @@ export function DateSelector() {
           <button className={`${styles["month"]} btn ${(currentMonthNumber === 11 ? styles["selected"] : "")}`} onClick={() => handleMonthSelect(11)}>Nov</button>
           <button className={`${styles["month"]} btn ${(currentMonthNumber === 12 ? styles["selected"] : "")}`} onClick={() => handleMonthSelect(12)}>Dec</button>
         </div>
-        <div className={styles["year"]}>
-          <select
-            className={`${styles["year-select"]} btn`}
-            onChange={(event) => handleYearSelect(event.target.value)}
-            defaultValue={DateTime.now().year.toString()}
-          >
-            {years.map((year) => (
-              <option key={year} value={year} className={`${styles["year-select-option"]}`}>{year}</option>
-            ))}
-          </select>
-        </div>
-        <div className={styles["current-budget-month"]}>
-          Currently Viewing: <br/> <span className="date">{currentMonth.monthLong} {currentMonth.year}</span>
-        </div>
+        <select
+          className={`${styles["year-select"]} btn`}
+          onChange={(event) => handleYearSelect(event.target.value)}
+          defaultValue={DateTime.now().year.toString()}
+        >
+          {years.map((year) => (
+            <option key={year} value={year} className={`${styles["year-select-option"]}`}>{year}</option>
+          ))}
+        </select>
       </div>
     </>
   )
