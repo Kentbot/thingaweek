@@ -1,4 +1,6 @@
-const path = require('path');
+const path = require('path')
+
+const createMDX = require('@next/mdx')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -11,4 +13,8 @@ const nextConfig = {
   output: 'export'
 }
 
-module.exports = nextConfig
+const withMdx = createMDX({
+  // Any additional MDX config should go here
+})
+
+module.exports = withMdx(nextConfig)
