@@ -1,4 +1,7 @@
 .about-container {
-  margin: 1rem 3rem 3rem;
-  padding-bottom: 3rem;
+  margin: 1rem 3rem;
+
+  .section {
+    margin-bottom: 2rem;
+  }
 }

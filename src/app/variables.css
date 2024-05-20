@@ -9,6 +9,8 @@
   
   --category-context-width: 45px;
 
+  --mobile-menu-size: 1100px;
+
   /****************
   *    Colors    *
   ****************/
@@ -48,4 +50,6 @@
   --outline-highlight: var(--dark-yellow);
 
   --color: white;
+
+  --card-float-in-increment: 0.3s;
 }

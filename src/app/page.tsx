@@ -1,29 +1,26 @@
+'use client'
+
 import React from 'react'
+
+import { TechCards } from './components/home/tech-cards/TechCards'
 
 export default function Home() {
   return (
     <>
       <h4>
-        Welcome to my website!
+        Hello!
       </h4>
       <div>
-        This site is where I keep all my experiments with web technologies. I have plans for
-        learning about things like:
+        My name is Kent Miller and I&apos;m a web developer. I have nearly a decade of experience
+        working on all sorts of projects with many types of teams. I&apos;ve worked for a variety of
+        companies, from small contracting firm to Fortune 500, and I believe there is always something to
+        learn!
       </div>
-      <ul>
-        <li>
-          Next.js: This is the framework the site is built with
-        </li>
-        <li>
-          Serverless functions (AWS Lambda, Google Cloud Functions, something like these)
-        </li>
-        <li>
-          Any cool JS libraries that I find out about
-        </li>
-        <li>
-          And more!
-        </li>
-      </ul>
+      <div>
+        I have experience working with many web technologies from front-end back to the database:
+        <TechCards />
+      </div>
     </>
   )
 }
+

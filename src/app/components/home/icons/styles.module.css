@@ -1,0 +1,17 @@
+.react-icon-svg {
+  color: rgb(88 196 220);
+  width: 48px;
+  height: 48px;
+  max-width: revert;
+
+  align-self: center;
+  justify-self: center;
+}
+
+.vue-icon-svg {
+  width: 48px;
+  height: 48px;
+  
+  align-self: center;
+  justify-self: center;
+}

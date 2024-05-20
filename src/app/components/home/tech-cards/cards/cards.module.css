@@ -1,0 +1,131 @@
+#icon-1 {
+  position: absolute;
+
+  justify-content: center;
+
+  animation: 8s infinite linear spinning-card-1;
+}
+
+#icon-2 {
+  justify-content: center;
+
+  animation: 8s infinite linear spinning-card-2;
+
+  transform: scaleX(0);
+}
+
+@keyframes spinning-card-1 {
+  from {
+    transform: scaleX(1);
+  }
+
+  25% {
+    transform: scaleX(0);
+  }
+
+  75% {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes spinning-card-2 {
+  from {
+    transform: scaleX(0);
+  }
+
+  25% {
+    transform: scaleX(0);
+  }
+
+  50% {
+    transform: scaleX(1);
+  }
+
+  75% {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.card {
+  display: flex;
+
+  --icon-size: 5rem;
+  border: 1px solid var(--grey);
+  border-radius: var(--icon-size);
+
+  padding: 8px;
+
+  justify-self: center;
+
+  .icon-wrapper {
+    display: grid;
+    width: var(--icon-size);
+    height: var(--icon-size);
+  
+    padding: 8px;
+  
+    cursor: pointer;
+  }
+
+  width: fit-content;
+
+  &.in-view {
+    transform: translateY(0%);
+  }
+  
+  &:not(.in-view) {
+    transform: translateY(25%);
+  }
+}
+
+.card:nth-child(1) {
+  transition: transform var(--card-float-in-increment);
+}
+.card:nth-child(2) {
+  transition: transform calc(var(--card-float-in-increment) * 2);
+}
+.card:nth-child(3) {
+  transition: transform calc(var(--card-float-in-increment) * 3);
+}
+.card:nth-child(4) {
+  transition: transform calc(var(--card-float-in-increment) * 4);
+}
+.card:nth-child(5) {
+  transition: transform calc(var(--card-float-in-increment) * 5);
+}
+.card:nth-child(6) {
+  transition: transform calc(var(--card-float-in-increment) * 6);
+}
+.card:nth-child(7) {
+  transition: transform calc(var(--card-float-in-increment) * 7);
+}
+.card:nth-child(8) {
+  transition: transform calc(var(--card-float-in-increment) * 8);
+}
+
+.icon-wrapper {
+  display: grid;
+
+  width: var(--icon-size);
+  height: var(--icon-size);
+
+  padding: 8px;
+
+  cursor: pointer;
+}
+
+.tech-icon {
+  width: 48px;
+  height: 48px;
+
+  justify-self: center;
+  align-self: center;
+}

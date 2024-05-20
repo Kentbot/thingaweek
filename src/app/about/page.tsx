@@ -10,8 +10,12 @@ import styles from './styles.module.css'
 export default function About() {
   return (
     <div className={styles["about-container"]}>
-      <SiteOverview/>
-      <AboutBudget />
+      <div className={styles["section"]}>
+        <SiteOverview/>
+      </div>
+      <div className={styles["section"]}>
+        <AboutBudget />
+      </div>
     </div>
   )
 }
