@@ -1,26 +1,28 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useMemo, useRef } from 'react'
 
-import useInView from '@/hooks/useInView'
+import { useHasBeenInView } from '@/hooks/useInView'
 
-import styles from './cards.module.css'
+import styles from '../techCard.module.css'
 
-export function Card({ children }: React.PropsWithChildren) {
-  const [inView, setInView] = useState(false)
+type Props = {
+  selected?: boolean
+  onClick: () => void
+} & React.PropsWithChildren
 
+export function Card({ children, selected, onClick }: Props) {
   const cardRef = useRef<HTMLDivElement>(null)
 
-  const isInView = useInView(cardRef)
+  const isInView = useHasBeenInView(cardRef)
 
-  useEffect(() => {
-    if (isInView && !inView) {
-      setInView(true)
-    }
-  }, [isInView, inView])
+  const classes = useMemo(
+    () => [styles["card"], selected ? styles["show-content"] : undefined, isInView ? styles["in-view"] : undefined], 
+    [ selected, isInView ]
+  )
 
   return (
     <div
-      className={`${styles["card"]}
-      ${inView ? styles["in-view"] : ''}`}
+      className={classes.join(' ')}
+      onClick={onClick}
       ref={cardRef}
     >
       {children}

@@ -3,14 +3,14 @@ import React from 'react'
 import Link from 'next/link'
 
 import { Card } from './Card'
-import { VueIcon } from '../../icons/VueIcon'
+import { VueIcon } from '../icons/VueIcon'
 
 import styles from './cards.module.css'
 
-export function VueCard() {
+export function VueCard({ onClick }: { onClick: () => void }) {
   return (
-    <Card>
-      <Link href={"https://vuejs.org/"}>
+    <Card onClick={onClick}>
+      <Link href={"/"}>
         <div className={styles["icon-wrapper"]}>
           <VueIcon />
         </div>

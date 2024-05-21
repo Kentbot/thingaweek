@@ -1,20 +1,17 @@
-import React from 'react'
-
-import Link from 'next/link'
+import React, { useState } from 'react'
 
 import { Card } from './Card'
-import { ReactIcon } from '../../icons/ReactIcon'
+import { ReactIcon } from '../icons/ReactIcon'
 
 import styles from './cards.module.css'
 
-export function ReactCard() {
+export function ReactCard({ onClick, selected }: { onClick: () => void, selected?: boolean }) {
+  console.log('react selected', selected)
   return (
-    <Card>
-      <Link href={"https://react.dev/"}>
-        <div className={styles["icon-wrapper"]}>
-          <ReactIcon />
-        </div>
-      </Link>
+    <Card onClick={onClick} selected={selected}>
+      <div className={styles["icon-wrapper"]}>
+        <ReactIcon />
+      </div>
     </Card>
   )
 }

@@ -6,10 +6,10 @@ import { Card } from './Card'
 
 import styles from './cards.module.css'
 
-export function DotnetCard() {
+export function DotnetCard({ onClick }: { onClick: () => void }) {
   return (
-    <Card>
-      <Link href={"https://dotnet.microsoft.com/en-us/"}>
+    <Card onClick={onClick}>
+      <Link href={"/"}>
         <div className={styles["icon-wrapper"]}>
           <img
             src="https://dotnet.microsoft.com/favicon.ico"

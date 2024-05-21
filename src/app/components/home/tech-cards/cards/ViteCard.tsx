@@ -6,10 +6,10 @@ import { Card } from './Card'
 
 import styles from './cards.module.css'
 
-export function ViteCard() {
+export function ViteCard({ onClick }: { onClick: () => void }) {
   return (
-    <Card>
-      <Link href={"https://vitejs.dev/"}>
+    <Card onClick={onClick}>
+      <Link href={"/"}>
         <div className={styles["icon-wrapper"]}>
           <img
             src="https://vitejs.dev/logo-with-shadow.png"

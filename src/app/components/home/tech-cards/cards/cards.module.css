@@ -64,6 +64,8 @@
   padding: 8px;
 
   justify-self: center;
+  
+  cursor: pointer;
 
   .icon-wrapper {
     display: grid;
@@ -71,8 +73,6 @@
     height: var(--icon-size);
   
     padding: 8px;
-  
-    cursor: pointer;
   }
 
   width: fit-content;
@@ -84,6 +84,15 @@
   &:not(.in-view) {
     transform: translateY(25%);
   }
+
+  &.show-content {
+    grid-column: 1 / -1;
+    grid-row: 1;
+
+    width: 100%;
+  }
+
+  transition: width 1s;
 }
 
 .card:nth-child(1) {

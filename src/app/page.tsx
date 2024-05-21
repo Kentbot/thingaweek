@@ -4,9 +4,11 @@ import React from 'react'
 
 import { TechCards } from './components/home/tech-cards/TechCards'
 
+import styles from './styles.module.css'
+
 export default function Home() {
   return (
-    <>
+    <div className={styles["container"]}>
       <h4>
         Hello!
       </h4>
@@ -20,7 +22,7 @@ export default function Home() {
         I have experience working with many web technologies from front-end back to the database:
         <TechCards />
       </div>
-    </>
+    </div>
   )
 }
 

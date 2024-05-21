@@ -6,10 +6,10 @@ import { Card } from './Card'
 
 import styles from './cards.module.css'
 
-export function AngularCard() {
+export function AngularCard({ onClick }: { onClick: () => void }) {
   return (
-    <Card>
-      <Link href={"https://angular.io/"}>
+    <Card onClick={onClick}>
+      <Link href={"/"}>
         <div className={styles["icon-wrapper"]}>
           <img
             src="https://angular.io/assets/images/logos/angularjs/AngularJS-Shield.svg"

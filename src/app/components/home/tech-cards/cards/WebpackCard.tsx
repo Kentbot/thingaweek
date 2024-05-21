@@ -6,10 +6,10 @@ import { Card } from './Card'
 
 import styles from './cards.module.css'
 
-export function WebpackCard() {
+export function WebpackCard({ onClick }: { onClick: () => void }) {
   return (
-    <Card>
-      <Link href={"https://webpack.js.org/"}>
+    <Card onClick={onClick}>
+      <Link href={"/"}>
         <div className={styles["icon-wrapper"]}>
           <img
             src="https://webpack.js.org/favicon.a3dd58d3142f7566.ico"

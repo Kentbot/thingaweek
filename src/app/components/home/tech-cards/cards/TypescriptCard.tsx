@@ -6,9 +6,9 @@ import { Card } from './Card'
 
 import styles from './cards.module.css'
 
-export function TypescriptCard() {
+export function TypescriptCard({ onClick }: { onClick: () => void }) {
   return (
-    <Card>
+    <Card onClick={onClick}>
       <Link href={"/"}>
         <div className={styles["icon-wrapper"]} id={styles["icon-1"]}>
           <img
