@@ -44,26 +44,35 @@ export function TechCards() {
         <div className={styles["icon-wrapper"]}>
           <ReactIcon />
         </div>
+        <div className={styles["title"]}>
+          React
+        </div>
       </Card>
       <Card onClick={() => handleCardClick('vue')} selected={selectedCard === 'vue'}>
         <div className={styles["icon-wrapper"]}>
           <VueIcon />
         </div>
+        <div className={styles["title"]}>
+          Vue
+        </div>
       </Card>
       <Card onClick={() => handleCardClick('jsts')} selected={selectedCard === 'jsts'}>
-        <div className={styles["icon-wrapper"]} id={styles["icon-1"]}>
+        <div className={styles["icon-wrapper"]}>
           <img
             src="https://www.typescriptlang.org/icons/icon-144x144.png?v=8944a05a8b601855de116c8a56d3b3ae"
             alt="Typescript Icon"
             className={styles["tech-icon"]}
+            id={styles["icon-1"]}
           />
-        </div>
-        <div className={styles["icon-wrapper"]} id={styles["icon-2"]}>
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/320px-Unofficial_JavaScript_logo_2.svg.png"
             alt="Javascript Icon"
             className={styles["tech-icon"]}
+            id={styles["icon-2"]}
           />
+        </div>
+        <div className={styles["title"]}>
+          JS/TS
         </div>
       </Card>
       <Card onClick={() => handleCardClick('vite')} selected={selectedCard === 'vite'}>
@@ -74,6 +83,9 @@ export function TechCards() {
             className={styles["tech-icon"]}
           />
         </div>
+        <div className={styles["title"]}>
+          Vite
+        </div>
       </Card>
       <Card onClick={() => handleCardClick('webpack')} selected={selectedCard === 'webpack'}>
         <div className={styles["icon-wrapper"]}>
@@ -82,6 +94,9 @@ export function TechCards() {
             alt="Webpack Icon"
             className={styles["tech-icon"]}
           />
+        </div>
+        <div className={styles["title"]}>
+          Webpack
         </div>
       </Card>
       <Card onClick={() => handleCardClick('csharp')} selected={selectedCard === 'csharp'}>
@@ -92,6 +107,9 @@ export function TechCards() {
             className={styles["tech-icon"]}
           />
         </div>
+        <div className={styles["title"]}>
+          C-Sharp
+        </div>
       </Card>
       <Card onClick={() => handleCardClick('dotnet')} selected={selectedCard === 'dotnet'}>
         <div className={styles["icon-wrapper"]}>
@@ -100,6 +118,9 @@ export function TechCards() {
             alt="Dotnet Icon"
             className={styles["tech-icon"]}
           />
+        </div>
+        <div className={styles["title"]}>
+          .NET
         </div>
       </Card>
     </div>
