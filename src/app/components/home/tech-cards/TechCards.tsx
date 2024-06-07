@@ -1,17 +1,9 @@
-import React, { useState } from 'react'
+'use client'
 
-import { TypescriptCard } from './cards/TypescriptCard'
-import { ViteCard } from './cards/ViteCard'
-import { CSharpCard } from './cards/CSharpCard'
-import { DotnetCard } from './cards/DotnetCard'
-import { WebpackCard } from './cards/WebpackCard'
-import { VueCard } from './cards/VueCard'
-import { AngularCard } from './cards/AngularCard'
-import { ReactCard } from './cards/ReactCard'
+import React, { useState } from 'react'
 
 import styles from './techCard.module.css'
 import { Card } from './cards/Card'
-import Link from 'next/link'
 import { ReactIcon } from './icons/ReactIcon'
 import { VueIcon } from './icons/VueIcon'
 

@@ -15,7 +15,7 @@
 
 @media screen and (max-width: 550px) {
   .tech-cards {
-    grid-template: auto / 1fr;
+    grid-template: auto / 1fr 1fr;
   }
 }
 
@@ -134,9 +134,10 @@
   }
 }
 
-.card:nth-child(n + 1) {
-  transition-delay: calc(var(--card-float-in-increment) * 1);
-}
+.card:nth-child(4n + 1) { transition-delay: calc(var(--card-float-in-increment) * 1); }
+.card:nth-child(4n + 2) { transition-delay: calc(var(--card-float-in-increment) * 1.5); }
+.card:nth-child(4n + 3) { transition-delay: calc(var(--card-float-in-increment) * 2); }
+.card:nth-child(4n + 4) { transition-delay: calc(var(--card-float-in-increment) * 2.5); }
 
 .tech-icon {
   width: 48px;

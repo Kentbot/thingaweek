@@ -1,3 +1,11 @@
+/************************\
+ * Breakpoint Reference *
+ Mobile: 600px
+ Small:  1000px
+ Medium: 1300px
+ Large:  Over 1300px
+\************************/
+
 :root {
   /****************
   * Measurements *
@@ -52,4 +60,8 @@
   --color: white;
 
   --card-float-in-increment: 0.3s;
+
+  --scrollbar-background: var(--background-light);
+  --scrollbar-color: var(--light-grey-1);
+  --scrollbar-color-active: var(--light-grey-2);
 }

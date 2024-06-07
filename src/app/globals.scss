@@ -53,13 +53,13 @@ body {
 }
 
 ::-webkit-scrollbar {
-  background: var(--background-light);
+  background: var(--scrollbar-background);
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-corner {
-  background: var(--background-light);
+  background: var(--scrollbar-background);
 }
 
 ::-webkit-scrollbar-track {
@@ -67,10 +67,25 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-light);
+  background: var(--scrollbar-color);
   border-radius: 25px;
 
   &:active {
-    background: var(--primary);
+    background: var(--scrollbar-color-active);
+  }
+}
+
+blockquote p {
+  width: 80%;
+  margin: 1rem auto;
+  padding: 15px;
+  font-style: italic;
+  background: var(--light-grey-0);
+  border-radius: var(--border-radius);
+}
+
+@for $i from 1 through 10 {
+  .w-#{$i}0 {
+    width: $i * 10%;
   }
 }
