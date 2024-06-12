@@ -7,6 +7,7 @@ $nav-highlight: var(--primary);
   flex-direction: column;
 
   width: var(--nav-width);
+
   position: fixed;
   height: calc(100% - var(--nav-height));
   background-color: var(--secondary-light);
@@ -22,6 +23,14 @@ $nav-highlight: var(--primary);
     text-decoration: none;
     transition: .3s;
     display: block;
+
+    .long-desc {
+      display: contents;
+
+      @media screen and (max-width: 600px) {
+        display: none;
+      }
+    }
 
     &::after {
       content: '';

@@ -24,7 +24,7 @@ export default function Home() {
               <p>
                 I believe a good developer isn&apos;t just someone that knows design patterns, problem solving,
                 and how to write clean code (though these are all important!).
-                They&apos;re someone that cares about everyone that they, and their code, interact with:
+                They&apos;re also someone that cares about everyone that they, and their code, interact with:
                 coworkers, users, testers, stakeholders, and beyond.
               </p>
             </blockquote>

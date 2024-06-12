@@ -13,11 +13,14 @@
   --border-radius: 5px;
   
   --nav-width: 200px;
+
+  @media screen and (max-width: 600px) {
+    --nav-width: 3rem;
+  }
+
   --nav-height: 35px;
   
   --category-context-width: 45px;
-
-  --mobile-menu-size: 1100px;
 
   /****************
   *    Colors    *

@@ -26,22 +26,22 @@ export function BudgetNav() {
     <div className={styles.budgetNav}>
       <nav>
         <Link
-          className={`${styles.link} ${pathname === '/budget' ? `${styles.active}` : ''}`}
+          className={`${styles["link"]} ${pathname === '/budget' ? `${styles.active}` : ''}`}
           href="/budget"
         >
-          <FontAwesomeIcon icon={faChartLine} /> Overview
+          <FontAwesomeIcon icon={faChartLine} /> <span className={styles["long-desc"]}>Overview</span>
         </Link>
         <Link
-          className={`${styles.link} ${pathname.endsWith('/categories') ? `${styles.active}` : ''}`}
+          className={`${styles["link"]} ${pathname.endsWith('/categories') ? `${styles.active}` : ''}`}
           href="/budget/categories"
         >
-          <FontAwesomeIcon icon={faListUl} /> Categories
+          <FontAwesomeIcon icon={faListUl} /> <span className={styles["long-desc"]}>Categories</span>
         </Link>
         <Link
-          className={`${styles.link} ${pathname.endsWith('/transactions') ? `${styles.active}` : ''}`}
+          className={`${styles["link"]} ${pathname.endsWith('/transactions') ? `${styles.active}` : ''}`}
           href="/budget/transactions"
         >
-          <FontAwesomeIcon icon={faMoneyBills} /> Transactions
+          <FontAwesomeIcon icon={faMoneyBills} /> <span className={styles["long-desc"]}>Transactions</span>
         </Link>
       </nav>
       <Modal
