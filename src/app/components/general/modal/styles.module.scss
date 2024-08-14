@@ -29,6 +29,14 @@
   }
 }
 
+.responsive-btn-text {
+  display: inline;
+
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;

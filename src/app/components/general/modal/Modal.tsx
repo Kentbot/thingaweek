@@ -9,6 +9,7 @@ type Props = React.PropsWithChildren<{
   toggleButtonIcon?: React.ReactNode
   displayCloseButton?: boolean
   isOpen?: boolean
+  responsiveBtnText?: boolean
   onOpen?: () => void
   onClose?: () => void
 }>
@@ -21,6 +22,7 @@ export function Modal({
   toggleButtonIcon,
   displayCloseButton,
   isOpen,
+  responsiveBtnText,
   onOpen,
   onClose
 }: Props) {
@@ -67,7 +69,10 @@ export function Modal({
   return (
     <>
       <button className="btn" onClick={handleModalOpen} style={buttonStyle}>
-        {toggleButtonIcon}{toggleButtonText ? <>&nbsp;{toggleButtonText}</> : null}
+        {toggleButtonIcon}
+        <span className={responsiveBtnText ? styles["responsive-btn-text"] : ""}>
+          {toggleButtonText ? <>&nbsp;{toggleButtonText}</> : null}
+        </span>
       </button>
       <dialog ref={dialogRef} className={styles.modal} onKeyDown={handleKeyDown}>
         { title && <div className={styles.title}>{title}</div> }

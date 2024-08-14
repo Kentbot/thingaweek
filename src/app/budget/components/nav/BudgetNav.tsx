@@ -47,7 +47,9 @@ export function BudgetNav() {
       <Modal
         title="Save/Load Budget"
         toggleButtonIcon={<FontAwesomeIcon icon={faSave} />}
-        toggleButtonText="Save/Load Budget">
+        toggleButtonText="Save/Load Budget"
+        responsiveBtnText
+      >
         <Persister/>
       </Modal>
     </div>

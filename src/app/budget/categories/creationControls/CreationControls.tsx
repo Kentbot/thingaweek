@@ -12,13 +12,15 @@ import { IncomeCreator } from './incomeCreator/IncomeCreator'
 
 import './creationControl.styles.scss'
 
+const categoryManagerText = 'Edit Categories'
+
 export function CreationControls() {
   return (
     <div className="creation-controls">
       <Modal 
         toggleButtonIcon={<FontAwesomeIcon icon={faPencil} />}
-        toggleButtonText="Category Management"
-        title={'Category Management'}>
+        toggleButtonText={categoryManagerText}
+        title={categoryManagerText}>
         <CategoryCreator />
         <IncomeCreator />
         <GroupCreator />
